@@ -1,0 +1,14 @@
+.title1 span.new-title-addon {
+    display: inline-block;
+    background-color: #c5071a5e;
+}
+
+.bad-price {
+    display: inline-block;
+    text-decoration: line-through;
+}
+
+.good-price {
+    display: inline-block;
+    margin-left: 10px;
+}
