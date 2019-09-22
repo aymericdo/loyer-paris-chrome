@@ -1,14 +1,9 @@
 const priceElement = document.getElementById('price');
 const url = window.location.toString()
+const id = url.split('/')[8].split('.')[0]
 const title = document.querySelector('.detail-title.title1');
 
-chrome.storage.sync.set({ url })
-chrome.storage.sync.get('url', (data) => {
-    if (data.url) {
-        chrome.storage.sync.set({ id: data.url.split('/')[8].split('.')[0] })
-    }
-});
-
+chrome.storage.sync.set({ id })
 chrome.storage.sync.get('id', (data) => {
     fetch(`https://encadrement-loyers.herokuapp.com/seloger?id=${data.id}`)
         .then(response => response.json())
