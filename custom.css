@@ -1,6 +1,20 @@
-.title1 span.new-title-addon {
+.title1 span.title-addon {
     display: inline-block;
+    margin-left: 4px;
+}
+
+.title1 span.title-addon.-illegal {
     background-color: #c5071a5e;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    padding: 2px 4px;
+}
+
+.title1 span.title-addon.-legal {
+    background-color: #07c5075e;
+    border: 1px solid transparent;
+    border-radius: 22px;
+    padding: 4px 6px;
 }
 
 .bad-price {
