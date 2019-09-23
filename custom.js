@@ -1,9 +1,11 @@
 const priceElement = document.getElementById('price');
-const url = window.location.toString()
-const id = url.split('/')[8].split('.')[0]
 const title = document.querySelector('.detail-title.title1');
 
+const url = window.location.toString()
+const urlArray = url.split('/')
+const id = urlArray[urlArray.length - 1].split('.')[0]
 chrome.storage.sync.set({ id })
+
 chrome.storage.sync.get('id', (data) => {
     fetch(`https://encadrement-loyers.herokuapp.com/seloger?id=${data.id}`)
         .then(response => response.json())
@@ -18,7 +20,7 @@ chrome.storage.sync.get('id', (data) => {
 
                 const subTitleAddon = document.createElement('span')
                 subTitleAddon.classList.add('title-addon')
-                subTitleAddon.textContent = '(Cliquez sur l\'extension pour plus d\'informations)'
+                subTitleAddon.textContent = '(Cliquez sur le logo de l\'extension (à droite de l\'url) pour plus d\'informations)'
                 title.appendChild(subTitleAddon)
 
                 const oldPriceElements = [...priceElement.childNodes]
