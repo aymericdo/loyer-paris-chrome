@@ -24,7 +24,9 @@
   "content_scripts": [
     {
       "matches": [
-        "https://www.seloger.com/annonces/locations/appartement/*"
+        "https://www.seloger.com/annonces/locations/appartement/*",
+        "https://www.leboncoin.fr/locations/*",
+        "https://www.loueragile.fr/alert_result*"
       ],
       "js": [
         "custom.js"
