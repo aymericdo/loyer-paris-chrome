@@ -1,4 +1,4 @@
-let currentAd = null;
+let currentAd = null
 
 const getIdFromSeLogerUrl = () => {
     const url = window.location.toString()
@@ -21,7 +21,7 @@ const getIdFromLouerAgileUrl = () => {
 }
 
 const activateTab = () => {
-    chrome.runtime.sendMessage({ 'message': 'activateIcon' });
+    chrome.runtime.sendMessage({ 'message': 'activateIcon' })
     chrome.storage.sync.set({ ad: currentAd })
 }
 
@@ -30,46 +30,64 @@ const getDomain = () => {
     return url.split('/')[2].split('.')[1]
 }
 
-const customizeSeLoger = () => {
-    const priceElement = document.getElementById('price');
-    const title = document.querySelector('.detail-title.title1');
+const customizeLegalAd = (titleElements) => {
+    const titleAddon = document.createElement('span')
+    titleAddon.textContent = '✓'
+    titleAddon.classList.add('title-addon')
+    titleAddon.classList.add('-legal')
+    titleAddon.classList.add(`-${getDomain()}`)
+    titleElements.forEach(node => {
+        node.appendChild(titleAddon.cloneNode(true))
+    })
+}
 
-    if (!currentAd.isLegal) {
-        const titleAddon = document.createElement('span')
-        titleAddon.textContent = 'ANNONCE ILLEGALE'
-        titleAddon.classList.add('title-addon')
-        titleAddon.classList.add('-illegal')
-        title.appendChild(titleAddon)
+const customizeIllegalAd = (titleElements, priceElements) => {
+    const titleAddon = document.createElement('span')
+    titleAddon.textContent = 'ANNONCE ILLEGALE'
+    titleAddon.classList.add('title-addon')
+    titleAddon.classList.add('-illegal')
+    titleElements.forEach(node => {
+        node.appendChild(titleAddon.cloneNode(true))
+    })
 
-        const subTitleAddon = document.createElement('span')
-        subTitleAddon.classList.add('title-addon')
-        subTitleAddon.textContent = '(Cliquez sur le logo de l\'extension (à droite de l\'url) pour plus d\'informations)'
-        title.appendChild(subTitleAddon)
+    const subTitleAddon = document.createElement('span')
+    subTitleAddon.classList.add('title-addon')
+    subTitleAddon.textContent = '(Cliquez sur le logo de l\'extension (à droite de l\'url) pour plus d\'informations)'
+    titleElements.forEach(node => {
+        node.appendChild(subTitleAddon.cloneNode(true))
+    })
 
-        const oldPriceElements = [...priceElement.childNodes]
-        const badPrice = document.createElement('div')
-        const goodPrice = document.createElement('span')
-        for (var i = 0; i < oldPriceElements.length; i++) {
-            badPrice.appendChild(oldPriceElements[i])
-        }
-        goodPrice.textContent = currentAd.computedInfo.maxAuthorized + '€'
-        badPrice.classList.add('bad-price')
-        goodPrice.classList.add('good-price')
-        priceElement.appendChild(badPrice)
-        priceElement.appendChild(goodPrice)
-    } else {
-        const titleAddon = document.createElement('span')
-        titleAddon.textContent = '✓'
-        titleAddon.classList.add('title-addon')
-        titleAddon.classList.add('-legal')
-        title.appendChild(titleAddon)
+    const oldPriceElements = [...priceElement.childNodes]
+    const badPrice = document.createElement('div')
+    const goodPrice = document.createElement('span')
+    for (var i = 0; i < oldPriceElements.length; i++) {
+        badPrice.appendChild(oldPriceElements[i])
     }
+    goodPrice.textContent = currentAd.computedInfo.maxAuthorized + '€'
+    badPrice.classList.add('bad-price')
+    goodPrice.classList.add('good-price')
+    priceElements.forEach(node => {
+        node.appendChild(badPrice.cloneNode(true))
+        node.appendChild(goodPrice.cloneNode(true))
+    })
 }
 
-const customizeLeBonCoin = () => {
+const seLogerScraping = () => {
+    const title = document.querySelector('.detail-title.title1')
+    const price = document.getElementById('price')
+
+    return [[title], [price]]
 }
 
-const customizeLouerAgile = () => {
+const leBonCoinScraping = () => {
+    const titles = [...document.querySelectorAll('[data-qa-id=adview_title] h1, [data-qa-id=adview_title] h3')]
+    const price = document.querySelector('[data-qa-id=adview_price]').firstChild
+
+    return [titles, [price]]
+}
+
+const louerAgileScraping = () => {
+    return []
 }
 
 const fetchData = () => {
@@ -82,26 +100,27 @@ const fetchData = () => {
                     getIdFromLouerAgileUrl()
                     : null
 
-    console.log(getDomain())
-    console.log(id)
-
     fetch(`https://encadrement-loyers.herokuapp.com/${getDomain()}?id=${id}`)
         .then(response => response.json())
         .then((myJson) => {
             currentAd = myJson
             activateTab()
-            switch (getDomain()) {
-                case 'seloger': {
-                    customizeSeLoger(); break;
-                }
-                case 'leboncoin': {
-                    customizeLeBonCoin(); break;
-                }
-                case 'loueragile': {
-                    customizeLouerAgile(); break;
-                }
+
+            const [titleElements, priceElements] =
+                getDomain() === 'seloger' ?
+                    seLogerScraping()
+                    : getDomain() === 'leboncoin' ?
+                        leBonCoinScraping()
+                        : getDomain() === 'loueragile' ?
+                            louerAgileScraping()
+                            : null
+
+            if (!currentAd.isLegal) {
+                customizeIllegalAd(titleElements, priceElements)
+            } else {
+                customizeLegalAd(titleElements)
             }
-        });
+        })
 }
 
 chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
@@ -110,6 +129,6 @@ chrome.extension.onMessage.addListener(function (request, sender, sendResponse) 
             activateTab()
         }
     }
-});
+})
 
 fetchData()
