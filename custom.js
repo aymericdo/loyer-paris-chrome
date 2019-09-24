@@ -8,7 +8,6 @@ const getIdFromUrl = () => {
     return urlArray[urlArray.length - 1].split('.')[0]
 }
 
-chrome.runtime.sendMessage({ 'message': 'activateIcon' });
 chrome.storage.sync.set({ id: getIdFromUrl() })
 
 chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
@@ -26,6 +25,7 @@ chrome.storage.sync.get('id', (data) => {
         .then((myJson) => {
             hashAd[data.id] = myJson
             chrome.storage.sync.set({ ad: myJson })
+            chrome.runtime.sendMessage({ 'message': 'activateIcon' });
             if (!myJson.isLegal) {
                 const titleAddon = document.createElement('span')
                 titleAddon.textContent = 'ANNONCE ILLEGALE'
