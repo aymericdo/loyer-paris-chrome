@@ -2,22 +2,17 @@ let currentAd = null
 
 const getIdFromSeLogerUrl = () => {
     const url = window.location.toString()
-    const urlArray = url.split('/')
-    return urlArray[urlArray.length - 1].split('.')[0]
+    return url.match(/\d+(?=.htm)/)[0]
 }
 
 const getIdFromLeBonCoinUrl = () => {
     const url = window.location.toString()
-    const urlArray = url.split('/')
-    return urlArray[urlArray.length - 2].split('.')[0]
+    return url.match(/\d+(?=.htm)/)[0]
 }
 
 const getIdFromLouerAgileUrl = () => {
     const url = window.location.toString()
-    const urlArray = url.split('/')
-    const paramArray = urlArray[urlArray.length - 1].split('?')[1].split('&')
-    const ad = paramArray.find(param => param.startsWith('ad='))
-    return ad ? ad.split('=')[1] : null
+    return url.match(/\?<=ad=)\d+/)
 }
 
 const activateTab = () => {
@@ -52,21 +47,26 @@ const customizeIllegalAd = (titleElements, priceElements) => {
 
     const subTitleAddon = document.createElement('span')
     subTitleAddon.classList.add('title-addon')
+    subTitleAddon.classList.add('-description-helper')
     subTitleAddon.textContent = '(Cliquez sur le logo de l\'extension (à droite de l\'url) pour plus d\'informations)'
     titleElements.forEach(node => {
         node.appendChild(subTitleAddon.cloneNode(true))
     })
 
-    const oldPriceElements = [...priceElement.childNodes]
-    const badPrice = document.createElement('div')
     const goodPrice = document.createElement('span')
-    for (var i = 0; i < oldPriceElements.length; i++) {
-        badPrice.appendChild(oldPriceElements[i])
-    }
     goodPrice.textContent = currentAd.computedInfo.maxAuthorized + '€'
-    badPrice.classList.add('bad-price')
     goodPrice.classList.add('good-price')
+
     priceElements.forEach(node => {
+        const badPrice = document.createElement('div')
+        badPrice.classList.add('bad-price')
+
+        const oldPriceElements = [...node.childNodes]
+        oldPriceElements.forEach(node => {
+            badPrice.appendChild(node.cloneNode(true))
+        })
+
+        node.innerHTML = ''
         node.appendChild(badPrice.cloneNode(true))
         node.appendChild(goodPrice.cloneNode(true))
     })
@@ -81,9 +81,10 @@ const seLogerScraping = () => {
 
 const leBonCoinScraping = () => {
     const titles = [...document.querySelectorAll('[data-qa-id=adview_title] h1, [data-qa-id=adview_title] h3')]
-    const price = document.querySelector('[data-qa-id=adview_price]').firstChild
+    const prices = [...document.querySelectorAll('[data-qa-id=adview_price]')].map(node => node.firstChild)
+    console.log(prices)
 
-    return [titles, [price]]
+    return [titles, prices]
 }
 
 const louerAgileScraping = () => {
@@ -120,6 +121,8 @@ const fetchData = () => {
             } else {
                 customizeLegalAd(titleElements)
             }
+        }).catch((err) => {
+            console.log(err)
         })
 }
 

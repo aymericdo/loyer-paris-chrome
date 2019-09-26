@@ -1,6 +1,10 @@
 span.title-addon {
-    display: inline-block;
-    margin-left: 4px;
+    display: inline-block !important;
+    margin-left: 4px !important;
+}
+
+span.title-addon.-description-helper {
+    font-size: 14px;
 }
 
 span.title-addon.-illegal {
