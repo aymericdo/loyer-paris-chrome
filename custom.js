@@ -102,7 +102,13 @@ const fetchData = () => {
                     : null
 
     fetch(`https://encadrement-loyers.herokuapp.com/${getDomain()}?id=${id}`)
-        .then(response => response.json())
+        .then((response) => {
+            if (response.status === 200) {
+                return response.json()
+            } else {
+                throw Error(response.statusText)
+            }
+        })
         .then((myJson) => {
             currentAd = myJson
             activateTab()
