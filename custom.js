@@ -12,7 +12,7 @@ const getIdFromLeBonCoinUrl = () => {
 
 const getIdFromLouerAgileUrl = () => {
     const url = window.location.toString()
-    return url.match(/\?<=ad=)\d+/)
+    return url.match(/(?<=ad=)\d+/)[0]
 }
 
 const activateTab = () => {
