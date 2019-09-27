@@ -112,8 +112,6 @@ chrome.extension.onMessage.addListener(function (request, sender, sendResponse) 
     if (request.message === 'urlHasChanged') {
         if (currentAd) {
             activateTab()
-        } else {
-            fetchData()
         }
     }
 })
