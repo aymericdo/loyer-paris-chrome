@@ -3,15 +3,12 @@ span.title-addon {
     margin-left: 4px !important;
 }
 
-span.title-addon.-description-helper {
-    font-size: 14px;
-}
-
 span.title-addon.-illegal {
     background-color: #c5071a5e;
     border: 1px solid transparent;
     border-radius: 20px;
-    padding: 2px 4px;
+    padding: 4px 8px;
+    font-weight: bold;
 }
 
 span.title-addon.-legal {
@@ -21,7 +18,8 @@ span.title-addon.-legal {
     padding: 4px 6px;
 }
 
-span.title-addon.-legal.-leboncoin {
+span.title-addon.-legal.-leboncoin,
+span.title-addon.-legal.-loueragile {
     padding: 2px 10px;
 }
 
@@ -33,4 +31,33 @@ span.title-addon.-legal.-leboncoin {
 .good-price {
     display: inline-block;
     margin-left: 10px;
+}
+
+span.title-addon.-description-helper {
+    position: fixed;
+    z-index: 9999999;
+    top: 0.875em;
+    right: 0.875em;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    padding: 0.875em 1em;
+    visibility: visible;
+    opacity: 1;
+}
+
+span.title-addon.-description-helper.-legal {
+    background: #07c507de;
+}
+
+span.title-addon.-description-helper.-illegal {
+    background: #c5071ad8;
+}
+
+span.title-addon.-description-helper.-hide {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s linear;
 }

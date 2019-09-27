@@ -1,23 +1,8 @@
 let currentAd = null
 
-const getIdFromSeLogerUrl = () => {
-    const url = window.location.toString()
-    return url.match(/\d+(?=.htm)/)[0]
-}
-
-const getIdFromLeBonCoinUrl = () => {
-    const url = window.location.toString()
-    return url.match(/\d+(?=.htm)/)[0]
-}
-
-const getIdFromLouerAgileUrl = () => {
-    const url = window.location.toString()
-    return url.match(/(?<=ad=)\d+/)[0]
-}
-
 const activateTab = () => {
     chrome.runtime.sendMessage({ 'message': 'activateIcon' })
-    chrome.storage.sync.set({ ad: currentAd })
+    chrome.storage.sync.set({ ad: { ...currentAd } })
 }
 
 const getDomain = () => {
@@ -45,14 +30,6 @@ const customizeIllegalAd = (titleElements, priceElements) => {
         node.appendChild(titleAddon.cloneNode(true))
     })
 
-    const subTitleAddon = document.createElement('span')
-    subTitleAddon.classList.add('title-addon')
-    subTitleAddon.classList.add('-description-helper')
-    subTitleAddon.textContent = '(Cliquez sur le logo de l\'extension (à droite de l\'url) pour plus d\'informations)'
-    titleElements.forEach(node => {
-        node.appendChild(subTitleAddon.cloneNode(true))
-    })
-
     const goodPrice = document.createElement('span')
     goodPrice.textContent = currentAd.computedInfo.maxAuthorized + '€'
     goodPrice.classList.add('good-price')
@@ -72,70 +49,71 @@ const customizeIllegalAd = (titleElements, priceElements) => {
     })
 }
 
-const seLogerScraping = () => {
-    const title = document.querySelector('.detail-title.title1')
-    const price = document.getElementById('price')
+const addDescriptionHelper = (isLegal) => {
+    const subTitleAddon = document.createElement('span')
+    subTitleAddon.classList.add('title-addon')
+    subTitleAddon.classList.add('-description-helper')
+    subTitleAddon.classList.add(isLegal ? '-legal' : '-illegal')
+    subTitleAddon.textContent = 'Cliquez sur le logo de l\'extension pour plus d\'informations ⤴'
+    document.body.appendChild(subTitleAddon)
 
-    return [[title], [price]]
+    setTimeout(() => {
+        subTitleAddon.classList.add('-hide')
+    }, 5000)
 }
 
-const leBonCoinScraping = () => {
-    const titles = [...document.querySelectorAll('[data-qa-id=adview_title] h1, [data-qa-id=adview_title] h3')]
-    const prices = [...document.querySelectorAll('[data-qa-id=adview_price]')].map(node => node.firstChild)
-    console.log(prices)
-
-    return [titles, prices]
+const fetchDataFromJSON = (data) => {
+    return fetch(`${server}/${getDomain()}/data`, { method: 'post', body: JSON.stringify(data) })
 }
 
-const louerAgileScraping = () => {
-    return []
+const fetchDataFromId = (id) => {
+    return fetch(`${server}/${getDomain()}?id=${id}`)
 }
 
 const fetchData = () => {
-    const id =
-        getDomain() === 'seloger' ?
-            getIdFromSeLogerUrl()
-            : getDomain() === 'leboncoin' ?
-                getIdFromLeBonCoinUrl()
-                : getDomain() === 'loueragile' ?
-                    getIdFromLouerAgileUrl()
+    let request = null
+    if (getDomain() === 'leboncoin') {
+        const data = getDataFromLeboncoinScriptInDOM()
+        request = fetchDataFromJSON(data)
+    } else if (getDomain() === 'seloger') {
+        const id = getIdFromSelogerUrl()
+        request = fetchDataFromId(id)
+    } else if (getDomain() === 'loueragile') {
+        const id = getIdFromLoueragileUrl()
+        request = fetchDataFromId(id)
+    }
+
+    request
+        .then(middleware)
+        .then(handleSuccess)
+        .catch(err => console.log(err))
+}
+
+const handleSuccess = (myJson) => {
+    currentAd = { ...myJson }
+    activateTab()
+
+    const [titleElements, priceElements] =
+        getDomain() === 'seloger' ? selogerScraping()
+            : getDomain() === 'leboncoin' ? leboncoinScraping()
+                : getDomain() === 'loueragile' ? loueragileScraping()
                     : null
 
-    fetch(`https://encadrement-loyers.herokuapp.com/${getDomain()}?id=${id}`)
-        .then((response) => {
-            if (response.status === 200) {
-                return response.json()
-            } else {
-                throw Error(response.statusText)
-            }
-        })
-        .then((myJson) => {
-            currentAd = myJson
-            activateTab()
+    if (!currentAd.isLegal) {
+        customizeIllegalAd(titleElements, priceElements)
+    } else {
+        customizeLegalAd(titleElements)
+    }
 
-            const [titleElements, priceElements] =
-                getDomain() === 'seloger' ?
-                    seLogerScraping()
-                    : getDomain() === 'leboncoin' ?
-                        leBonCoinScraping()
-                        : getDomain() === 'loueragile' ?
-                            louerAgileScraping()
-                            : null
-
-            if (!currentAd.isLegal) {
-                customizeIllegalAd(titleElements, priceElements)
-            } else {
-                customizeLegalAd(titleElements)
-            }
-        }).catch((err) => {
-            console.log(err)
-        })
+    addDescriptionHelper(currentAd.isLegal)
 }
 
 chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.message === 'urlHasChanged') {
         if (currentAd) {
             activateTab()
+        } else {
+            fetchData()
         }
     }
 })
