@@ -1,13 +1,49 @@
-let currentAd = null
-
-const activateTab = () => {
-    chrome.runtime.sendMessage({ 'message': 'activateIcon' })
-    chrome.storage.sync.set({ ad: { ...currentAd } })
-}
-
 const getDomain = () => {
     const url = window.location.toString()
     return url.split('/')[2].split('.')[1]
+}
+
+const getIdByDomain = () => {
+    return (getDomain() === 'leboncoin') ?
+        getIdFromLeboncoinUrl()
+        : (getDomain() === 'seloger') ?
+            getIdFromSelogerUrl()
+            : (getDomain() === 'loueragile') ?
+                getIdFromLoueragileUrl()
+                : null
+}
+
+let currentDomain = getDomain()
+let currentId = getIdByDomain()
+let currentAd = null
+
+const activateTab = () => {
+    chrome.storage.sync.set({ ad: { ...currentAd } })
+    chrome.runtime.sendMessage({ 'message': 'activateIcon' })
+}
+
+const deactivateTab = () => {
+    currentAd = null
+    currentDomain = null
+    currentId = null
+    chrome.runtime.sendMessage({ 'message': 'deactivateIcon' })
+}
+
+const customizeTab = () => {
+    activateTab()
+    const [titleElements, priceElements] =
+        currentDomain === 'seloger' ? selogerScraping()
+            : currentDomain === 'leboncoin' ? leboncoinScraping()
+                : currentDomain === 'loueragile' ? loueragileScraping()
+                    : null
+
+    if (!currentAd.isLegal) {
+        customizeIllegalAd(titleElements, priceElements)
+    } else {
+        customizeLegalAd(titleElements)
+    }
+
+    addDescriptionHelper(currentAd.isLegal)
 }
 
 const customizeLegalAd = (titleElements) => {
@@ -15,7 +51,7 @@ const customizeLegalAd = (titleElements) => {
     titleAddon.textContent = '✓'
     titleAddon.classList.add('title-addon')
     titleAddon.classList.add('-legal')
-    titleAddon.classList.add(`-${getDomain()}`)
+    titleAddon.classList.add(`-${currentDomain}`)
     titleElements.forEach(node => {
         node.appendChild(titleAddon.cloneNode(true))
     })
@@ -63,22 +99,22 @@ const addDescriptionHelper = (isLegal) => {
 }
 
 const fetchDataFromJSON = (data) => {
-    return fetch(`${server}/${getDomain()}/data`, { method: 'post', body: JSON.stringify(data) })
+    return fetch(`${server}/${currentDomain}/data`, { method: 'post', body: JSON.stringify(data) })
 }
 
 const fetchDataFromId = (id) => {
-    return fetch(`${server}/${getDomain()}?id=${id}`)
+    return fetch(`${server}/${currentDomain}?id=${id}`)
 }
 
 const fetchData = () => {
     let request = null
-    if (getDomain() === 'leboncoin') {
+    if (currentDomain === 'leboncoin') {
         const data = getDataFromLeboncoinScriptInDOM()
         request = fetchDataFromJSON(data)
-    } else if (getDomain() === 'seloger') {
+    } else if (currentDomain === 'seloger') {
         const id = getIdFromSelogerUrl()
         request = fetchDataFromId(id)
-    } else if (getDomain() === 'loueragile') {
+    } else if (currentDomain === 'loueragile') {
         const id = getIdFromLoueragileUrl()
         request = fetchDataFromId(id)
     }
@@ -86,32 +122,28 @@ const fetchData = () => {
     request
         .then(middleware)
         .then(handleSuccess)
-        .catch(err => console.log(err))
+        .catch(err => {
+            console.log(err)
+        })
 }
 
 const handleSuccess = (myJson) => {
     currentAd = { ...myJson }
-    activateTab()
-
-    const [titleElements, priceElements] =
-        getDomain() === 'seloger' ? selogerScraping()
-            : getDomain() === 'leboncoin' ? leboncoinScraping()
-                : getDomain() === 'loueragile' ? loueragileScraping()
-                    : null
-
-    if (!currentAd.isLegal) {
-        customizeIllegalAd(titleElements, priceElements)
-    } else {
-        customizeLegalAd(titleElements)
-    }
-
-    addDescriptionHelper(currentAd.isLegal)
+    customizeTab()
 }
 
-chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.message === 'urlHasChanged') {
-        if (currentAd) {
-            activateTab()
+chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.message === 'tabHasChanged') {
+        activateTab()
+    } else if (request.message === 'urlHasChanged') {
+        const newDomain = getDomain()
+        const newId = getIdByDomain()
+        if (newId === null) {
+            deactivateTab()
+        } else if (currentDomain !== newDomain || currentId !== newId) {
+            currentDomain = newDomain
+            currentId = newId
+            fetchData()
         }
     }
 })

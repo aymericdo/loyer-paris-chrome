@@ -1,6 +1,7 @@
 const getIdFromLoueragileUrl = () => {
     const url = window.location.toString()
-    return url.match(/(?<=ad=)\d+/)[0]
+    const match = url.match(/(?<=ad=)\d+/)
+    return match ? match[0] : null
 }
 
 const loueragileScraping = () => {

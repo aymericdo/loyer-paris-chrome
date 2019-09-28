@@ -1,6 +1,7 @@
 const getIdFromLeboncoinUrl = () => {
     const url = window.location.toString()
-    return url.match(/\d+(?=.htm)/)[0]
+    const match = url.match(/\d+(?=.htm)/)
+    return match ? match[0] : null
 }
 
 const leboncoinScraping = () => {

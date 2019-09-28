@@ -35,6 +35,7 @@
         "service/loueragile.service.js",
         "custom.js"
       ],
+      "run_at": "document_end",
       "css": [
         "custom.css"
       ]
