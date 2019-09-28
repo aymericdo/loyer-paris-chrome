@@ -1,6 +1,6 @@
 {
   "name": "Encadrement loyers paris",
-  "version": "1.9",
+  "version": "2.0",
   "description": "Savoir si le prix est légal ou non. #rendslargent",
   "permissions": [
     "storage",
