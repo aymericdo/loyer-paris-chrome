@@ -106,11 +106,20 @@ const fetchDataFromId = (id) => {
     return fetch(`${server}/${currentDomain}?id=${id}`)
 }
 
-const fetchData = () => {
+const fetchData = (urlHasChanged = false) => {
     let request = null
     if (currentDomain === 'leboncoin') {
-        const data = getDataFromLeboncoinScriptInDOM()
-        request = fetchDataFromJSON(data)
+        request = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const data = urlHasChanged ?
+                    getDataFromLeboncoinScriptInDOM2(getIdByDomain())
+                    :
+                    getDataFromLeboncoinScriptInDOM()
+
+                request = fetchDataFromJSON(data)
+                resolve(request)
+            }, 5000)
+        })
     } else if (currentDomain === 'seloger') {
         const id = getIdFromSelogerUrl()
         request = fetchDataFromId(id)
@@ -143,9 +152,11 @@ chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
         } else if (currentDomain !== newDomain || currentId !== newId) {
             currentDomain = newDomain
             currentId = newId
-            fetchData()
+            fetchData(true)
         }
     }
 })
 
-fetchData()
+if (currentId) {
+    fetchData()
+}

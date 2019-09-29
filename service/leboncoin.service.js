@@ -12,7 +12,13 @@ const leboncoinScraping = () => {
 }
 
 const getDataFromLeboncoinScriptInDOM = () => {
-    const scripts = document.getElementsByTagName('script');
+    const scripts = document.getElementsByTagName('script')
     const dataScript = [...scripts].find(s => s.textContent.substring(3, 20) === 'window.FLUX_STATE')
     return dataScript ? JSON.parse(dataScript.textContent.slice(23, -1)).adview : null
+}
+
+const getDataFromLeboncoinScriptInDOM2 = (id) => {
+    const scripts = document.getElementsByTagName('script')
+    const dataScript = [...scripts].find(s => s.textContent.substring(3, 20) === 'window.__REDIAL_P')
+    return dataScript ? JSON.parse(dataScript.textContent.slice(29, -1))[4].data.ads.find(ad => ad.list_id === +id) : null
 }
