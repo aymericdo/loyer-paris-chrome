@@ -109,8 +109,10 @@ const fetchDataFromId = (id) => {
 const fetchData = () => {
     let request = null
     if (currentDomain === 'leboncoin') {
-        const id = getIdFromLeboncoinUrl()
-        request = fetchDataFromId(id)
+        const data = getDataFromDOM()
+        if (data) {
+            request = fetchDataFromJSON(data)
+        }
     } else if (currentDomain === 'seloger') {
         const id = getIdFromSelogerUrl()
         request = fetchDataFromId(id)
@@ -119,12 +121,14 @@ const fetchData = () => {
         request = fetchDataFromId(id)
     }
 
-    request
-        .then(middleware)
-        .then(handleSuccess)
-        .catch(err => {
-            console.log(err)
-        })
+    if (request) {
+        request
+            .then(middleware)
+            .then(handleSuccess)
+            .catch(err => {
+                console.log(err)
+            })
+    }
 }
 
 const handleSuccess = (myJson) => {
