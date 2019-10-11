@@ -1,6 +1,6 @@
 span.title-addon {
     display: inline-block !important;
-    margin-left: 4px !important;
+    margin-right: 4px !important;
 }
 
 span.title-addon.-illegal {
@@ -24,6 +24,11 @@ span.title-addon.-legal.-loueragile {
 }
 
 .bad-price {
+    display: inline-block;
+    text-decoration: line-through;
+}
+
+.bad-price * {
     display: inline-block;
     text-decoration: line-through;
 }

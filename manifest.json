@@ -1,6 +1,6 @@
 {
   "name": "Encadrement loyers paris",
-  "version": "2.6",
+  "version": "2.8",
   "description": "Savoir si le prix est légal ou non. #rendslargent",
   "permissions": [
     "storage",
@@ -26,13 +26,19 @@
       "matches": [
         "https://www.seloger.com/*",
         "https://www.leboncoin.fr/*",
-        "https://www.loueragile.fr/*"
+        "https://www.loueragile.fr/*",
+        "https://www.pap.fr/*",
+        "https://www.logic-immo.com/*",
+        "https://immobilier.lefigaro.fr/*"
       ],
       "js": [
         "helper/api.helper.js",
         "service/seloger.service.js",
         "service/leboncoin.service.js",
         "service/loueragile.service.js",
+        "service/pap.service.js",
+        "service/logicimmo.service.js",
+        "service/lefigaro.service.js",
         "custom.js"
       ],
       "run_at": "document_end",

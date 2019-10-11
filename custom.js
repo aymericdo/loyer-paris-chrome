@@ -4,13 +4,13 @@ const getDomain = () => {
 }
 
 const getIdByDomain = () => {
-    return (getDomain() === 'leboncoin') ?
-        getIdFromLeboncoinUrl()
-        : (getDomain() === 'seloger') ?
-            getIdFromSelogerUrl()
-            : (getDomain() === 'loueragile') ?
-                getIdFromLoueragileUrl()
-                : null
+    return (getDomain() === 'leboncoin') ? getIdFromLeboncoinUrl()
+        : (getDomain() === 'seloger') ? getIdFromSelogerUrl()
+            : (getDomain() === 'loueragile') ? getIdFromLoueragileUrl()
+                : (getDomain() === 'pap') ? getIdFromPapUrl()
+                    : (getDomain() === 'logic-immo') ? getIdFromLogicimmoUrl()
+                        : (getDomain() === 'lefigaro') ? getIdFromLefigaroUrl()
+                            : null
 }
 
 let currentDomain = getDomain()
@@ -35,7 +35,10 @@ const customizeTab = () => {
         currentDomain === 'seloger' ? selogerScraping()
             : currentDomain === 'leboncoin' ? leboncoinScraping()
                 : currentDomain === 'loueragile' ? loueragileScraping()
-                    : null
+                    : currentDomain === 'pap' ? papScraping()
+                        : currentDomain === 'logic-immo' ? logicimmoScraping()
+                            : currentDomain === 'lefigaro' ? lefigaroScraping()
+                                : null
 
     if (!currentAd.isLegal) {
         customizeIllegalAd(titleElements, priceElements)
@@ -53,7 +56,7 @@ const customizeLegalAd = (titleElements) => {
     titleAddon.classList.add('-legal')
     titleAddon.classList.add(`-${currentDomain}`)
     titleElements.forEach(node => {
-        node.appendChild(titleAddon.cloneNode(true))
+        node.insertBefore(titleAddon.cloneNode(true), node.firstChild)
     })
 }
 
@@ -63,7 +66,7 @@ const customizeIllegalAd = (titleElements, priceElements) => {
     titleAddon.classList.add('title-addon')
     titleAddon.classList.add('-illegal')
     titleElements.forEach(node => {
-        node.appendChild(titleAddon.cloneNode(true))
+        node.insertBefore(titleAddon.cloneNode(true), node.firstChild)
     })
 
     const goodPrice = document.createElement('span')
@@ -109,7 +112,7 @@ const fetchDataFromId = (id) => {
 const fetchData = () => {
     let request = null
     if (currentDomain === 'leboncoin') {
-        const data = getDataFromDOM()
+        const data = getDataFromLeboncoinDOM()
         if (data) {
             request = fetchDataFromJSON(data)
         }
@@ -119,6 +122,21 @@ const fetchData = () => {
     } else if (currentDomain === 'loueragile') {
         const id = getIdFromLoueragileUrl()
         request = fetchDataFromId(id)
+    } else if (currentDomain === 'pap') {
+        const data = getDataFromPapDOM()
+        if (data) {
+            request = fetchDataFromJSON(data)
+        }
+    } else if (currentDomain === 'logic-immo') {
+        const data = getDataFromLogicimmoDOM()
+        if (data) {
+            request = fetchDataFromJSON(data)
+        }
+    } else if (currentDomain === 'lefigaro') {
+        const data = getDataFromLefigaroDOM()
+        if (data) {
+            request = fetchDataFromJSON(data)
+        }
     }
 
     if (request) {

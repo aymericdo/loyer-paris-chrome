@@ -1,6 +1,6 @@
 const getIdFromLeboncoinUrl = () => {
     const url = window.location.toString()
-    const match = url.match(/\d+(?=.htm)/)
+    const match = url.match(/\d+(?=.htm)/g)
     return match ? match[0] : null
 }
 
@@ -11,7 +11,7 @@ const leboncoinScraping = () => {
     return [titles, prices]
 }
 
-const getDataFromDOM = () => {
+const getDataFromLeboncoinDOM = () => {
     const subject = document.querySelector('[data-qa-id=adview_title] > h1')
     const body = document.querySelector('[data-qa-id=adview_description_container] > div > span')
     const price = document.querySelector('[data-qa-id=adview_price] > div > span')
@@ -39,7 +39,7 @@ const getDataFromDOM = () => {
             generic: true
         }, {
             key: "furnished",
-            value: furnished && furnished.textContent === 'Meublé' ? '1' : '2',
+            value: furnished ? furnished && furnished.textContent === 'Meublé' ? '1' : '2' : null,
             key_label: "Meublé / Non meublé",
             value_label: furnished && furnished.textContent,
             generic: true
@@ -53,7 +53,7 @@ const getDataFromDOM = () => {
         location: {
             cityLabel: cityLabel && cityLabel.textContent,
             city: cityLabel && cityLabel.textContent && cityLabel.textContent.match(/[A-Za-z]+/g)[0],
-            zipcode: cityLabel && cityLabel.textContent && cityLabel.textContent.match(/\d+/g)[0],
+            zipcode: cityLabel && cityLabel.textContent && cityLabel.textContent.match(/\b75[0-9]{3}\b/g)[0],
         }
     }
 }
