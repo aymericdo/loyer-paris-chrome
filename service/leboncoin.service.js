@@ -25,35 +25,13 @@ const getDataFromLeboncoinDOM = () => {
     }
 
     return {
-        list_id: getIdFromLeboncoinUrl(),
+        id: getIdFromLeboncoinUrl(),
         subject: subject && subject.textContent,
         body: body && body.textContent,
-        price: [
-            price && price.textContent && price.textContent.replace(/\s/g, '').match(/\d+/g)[0],
-        ],
-        attributes: [{
-            key: "rooms",
-            value: rooms && rooms.textContent,
-            key_label: "Pièces",
-            value_label: rooms && rooms.textContent,
-            generic: true
-        }, {
-            key: "furnished",
-            value: furnished ? furnished && furnished.textContent === 'Meublé' ? '1' : '2' : null,
-            key_label: "Meublé / Non meublé",
-            value_label: furnished && furnished.textContent,
-            generic: true
-        }, {
-            key: "square",
-            value: surface && surface.textContent && surface.textContent.match(/\d+/g)[0],
-            key_label: "Surface",
-            value_label: surface && surface.textContent,
-            generic: true
-        }],
-        location: {
-            cityLabel: cityLabel && cityLabel.textContent,
-            city: cityLabel && cityLabel.textContent && cityLabel.textContent.match(/[A-Za-z]+/g)[0],
-            zipcode: cityLabel && cityLabel.textContent && cityLabel.textContent.match(/\b75[0-9]{3}\b/g)[0],
-        }
+        price: price && price.textContent,
+        rooms: rooms && rooms.textContent,
+        furnished: furnished && furnished.textContent,
+        surface: surface && surface.textContent,
+        cityLabel: cityLabel && cityLabel.textContent,
     }
 }

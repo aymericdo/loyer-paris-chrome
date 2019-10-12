@@ -38,7 +38,7 @@ span.title-addon.-legal.-loueragile {
     margin-left: 10px;
 }
 
-span.title-addon.-description-helper {
+span.-description-helper {
     position: fixed;
     z-index: 9999999;
     top: 0.875em;
@@ -53,15 +53,15 @@ span.title-addon.-description-helper {
     opacity: 1;
 }
 
-span.title-addon.-description-helper.-legal {
+span.-description-helper.-legal {
     background: #07c507de;
 }
 
-span.title-addon.-description-helper.-illegal {
+span.-description-helper.-illegal {
     background: #c5071ad8;
 }
 
-span.title-addon.-description-helper.-hide {
+span.-description-helper.-hide {
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s 1s, opacity 1s linear;

@@ -12,8 +12,8 @@ const logicimmoScraping = () => {
 }
 
 const getDataFromLogicimmoDOM = () => {
-    const title = document.querySelector('h2.offerMainFeatures > meta')
-    const description = document.querySelector('div.offer-description-text > meta')
+    const title = document.querySelector('h2.offerMainFeatures')
+    const description = document.querySelector('div.offer-description-text')
     const price = document.querySelector('div.rightSide > .price > div')
     const cityLabel = document.querySelector('[itemprop=address]')
 
@@ -25,7 +25,10 @@ const getDataFromLogicimmoDOM = () => {
 
     offerCriteria.forEach(criteria => {
         const label = criteria.querySelector('.label')
-        const value = criteria.querySelector('.value')
+        const value = criteria.querySelector('.value').cloneNode(true)
+        if (value && value.firstChild) {
+            value.removeChild(value.firstChild)
+        }
         if (label.textContent === 'Ref de l\'annonce') {
             ref = value
         } else if (label.textContent === 'Meublé') {
@@ -49,24 +52,13 @@ const getDataFromLogicimmoDOM = () => {
     }
 
     return {
-        id: ref,
+        id: ref && ref.textContent,
         title: title && title.textContent,
         description: description && description.textContent,
-        price: price && price.textContent && price.textContent.replace(/\s|\.|,/g, '').match(/\d+/g)[0],
-        attributes: [{
-            key: "rooms",
-            value: rooms && rooms.textContent.match(/\d+/g)[0],
-        }, {
-            key: "furnished",
-            value: furnished ? furnished && furnished.textContent !== 'NC' ? '1' : '2' : null,
-        }, {
-            key: "square",
-            value: surface && surface.textContent && surface.textContent.match(/\d+/g)[0],
-        }],
-        location: {
-            cityLabel: cityLabel && cityLabel.textContent,
-            city: cityLabel && cityLabel.textContent && cityLabel.textContent.match(/[A-Za-z]+/g)[0],
-            zipcode: cityLabel && cityLabel.textContent && cityLabel.textContent.match(/\b75[0-9]{3}\b/g)[0],
-        }
+        price: price && price.textContent,
+        rooms: rooms && rooms.textContent,
+        furnished: furnished && furnished.textContent,
+        surface: surface && surface.textContent,
+        cityLabel: cityLabel && cityLabel.textContent,
     }
 }

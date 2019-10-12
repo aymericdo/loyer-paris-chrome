@@ -6,6 +6,5 @@ const getIdFromLoueragileUrl = () => {
 
 const loueragileScraping = () => {
     const titles = [...document.querySelectorAll('.h2-like')]
-
     return [titles, []]
 }

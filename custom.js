@@ -89,15 +89,36 @@ const customizeIllegalAd = (titleElements, priceElements) => {
 }
 
 const addDescriptionHelper = (isLegal) => {
-    const subTitleAddon = document.createElement('span')
-    subTitleAddon.classList.add('title-addon')
-    subTitleAddon.classList.add('-description-helper')
-    subTitleAddon.classList.add(isLegal ? '-legal' : '-illegal')
-    subTitleAddon.textContent = 'Cliquez sur le logo de l\'extension pour plus d\'informations ⤴'
-    document.body.appendChild(subTitleAddon)
+    const descriptionHelper = document.createElement('span')
+    descriptionHelper.classList.add('-description-helper')
+    descriptionHelper.classList.add(isLegal ? '-legal' : '-illegal')
+    descriptionHelper.textContent = 'Cliquez sur le logo de l\'extension pour plus d\'informations ⤴'
+    document.body.appendChild(descriptionHelper)
 
     setTimeout(() => {
-        subTitleAddon.classList.add('-hide')
+        descriptionHelper.classList.add('-hide')
+    }, 5000)
+}
+
+const addErrorBanner = (error) => {
+    const errorBanner = document.createElement('span')
+    errorBanner.classList.add('-description-helper')
+    errorBanner.classList.add('-illegal')
+    switch (error.error) {
+        case 'paris': {
+            errorBanner.textContent = 'L\'adresse de cette annonce n\'est pas dans Paris'; break;
+        }
+        case 'address': {
+            errorBanner.textContent = 'Nous n\'avons pas trouvé d\'adresse pour cette annonce.'; break;
+        }
+        default: {
+            errorBanner.textContent = error.msg; break;
+        }
+    }
+    document.body.appendChild(errorBanner)
+
+    setTimeout(() => {
+        errorBanner.classList.add('-hide')
     }, 5000)
 }
 
@@ -141,17 +162,20 @@ const fetchData = () => {
 
     if (request) {
         request
-            .then(middleware)
+            .then(middlewareJson)
+            .then(middlewareErrorCatcher)
             .then(handleSuccess)
             .catch(err => {
-                console.log(err)
+                addErrorBanner(err)
             })
     }
 }
 
 const handleSuccess = (myJson) => {
     currentAd = { ...myJson }
-    customizeTab()
+    setTimeout(() => {
+        customizeTab()
+    }, 1000)
 }
 
 chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
