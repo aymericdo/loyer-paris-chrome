@@ -1,6 +1,6 @@
 const getIdFromPapUrl = () => {
     const url = window.location.toString()
-    const match = url.match(/(?<=-)r\d+/g)
+    const match = url.match(/(?<=annonce\/locations\-appartement(.)+)(?<=-)r\d+/g)
     return match ? match[0] : null
 }
 
