@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const detectedInfo = document.getElementById('detected-info');
-    const computedInfo = document.getElementById('computed-info');
+    const detectedInfo = document.getElementById('detected-info')
+    const computedInfo = document.getElementById('computed-info')
 
     const token = {
         address: ['Adresse'],
@@ -36,5 +36,5 @@ document.addEventListener("DOMContentLoaded", () => {
             ...data.ad.computedInfo,
             isLegal: data.ad.isLegal,
         })
-    });
-});
+    })
+})

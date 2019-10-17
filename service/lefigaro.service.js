@@ -6,7 +6,7 @@ const getIdFromLefigaroUrl = () => {
 
 const lefigaroScraping = () => {
     const titles = [...document.querySelectorAll('#contenu > .container-h1 > h1')]
-    const prices = [...document.querySelectorAll('div.container-price > span.price')]
+    const prices = [...document.querySelectorAll('div.container-price span.price, .partners-with-price dd')]
 
     return [titles, prices]
 }
