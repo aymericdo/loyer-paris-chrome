@@ -9,5 +9,7 @@ Cette extension a pour but d'informer, et d'avertir les potentiels futurs locata
 
 L'extension est disponible sur les sites suivants : seloger.com, leboncoin.fr, loueragile.fr, pap.fr, logic-immo.com, immobilier.lefigaro.fr
 
-Disponnible aussi sur firefox : https://github.com/aymericdo/loyer-paris-firefox
+Disponnible aussi sur Firefox : https://github.com/aymericdo/loyer-paris-firefox
 
+## Chrome web store
+https://chrome.google.com/webstore/detail/encadrement-loyers-paris/nkmghhgmpbngkbjnhpomddeglkpkkfeo?hl=fr
