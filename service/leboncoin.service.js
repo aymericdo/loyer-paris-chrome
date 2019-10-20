@@ -19,6 +19,7 @@ const getDataFromLeboncoinDOM = () => {
     const rooms = document.querySelector('[data-qa-id=criteria_item_rooms] > div > div:last-child')
     const furnished = document.querySelector('[data-qa-id=criteria_item_furnished] > div > div:last-child')
     const cityLabel = document.querySelector('[data-qa-id=adview_location_informations] > span')
+    const renter = document.querySelector('[data-qa-id=adview_contact_container] [data-qa-id=storebox_title], [data-qa-id=adview_contact_container] [data-reactid="391"]')
 
     if (!subject) {
         return null
@@ -26,12 +27,13 @@ const getDataFromLeboncoinDOM = () => {
 
     return {
         id: getIdFromLeboncoinUrl(),
-        subject: subject && subject.textContent,
         body: body && body.textContent,
-        price: price && price.textContent,
-        rooms: rooms && rooms.textContent,
-        furnished: furnished && furnished.textContent,
-        surface: surface && surface.textContent,
         cityLabel: cityLabel && cityLabel.textContent,
+        furnished: furnished && furnished.textContent,
+        price: price && price.textContent,
+        renter: renter && renter.textContent,
+        rooms: rooms && rooms.textContent,
+        subject: subject && subject.textContent,
+        surface: surface && surface.textContent,
     }
 }

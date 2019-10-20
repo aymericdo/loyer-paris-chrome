@@ -10,7 +10,8 @@ const getIdByDomain = () => {
                 : (getDomain() === 'pap') ? getIdFromPapUrl()
                     : (getDomain() === 'logic-immo') ? getIdFromLogicimmoUrl()
                         : (getDomain() === 'lefigaro') ? getIdFromLefigaroUrl()
-                            : null
+                            : (getDomain() === 'orpi') ? getIdFromOrpiUrl()
+                                : null
 }
 
 let currentDomain = getDomain()
@@ -38,7 +39,8 @@ const customizeTab = () => {
                     : currentDomain === 'pap' ? papScraping()
                         : currentDomain === 'logic-immo' ? logicimmoScraping()
                             : currentDomain === 'lefigaro' ? lefigaroScraping()
-                                : null
+                                : currentDomain === 'orpi' ? orpiScraping()
+                                    : null
 
     if (!currentAd.isLegal) {
         customizeIllegalAd(titleElements, priceElements)
@@ -70,7 +72,7 @@ const customizeIllegalAd = (titleElements, priceElements) => {
     })
 
     const goodPrice = document.createElement('span')
-    goodPrice.textContent = currentAd.computedInfo.maxAuthorized + '€'
+    goodPrice.textContent = currentAd.computedInfo.maxAuthorized.value + '€'
     goodPrice.classList.add('good-price')
 
     priceElements.forEach(node => {
@@ -155,6 +157,11 @@ const fetchData = () => {
         }
     } else if (currentDomain === 'lefigaro') {
         const data = getDataFromLefigaroDOM()
+        if (data) {
+            request = fetchDataFromJSON(data)
+        }
+    } else if (currentDomain === 'orpi') {
+        const data = getDataFromOrpiDOM()
         if (data) {
             request = fetchDataFromJSON(data)
         }

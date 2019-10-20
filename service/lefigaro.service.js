@@ -16,6 +16,7 @@ const getDataFromLefigaroDOM = () => {
     const description = document.querySelector('div.container-paragraph > p.description')
     const price = document.querySelector('div.container-price span.price')
     const cityLabel = document.querySelector('#contenu > .container-h1 > h1 > .informations-localisation')
+    const renter = document.querySelector('div.container-agency-infos  > span.agency-name')
 
     const features = [...document.querySelectorAll('div.container-features > ul.list-features > li')]
 
@@ -39,12 +40,13 @@ const getDataFromLefigaroDOM = () => {
 
     return {
         id: getIdFromLefigaroUrl(),
-        title: title && title.textContent,
-        description: description && description.textContent,
-        price: price && price.textContent,
-        rooms: rooms && rooms.textContent,
-        furnished: furnished && furnished.textContent,
-        surface: surface && surface.textContent,
         cityLabel: cityLabel && cityLabel.textContent,
+        description: description && description.textContent,
+        furnished: furnished && furnished.textContent,
+        price: price && price.textContent,
+        renter: renter && renter.textContent,
+        rooms: rooms && rooms.textContent,
+        surface: surface && surface.textContent,
+        title: title && title.textContent,
     }
 }

@@ -13,21 +13,23 @@ document.addEventListener("DOMContentLoaded", () => {
         neighborhood: ['Quartier'],
         max: ['Prix maximum au mètre carré', '€'],
         min: ['Prix minimum au mètre carré', '€'],
-        maxAuthorized: ['Prix maximum autorisé par défaut', '€'],
+        maxAuthorized: ['Prix maximum autorisé', '€'],
+        promoPercentage: ['Promo', '%'],
         isLegal: ['Est legal'],
         true: 'Oui',
         false: 'Non',
     }
 
     const createList = (ulElement, data) => {
-        Object.keys(data).forEach(infoKey => {
-            if (data[infoKey]) {
-                const li = document.createElement('li')
-                const value = typeof data[infoKey] === 'boolean' ? token[data[infoKey]] : data[infoKey]
-                li.textContent = `${token[infoKey][0]} → ${value}${token[infoKey][1] ? token[infoKey][1] : ''}`
-                ulElement.appendChild(li)
-            }
-        })
+        Object.keys(data).sort((a, b) => data[a].order - data[b].order)
+            .forEach(infoKey => {
+                if (data[infoKey].value) {
+                    const li = document.createElement('li')
+                    const value = typeof data[infoKey].value === 'boolean' ? token[data[infoKey].value] : data[infoKey].value
+                    li.textContent = `${token[infoKey][0]} → ${value}${token[infoKey][1] ? token[infoKey][1] : ''}`
+                    ulElement.appendChild(li)
+                }
+            })
     }
 
     chrome.storage.sync.get('ad', (data) => {

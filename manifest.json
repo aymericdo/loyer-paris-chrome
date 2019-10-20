@@ -1,6 +1,6 @@
 {
   "name": "Encadrement loyers paris",
-  "version": "3.3",
+  "version": "3.5",
   "description": "Cette extension permet de savoir si le prix de votre loyer (ou futur loyer) est 'potentiellement' légal ou non.",
   "permissions": [
     "storage",
@@ -29,7 +29,8 @@
         "https://www.loueragile.fr/*",
         "https://www.pap.fr/*",
         "https://www.logic-immo.com/*",
-        "https://immobilier.lefigaro.fr/*"
+        "https://immobilier.lefigaro.fr/*",
+        "https://www.orpi.com/*"
       ],
       "js": [
         "helper/api.helper.js",
@@ -39,6 +40,7 @@
         "service/pap.service.js",
         "service/logicimmo.service.js",
         "service/lefigaro.service.js",
+        "service/orpi.service.js",
         "custom.js"
       ],
       "run_at": "document_end",

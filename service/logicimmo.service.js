@@ -16,6 +16,7 @@ const getDataFromLogicimmoDOM = () => {
     const description = document.querySelector('div.offer-description-text')
     const price = document.querySelector('div.rightSide > .price > div')
     const cityLabel = document.querySelector('[itemprop=address]')
+    const renter = document.querySelector('div.agencyInfos div.agencyNameNoLogo')
 
     const offerCriteria = [...document.querySelectorAll('div.offerCriteria > ul > li.listItem')]
     const itemTags = [...document.querySelectorAll('h2.offerMainFeatures > .feature')]
@@ -53,12 +54,13 @@ const getDataFromLogicimmoDOM = () => {
 
     return {
         id: ref && ref.textContent,
-        title: title && title.textContent,
-        description: description && description.textContent,
-        price: price && price.textContent,
-        rooms: rooms && rooms.textContent,
-        furnished: furnished && furnished.textContent,
-        surface: surface && surface.textContent,
         cityLabel: cityLabel && cityLabel.textContent,
+        description: description && description.textContent,
+        furnished: furnished && furnished.textContent,
+        price: price && price.textContent,
+        renter: renter && renter.textContent,
+        rooms: rooms && rooms.textContent,
+        surface: surface && surface.textContent,
+        title: title && title.textContent,
     }
 }
