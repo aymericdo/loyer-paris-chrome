@@ -196,7 +196,12 @@ chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
         } else if (currentDomain !== newDomain || currentId !== newId) {
             currentDomain = newDomain
             currentId = newId
-            fetchData()
+            if (currentDomain === 'leboncoin') {
+                // Because leboncoin
+                setTimeout(fetchData(), 2000)
+            } else {
+                fetchData()
+            }
         }
     }
 })
