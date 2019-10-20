@@ -1,5 +1,5 @@
-// const server = 'https://encadrement-loyers.herokuapp.com'
-const server = 'http://localhost:3000'
+const server = 'https://encadrement-loyers.herokuapp.com'
+// const server = 'http://localhost:3000'
 
 const middlewareJson = (response) => {
     return response.json()
