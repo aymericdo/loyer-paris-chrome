@@ -8,12 +8,16 @@ chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
 
 chrome.tabs.onActivated.addListener((tabs, changeInfo, tab) => {
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-        chrome.tabs.sendMessage(tabs[0].id, { message: 'tabHasChanged' })
+        if (tabs.length) {
+            chrome.tabs.sendMessage(tabs[0].id, { message: 'tabHasChanged' })
+        }
     })
 })
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-        chrome.tabs.sendMessage(tabs[0].id, { message: 'urlHasChanged' })
+        if (tabs.length) {
+            chrome.tabs.sendMessage(tabs[0].id, { message: 'urlHasChanged' })
+        }
     })
 })

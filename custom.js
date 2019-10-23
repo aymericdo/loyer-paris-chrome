@@ -186,6 +186,7 @@ const handleSuccess = (myJson) => {
 }
 
 chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
+    console.log(request.message)
     if (request.message === 'tabHasChanged') {
         activateTab()
     } else if (request.message === 'urlHasChanged') {
