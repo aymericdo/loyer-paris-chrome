@@ -1,6 +1,6 @@
 const getIdFromPapUrl = () => {
     const url = window.location.toString()
-    const match = url.match(/(?<=annonce\/locations\-appartement(.)+)(?<=-)r\d+/g)
+    const match = url.match(/(?<=annonces\/appartement(.)+)(?<=-)r\d+/g)
     return match ? match[0] : null
 }
 
@@ -17,6 +17,7 @@ const getDataFromPapDOM = () => {
     const price = document.querySelector('h1.item-title > span.item-price')
     const cityLabel = document.querySelector('div.item-description > h2')
     const itemTags = [...document.querySelectorAll('.item-tags > li > strong')]
+    const stations = [...document.querySelectorAll('ul.item-transports > li > span.label')]
 
     let surface = null
     let rooms = null
@@ -36,12 +37,13 @@ const getDataFromPapDOM = () => {
 
     return {
         id: getIdFromPapUrl(),
-        title: title && title.textContent,
+        cityLabel: cityLabel && cityLabel.textContent,
         description: description && description.textContent,
+        furnished: furnished && furnished.textContent,
         price: price && price.textContent,
         rooms: rooms && rooms.textContent,
-        furnished: furnished && furnished.textContent,
+        stations: stations && stations.map(station => station.textContent),
         surface: surface && surface.textContent,
-        cityLabel: cityLabel && cityLabel.textContent,
+        title: title && title.textContent,
     }
 }

@@ -125,15 +125,16 @@ const addErrorBanner = (error) => {
 }
 
 const fetchDataFromJSON = (data) => {
-    return fetch(`${server}/${currentDomain}/data`, { method: 'post', body: JSON.stringify(data) })
+    return { url: `${server}/${currentDomain}/data`, opts: { method: 'post', body: JSON.stringify(data) } }
 }
 
 const fetchDataFromId = (id) => {
-    return fetch(`${server}/${currentDomain}?id=${id}`)
+    return { url: `${server}/${currentDomain}?id=${id}` }
 }
 
 const fetchData = () => {
     let request = null
+    let requestBis = null
     if (currentDomain === 'leboncoin') {
         const data = getDataFromLeboncoinDOM()
         if (data) {
@@ -142,6 +143,11 @@ const fetchData = () => {
     } else if (currentDomain === 'seloger') {
         const id = getIdFromSelogerUrl()
         request = fetchDataFromId(id)
+
+        const data = getDataFromSelogerDOM()
+        if (data) {
+            requestBis = fetchDataFromJSON(data)
+        }
     } else if (currentDomain === 'loueragile') {
         const id = getIdFromLoueragileUrl()
         request = fetchDataFromId(id)
@@ -168,14 +174,23 @@ const fetchData = () => {
     }
 
     if (request) {
-        request
-            .then(middlewareJson)
-            .then(middlewareErrorCatcher)
-            .then(handleSuccess)
-            .catch(err => {
+        requestResolver(request, (err) => {
+            if (requestBis && err.error === 'api') {
+                requestResolver(requestBis, addErrorBanner.bind(err))
+            } else {
                 addErrorBanner(err)
-            })
+            }
+        })
     }
+}
+
+const requestResolver = (request, catchCallback) => {
+    const fetched = fetch(request.url, request.opts)
+    fetched
+        .then(middlewareJson)
+        .then(middlewareErrorCatcher)
+        .then(handleSuccess)
+        .catch(catchCallback)
 }
 
 const handleSuccess = (myJson) => {
@@ -196,16 +211,11 @@ chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
         } else if (currentDomain !== newDomain || currentId !== newId) {
             currentDomain = newDomain
             currentId = newId
-            if (currentDomain === 'leboncoin') {
-                // Because leboncoin
-                setTimeout(fetchData(), 2000)
-            } else {
-                fetchData()
-            }
+            setTimeout(fetchData, 2000)
         }
     }
 })
 
 if (currentId) {
-    fetchData()
+    setTimeout(fetchData, 2000)
 }
