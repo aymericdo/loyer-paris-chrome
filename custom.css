@@ -4,7 +4,8 @@ span.title-addon {
 }
 
 span.title-addon.-illegal {
-    background-color: #c5071a5e;
+    background-color: #FDCD56;
+    color: #0f0f0f;
     border: 1px solid transparent;
     border-radius: 20px;
     padding: 4px 8px;
@@ -58,7 +59,8 @@ span.-description-helper.-legal {
 }
 
 span.-description-helper.-illegal {
-    background: #c5071ad8;
+    background-color: #FDCD56;
+    color: #0f0f0f;
 }
 
 span.-description-helper.-hide {

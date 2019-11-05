@@ -8,38 +8,41 @@
 </head>
 
 <body>
-    <h1>Encadrement des loyers</h1>
-    <h4>Voici les informations que nous avons trouvées sur cette annonce</h4>
-    <ul id="detected-info"></ul>
-    <h4>Grâce à ces informations, nous avons déduit ces données</h4>
-    <ul id="computed-info"></ul>
-    <p class="-warning">
-        <b>Avertissement</b> Selon la mairie de Paris, il est possible de dépasser le prix de
-        l'encadrement sous certaines conditions très strictes. Les annonces notées "illégales"
-        ne le sont donc peut-être pas. (Ceci est un petit ajout pour ne pas choquer les âmes sensibles de nos chers
-        propriétaires parisiens)
-        <br>
-        <br>
-        Pour plus d'informations, vous pouvez vous renseigner ici
-        <a href="https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712"
-            target="_blank">
-            https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712
-        </a>
-    </p>
-    <p class="-warning">
-        Dans le cas où nous ne trouvons pas un critère
-        nécessaire au calcul, on garde la plus chère des hypothèses. Cela permet de n'avoir que des bonnes
-        surprises!
-    </p>
-    <p>
-        Si vous remarquez des erreurs, ou que vous souhaitez compléter des choses
-        que nous n'aurions pas vues, vous pouvez vous rendre sur le site
-        de la mairie de Paris
-        <a href="https://teleservices.paris.fr/encadrementdesloyers/" target="_blank">
-            https://teleservices.paris.fr/encadrementdesloyers/
-        </a>
-        et entrer les critères par vous même.
-    </p>
+    <section>
+        <h1>Encadrement</h1>
+        <h2>Informations que nous avons trouvées</h2>
+        <ul id="detected-info"></ul>
+        <h2>Informations que nous avons déduit</h2>
+        <ul id="computed-info"></ul>
+        <p>
+            Dans le cas où nous ne trouvons pas un critère
+            nécessaire au calcul, on garde la plus chère des hypothèses. Cela permet de n'avoir que des bonnes
+            surprises!
+        </p>
+        <p>
+            Si vous remarquez des erreurs, ou que vous souhaitez compléter des choses
+            que nous n'aurions pas vues, vous pouvez vous rendre sur le site
+            de la mairie de Paris
+            <a href="https://teleservices.paris.fr/encadrementdesloyers/" target="_blank">
+                https://teleservices.paris.fr/encadrementdesloyers/
+            </a> et entrer les critères par vous même.
+        </p>
+
+        <p class="-warning">
+            <b>Avertissement</b> Selon la mairie de Paris, il est possible de dépasser le prix de
+            l'encadrement sous certaines conditions très strictes. Les annonces notées "illégales"
+            ne le sont donc peut-être pas. (Ceci est un petit ajout pour ne pas choquer les âmes sensibles de nos chers
+            propriétaires parisiens)
+            <br>
+            <br>
+            Pour plus d'informations, vous pouvez vous renseigner ici
+            <a href="https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712"
+                target="_blank">
+                https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712
+            </a>
+        </p>
+    </section>
+
     <script src="popup.js"></script>
 </body>
 

@@ -25,8 +25,15 @@ document.addEventListener("DOMContentLoaded", () => {
             .forEach(infoKey => {
                 if (data[infoKey].value) {
                     const li = document.createElement('li')
+                    const spanKey = document.createElement('span')
+                    const spanValue = document.createElement('span')
                     const value = typeof data[infoKey].value === 'boolean' ? token[data[infoKey].value] : data[infoKey].value
-                    li.textContent = `${token[infoKey][0]} → ${value}${token[infoKey][1] ? token[infoKey][1] : ''}`
+                    spanKey.textContent = token[infoKey][0]
+                    spanKey.classList.add('key')
+                    spanValue.textContent = `${value}${token[infoKey][1] ? token[infoKey][1] : ''}`
+                    spanValue.classList.add('value')
+                    li.appendChild(spanKey)
+                    li.appendChild(spanValue)
                     ulElement.appendChild(li)
                 }
             })
