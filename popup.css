@@ -76,16 +76,30 @@ ul > li > .value {
 }
 
 p {
-    background-color: #222222;
-    color: #e1e1e1;
+    background-color: #5691fd;
+    color: #e4edfd;
     border-radius: 10px;
     font-size: 13px;
     padding: 24px;
+    padding-left: 48px;
     margin: 24px 0;
 }
 
 p:last-child {
     margin-bottom: 0;
+}
+
+p > b {
+    display: flex;
+    color: #ffffff;
+    position: relative;
+    margin-bottom: 4px;
+}
+
+p > b::before {
+    content: url('images/stroke-info.svg');
+    position: absolute;
+    left: -26px;
 }
 
 p > a {
@@ -100,7 +114,6 @@ p > a:hover {
 
 p.-warning {
     background-color: #FDCD56;
-    padding-left: 48px;
     color: #0f0f0f;
 }
 
@@ -109,14 +122,9 @@ p.-warning > a {
 }
 
 p.-warning > b {
-    display: flex;
-    position: relative;
     color: #050505;
-    margin-bottom: 4px;
 }
 
 p.-warning > b::before {
     content: url('images/solid-bang.svg');
-    position: absolute;
-    left: -26px;
 }
