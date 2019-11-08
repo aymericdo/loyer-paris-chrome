@@ -13,8 +13,11 @@ body {
 
 section {
     max-height: 100%;
-    padding: 24px;
     overflow-y: auto;
+}
+
+.inset {
+    padding: 24px;
 }
 
 h1 {
