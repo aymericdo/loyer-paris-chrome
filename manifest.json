@@ -1,6 +1,6 @@
 {
-  "name": "Encadrement loyers paris",
-  "version": "4.3",
+  "name": "Encadrement",
+  "version": "4.4",
   "description": "Cette extension permet de savoir si le prix de votre loyer (ou futur loyer) est 'potentiellement' légal ou non.",
   "permissions": [
     "storage"
