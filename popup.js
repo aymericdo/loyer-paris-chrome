@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const createList = (ulElement, data) => {
         Object.keys(data).sort((a, b) => data[a].order - data[b].order)
             .forEach(infoKey => {
-                if (data[infoKey].value) {
+                if (data[infoKey].value || data[infoKey].value === false) {
                     const li = document.createElement('li')
                     const spanKey = document.createElement('span')
                     const spanValue = document.createElement('span')

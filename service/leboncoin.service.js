@@ -27,7 +27,7 @@ const getDataFromLeboncoinDOM = () => {
 
     return {
         id: getIdFromLeboncoinUrl(),
-        body: body && body.textContent,
+        body: body && body.innerHTML,
         cityLabel: cityLabel && cityLabel.textContent,
         furnished: furnished && furnished.textContent,
         price: price && price.textContent,
