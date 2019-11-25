@@ -1,6 +1,6 @@
 {
   "name": "Encadrement",
-  "version": "4.6",
+  "version": "4.7",
   "description": "Cette extension permet de savoir si le prix de votre loyer (ou futur loyer) est 'potentiellement' légal ou non.",
   "permissions": [
     "storage"

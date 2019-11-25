@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const token = {
         address: ['Adresse'],
+        charges: ['Charges', '€'],
+        hasCharges: ['Charges comprises'],
         hasFurniture: ['Est meublé'],
         price: ['Prix', '€'],
         roomCount: ['Nombre de pièces'],
@@ -13,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         neighborhood: ['Quartier'],
         max: ['Prix maximum au mètre carré', '€'],
         min: ['Prix minimum au mètre carré', '€'],
-        maxAuthorized: ['Prix maximum autorisé', '€'],
+        maxAuthorized: ['Prix maximum autorisé (hors charges)', '€'],
         promoPercentage: ['Promo', '%'],
         isLegal: ['Est legal'],
         true: 'Oui',
@@ -23,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const createList = (ulElement, data) => {
         Object.keys(data).sort((a, b) => data[a].order - data[b].order)
             .forEach(infoKey => {
-                if (data[infoKey].value || data[infoKey].value === false) {
+                if (data[infoKey] && (data[infoKey].value || data[infoKey].value === false)) {
                     const li = document.createElement('li')
                     const spanKey = document.createElement('span')
                     const spanValue = document.createElement('span')
