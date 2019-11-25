@@ -224,7 +224,9 @@ chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
     }
 })
 
+let timer
 const observer = new MutationObserver((mutations, observer) => {
+    if (timer) clearTimeout(timer)
     mutations.forEach((mutation) => {
         if (!mutation.addedNodes) return
 
@@ -238,6 +240,14 @@ const observer = new MutationObserver((mutations, observer) => {
             }
         }
     })
+
+    timer = setTimeout(() => {
+        if (!isFetched) {
+            fetchData()
+            isFetched = true
+            observer.disconnect()
+        }
+    }, 3000)
 })
 
 const letsObserve = () => {
