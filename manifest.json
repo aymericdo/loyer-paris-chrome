@@ -1,7 +1,7 @@
 {
   "name": "Encadrement",
-  "version": "4.7",
-  "description": "Cette extension permet de savoir si le prix de votre loyer (ou futur loyer) est 'potentiellement' légal ou non.",
+  "version": "4.8",
+  "description": "Soyez informés du prix maximum des annonces (basé sur l'encadrement des loyers) sur tous vos sites d'annonces préférés",
   "permissions": [
     "storage"
   ],
@@ -29,6 +29,7 @@
         "https://www.pap.fr/*",
         "https://www.logic-immo.com/*",
         "https://immobilier.lefigaro.fr/*",
+        "https://www.facebook.com/marketplace/*",
         "https://www.orpi.com/*"
       ],
       "js": [
@@ -39,6 +40,7 @@
         "service/pap.service.js",
         "service/logicimmo.service.js",
         "service/lefigaro.service.js",
+        "service/facebook.service.js",
         "service/orpi.service.js",
         "custom.js"
       ],

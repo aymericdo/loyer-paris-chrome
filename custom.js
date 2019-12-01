@@ -11,17 +11,20 @@ const getIdByDomain = () => {
                     : (getDomain() === 'logic-immo') ? getIdFromLogicimmoUrl()
                         : (getDomain() === 'lefigaro') ? getIdFromLefigaroUrl()
                             : (getDomain() === 'orpi') ? getIdFromOrpiUrl()
-                                : null
+                                : (getDomain() === 'facebook') ? getIdFromFacebookUrl()
+                                    : null
 }
 
 let currentDomain = getDomain()
 let currentId = getIdByDomain()
+let alreadyChecked = []
 let currentAd = null
 
-const fireKeyword =
-    currentDomain === 'seloger' ? selogerFireKeyword()
-        : currentDomain === 'leboncoin' ? leboncoinFireKeyword()
-            : null
+const fireKeywords =
+    currentDomain === 'seloger' ? selogerFireKeywords()
+        : currentDomain === 'leboncoin' ? leboncoinFireKeywords()
+            : currentDomain === 'facebook' ? facebookFireKeywords()
+                : null
 
 const activateTab = () => {
     if (chrome.storage && currentAd) {
@@ -47,7 +50,8 @@ const customizeTab = () => {
                         : currentDomain === 'logic-immo' ? logicimmoScraping()
                             : currentDomain === 'lefigaro' ? lefigaroScraping()
                                 : currentDomain === 'orpi' ? orpiScraping()
-                                    : null
+                                    : currentDomain === 'facebook' ? facebookScraping()
+                                        : null
 
     if (!currentAd.isLegal) {
         customizeIllegalAd(titleElements, priceElements)
@@ -148,12 +152,11 @@ const fetchData = () => {
             request = fetchDataFromJSON(data)
         }
     } else if (currentDomain === 'seloger') {
-        const id = getIdFromSelogerUrl()
-        request = fetchDataFromId(id)
-
+        // const id = getIdFromSelogerUrl()
+        // request = fetchDataFromId(id)
         const data = getDataFromSelogerDOM()
         if (data) {
-            requestBis = fetchDataFromJSON(data)
+            request = fetchDataFromJSON(data)
         }
     } else if (currentDomain === 'loueragile') {
         const id = getIdFromLoueragileUrl()
@@ -175,6 +178,11 @@ const fetchData = () => {
         }
     } else if (currentDomain === 'orpi') {
         const data = getDataFromOrpiDOM()
+        if (data) {
+            request = fetchDataFromJSON(data)
+        }
+    } else if (currentDomain === 'facebook') {
+        const data = getDataFromFacebookDOM()
         if (data) {
             request = fetchDataFromJSON(data)
         }
@@ -202,6 +210,7 @@ const requestResolver = (request, catchCallback) => {
 
 const handleSuccess = (myJson) => {
     currentAd = { ...myJson }
+    alreadyChecked.push({ domain: currentDomain, id: currentId, ad: { ...currentAd } })
     customizeTab()
 }
 
@@ -215,11 +224,17 @@ chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
         if (newId === null) {
             deactivateTab()
             observer.disconnect()
-        } else if (currentDomain !== newDomain || currentId !== newId) {
+        } else if (!alreadyChecked.some(({ domain, id }) => domain === newDomain && id === newId)) {
             currentDomain = newDomain
             currentId = newId
             isFetched = false
             letsObserve()
+        } else if (newDomain === 'facebook') {
+            const ad = alreadyChecked.find(({ domain, id }) => domain === newDomain && id === newId)
+            currentDomain = newDomain
+            currentId = newId
+            currentAd = ad.ad
+            activateTab()
         }
     }
 })
@@ -233,7 +248,7 @@ const observer = new MutationObserver((mutations, observer) => {
         for (let i = 0; i < mutation.addedNodes.length; i++) {
             const node = mutation.addedNodes[i]
 
-            if (!isFetched && node.classList && node.classList[0] === fireKeyword) {
+            if (!isFetched && node.classList && fireKeywords.includes(node.classList[0])) {
                 fetchData()
                 isFetched = true
                 observer.disconnect()
@@ -251,7 +266,7 @@ const observer = new MutationObserver((mutations, observer) => {
 })
 
 const letsObserve = () => {
-    if (fireKeyword === null) {
+    if (fireKeywords === null) {
         fetchData()
         observer.disconnect()
     } else {

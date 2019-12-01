@@ -4,7 +4,7 @@ const getIdFromLeboncoinUrl = () => {
     return match ? match[0] : null
 }
 
-const leboncoinFireKeyword = () => 'myDvm'
+const leboncoinFireKeywords = () => ['myDvm']
 
 const leboncoinScraping = () => {
     const titles = [...document.querySelectorAll('[data-qa-id=adview_title] h1, [data-qa-id=adview_title] h3')]

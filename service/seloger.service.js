@@ -4,7 +4,7 @@ const getIdFromSelogerUrl = () => {
     return match ? match[0] : null
 }
 
-const selogerFireKeyword = () => 'description-bien'
+const selogerFireKeywords = () => ['description-bien']
 
 const selogerScraping = () => {
     const title = document.querySelector('.detail-title.title1')
