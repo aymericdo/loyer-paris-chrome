@@ -124,6 +124,9 @@ const addErrorBanner = (error) => {
         case 'address': {
             errorBanner.textContent = 'Nous n\'avons pas trouvé d\'adresse pour cette annonce.'; break;
         }
+        case 'minimal': {
+            errorBanner.textContent = 'Nous n\'avons pas trouvé les informations nécessaires pour cette annonce.'; break;
+        }
         default: {
             errorBanner.textContent = error.msg; break;
         }
