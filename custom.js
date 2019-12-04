@@ -203,6 +203,7 @@ const fetchData = () => {
 }
 
 const requestResolver = (request, catchCallback) => {
+    alreadyChecked.push({ domain: currentDomain, id: currentId, ad: { ...currentAd } })
     const fetched = fetch(request.url, request.opts)
     fetched
         .then(middlewareJson)
@@ -213,7 +214,6 @@ const requestResolver = (request, catchCallback) => {
 
 const handleSuccess = (myJson) => {
     currentAd = { ...myJson }
-    alreadyChecked.push({ domain: currentDomain, id: currentId, ad: { ...currentAd } })
     customizeTab()
 }
 
