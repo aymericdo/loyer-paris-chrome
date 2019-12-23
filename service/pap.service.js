@@ -19,6 +19,8 @@ const getDataFromPapDOM = () => {
     const itemTags = [...document.querySelectorAll('.item-tags > li > strong')]
     const stations = [...document.querySelectorAll('ul.item-transports > li > span.label')]
 
+    const sectionName = document.querySelector('[itemprop=itemListElement] > a[itemprop=item] > span[itemprop=name]')
+
     let surface = null
     let rooms = null
 
@@ -30,7 +32,7 @@ const getDataFromPapDOM = () => {
         }
     })
 
-    if (!title) {
+    if (!sectionName || sectionName.textContent.trim() !== 'Location Appartement' || !title) {
         return null
     }
 

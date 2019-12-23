@@ -36,7 +36,7 @@ const getDataFromLeboncoinDOM = () => {
         cityLabel: cityLabel && cityLabel.textContent,
         furnished: furnished && furnished.textContent,
         price: price && price.textContent,
-        renter: renter && isPro && isPro.textContent.toLowerCase().includes('siren') && renter.textContent,
+        renter: (renter && isPro && !!isPro.textContent.toLowerCase().includes('siren')) ? renter.textContent : null,
         rooms: rooms && rooms.textContent,
         subject: subject && subject.textContent,
         surface: surface && surface.textContent,
