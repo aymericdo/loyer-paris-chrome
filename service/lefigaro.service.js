@@ -22,6 +22,9 @@ const getDataFromLefigaroDOM = () => {
 
     const features = [...document.querySelectorAll('div.container-features > ul.list-features > li')]
 
+    const hasMonthlyPriceElement = document.querySelector('div.container-price > span.label')
+    const hasMonthlyPrice = hasMonthlyPriceElement && hasMonthlyPriceElement.textContent === 'Prix mensuel'
+
     let furnished = null
     let surface = null
     let rooms = null
@@ -36,7 +39,7 @@ const getDataFromLefigaroDOM = () => {
         }
     })
 
-    if (!title) {
+    if (!title || !hasMonthlyPrice) {
         return null
     }
 
