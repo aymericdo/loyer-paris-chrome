@@ -20,7 +20,7 @@ const getDataFromSelogerDOM = () => {
     const cityLabel = document.querySelector('.resume p.localite')
     const renter = document.querySelector('.agence-title')
     const itemTags = [...document.querySelectorAll('.resume ul.criterion > li')]
-    const furnishedElements = [...document.querySelectorAll('section.categorie .criteria-wrapper > div')]
+    const optionsSection = [...document.querySelectorAll('section.categorie .criteria-wrapper > div')]
     const chargesElement = document.querySelector('section.categorie.with-padding-bottom .sh-text-light')
 
     let surface = null
@@ -29,8 +29,12 @@ const getDataFromSelogerDOM = () => {
     const chargesIndex = chargesArray && chargesArray.indexOf(chargesArray.find(elem => elem.search('charges') !== -1))
     const charges = chargesArray && chargesArray.length && chargesArray[chargesIndex + 1]
 
-    const furnished = furnishedElements.some(el => {
+    const furnished = optionsSection.some(el => {
         return el.textContent.match(/^Meublé/g)
+    })
+
+    const yearBuilt = optionsSection.find(el => {
+        return el.textContent.match(/^Année de construction/g)
     })
 
     itemTags.forEach(tag => {
@@ -56,6 +60,7 @@ const getDataFromSelogerDOM = () => {
         renter: renter && renter.textContent.includes('particulier') ? null : renter.textContent,
         rooms: rooms && rooms.textContent,
         surface: surface && surface.textContent,
+        yearBuilt: yearBuilt && yearBuilt.textContent,
         title: title && title.textContent,
     }
 }
