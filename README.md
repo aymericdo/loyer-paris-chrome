@@ -7,7 +7,7 @@ Ceci à pour but d'informer, et d'avertir les potentiels futurs locataires que c
 
 ## Accessibilité
 
-L'extension est disponible sur les sites suivants : seloger.com, leboncoin.fr, loueragile.fr, pap.fr, logic-immo.com, immobilier.lefigaro.fr
+L'extension est disponible sur les sites suivants : seloger, leboncoin.fr, loueragile.fr, pap.fr, logic-immo.com, immobilier.lefigaro.fr
 
 Disponnible aussi sur Firefox : https://github.com/aymericdo/loyer-paris-firefox
 
