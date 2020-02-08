@@ -58,7 +58,7 @@ const getDataFromFacebookDOM = () => {
         }
     })
 
-    if (!title) {
+    if (!title && !description && !price && !cityLabel) {
         return null
     }
 

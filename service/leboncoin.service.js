@@ -25,7 +25,7 @@ const getDataFromLeboncoinDOM = () => {
     const renter = document.querySelector('[data-qa-id=adview_contact_container] [data-qa-id=storebox_title], [data-qa-id=adview_contact_container] > div:first-child > div:last-child > div:first-child')
     const isPro = document.querySelector('[data-qa-id=adview_contact_container] [data-qa-id=storebox_siret], [data-qa-id=adview_contact_container] > div:first-child > div:last-child > div:last-child')
 
-    if (!subject) {
+    if (!subject && !body && !price && !cityLabel) {
         return null
     }
 

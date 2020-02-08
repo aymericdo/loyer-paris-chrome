@@ -148,18 +148,19 @@ const fetchDataFromId = (id) => {
 
 const fetchData = () => {
     let request = null
-    let requestBis = null
     if (currentDomain === 'leboncoin') {
         const data = getDataFromLeboncoinDOM()
         if (data) {
             request = fetchDataFromJSON(data)
+        } else {
+            request = fetchDataFromJSON({ noMoreData: true })
         }
     } else if (currentDomain === 'seloger') {
-        // const id = getIdFromSelogerUrl()
-        // request = fetchDataFromId(id)
         const data = getDataFromSelogerDOM()
         if (data) {
             request = fetchDataFromJSON(data)
+        } else {
+            request = fetchDataFromJSON({ noMoreData: true })
         }
     } else if (currentDomain === 'loueragile') {
         const id = getIdFromLoueragileUrl()
@@ -168,36 +169,42 @@ const fetchData = () => {
         const data = getDataFromPapDOM()
         if (data) {
             request = fetchDataFromJSON(data)
+        } else {
+            request = fetchDataFromJSON({ noMoreData: true })
         }
     } else if (currentDomain === 'logic-immo') {
         const data = getDataFromLogicimmoDOM()
         if (data) {
             request = fetchDataFromJSON(data)
+        } else {
+            request = fetchDataFromJSON({ noMoreData: true })
         }
     } else if (currentDomain === 'lefigaro') {
         const data = getDataFromLefigaroDOM()
         if (data) {
             request = fetchDataFromJSON(data)
+        } else {
+            request = fetchDataFromJSON({ noMoreData: true })
         }
     } else if (currentDomain === 'orpi') {
         const data = getDataFromOrpiDOM()
         if (data) {
             request = fetchDataFromJSON(data)
+        } else {
+            request = fetchDataFromJSON({ noMoreData: true })
         }
     } else if (currentDomain === 'facebook') {
         const data = getDataFromFacebookDOM()
         if (data) {
             request = fetchDataFromJSON(data)
+        } else {
+            request = fetchDataFromJSON({ noMoreData: true })
         }
     }
 
     if (request) {
         requestResolver(request, (err) => {
-            if (requestBis && err.error === 'api') {
-                requestResolver(requestBis, addErrorBanner.bind(err))
-            } else {
-                addErrorBanner(err)
-            }
+            addErrorBanner(err)
         })
     }
 }
