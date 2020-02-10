@@ -101,15 +101,19 @@ const customizeIllegalAd = (titleElements, priceElements) => {
     })
 }
 
+let cpt = 0
 const addDescriptionHelper = (isLegal) => {
     const descriptionHelper = document.createElement('span')
     descriptionHelper.classList.add('-description-helper')
     descriptionHelper.classList.add(isLegal ? '-legal' : '-illegal')
     descriptionHelper.textContent = 'Cliquez sur le logo de l\'extension pour plus d\'informations ⤴'
     document.body.appendChild(descriptionHelper)
+    descriptionHelper.style.top = `${(descriptionHelper.offsetHeight * cpt) + 35}px`
+    cpt += 1
 
     setTimeout(() => {
         descriptionHelper.classList.add('-hide')
+        cpt -= 1
     }, 5000)
 }
 
@@ -127,14 +131,21 @@ const addErrorBanner = (error) => {
         case 'minimal': {
             errorBanner.textContent = 'Nous n\'avons pas trouvé les informations nécessaires pour cette annonce.'; break;
         }
+        case 'outdated': {
+            errorBanner.textContent = 'L\'extension n\'est plus à jour. Vous pouvez la mettre à jour manuellement dans les réglages.'; break;
+        }
         default: {
             errorBanner.textContent = error.msg; break;
         }
     }
+
     document.body.appendChild(errorBanner)
+    errorBanner.style.top = `${(errorBanner.offsetHeight * cpt) + 35}px`
+    cpt += 1
 
     setTimeout(() => {
         errorBanner.classList.add('-hide')
+        cpt -= 1
     }, 5000)
 }
 
@@ -146,8 +157,26 @@ const fetchDataFromId = (id) => {
     return { url: `${server}/${currentDomain}?id=${id}` }
 }
 
+const isExtensionUpToDate = (version) => {
+    return { url: `${server}/version?version=${version}` }
+}
+
+const checkExtensionVersion = () => {
+    const manifestData = chrome.runtime.getManifest()
+    const request = isExtensionUpToDate(manifestData.version)
+    fetch(request.url)
+        .then(middlewareJson)
+        .then(middlewareErrorCatcher)
+        .then((isOutdated) => {
+            if (isOutdated) {
+                addErrorBanner({ error: 'outdated' })
+            }
+        })
+}
+
 const fetchData = () => {
     let request = null
+    checkExtensionVersion()
     if (currentDomain === 'leboncoin') {
         const data = getDataFromLeboncoinDOM()
         if (data) {
@@ -197,8 +226,6 @@ const fetchData = () => {
         const data = getDataFromFacebookDOM()
         if (data) {
             request = fetchDataFromJSON(data)
-        } else {
-            request = fetchDataFromJSON({ noMoreData: true })
         }
     }
 
