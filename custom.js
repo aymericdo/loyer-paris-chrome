@@ -59,7 +59,7 @@ const customizeTab = () => {
         customizeLegalAd(titleElements)
     }
 
-    addDescriptionHelper(currentAd.isLegal)
+    addDescriptionHelper('Cliquez sur le logo de l\'extension pour plus d\'informations ⤴', currentAd.isLegal)
 }
 
 const customizeLegalAd = (titleElements) => {
@@ -101,50 +101,42 @@ const customizeIllegalAd = (titleElements, priceElements) => {
     })
 }
 
+const addErrorBanner = (error) => {
+    switch (error.error) {
+        case 'paris': {
+            addDescriptionHelper('L\'adresse de cette annonce n\'est pas dans Paris', false); break;
+        }
+        case 'address': {
+            addDescriptionHelper('Nous n\'avons pas trouvé d\'adresse pour cette annonce.', false); break;
+        }
+        case 'minimal': {
+            addDescriptionHelper('Nous n\'avons pas trouvé les informations nécessaires pour cette annonce.', false); break;
+        }
+        case 'outdated': {
+            addDescriptionHelper('L\'extension n\'est plus à jour. Vous pouvez la mettre à jour manuellement dans les réglages.', false); break;
+        }
+        default: {
+            addDescriptionHelper(error.msg, false); break;
+        }
+    }
+}
+
 let cpt = 0
-const addDescriptionHelper = (isLegal) => {
+const addDescriptionHelper = (text, isLegal) => {
     const descriptionHelper = document.createElement('span')
     descriptionHelper.classList.add('-description-helper')
     descriptionHelper.classList.add(isLegal ? '-legal' : '-illegal')
-    descriptionHelper.textContent = 'Cliquez sur le logo de l\'extension pour plus d\'informations ⤴'
+    descriptionHelper.textContent = text
     document.body.appendChild(descriptionHelper)
-    descriptionHelper.style.top = `${(descriptionHelper.offsetHeight * cpt) + 35}px`
+
+    if (cpt > 0) {
+        descriptionHelper.style.top = `${(56 * cpt) + (14 * 2)}px`
+    }
+
     cpt += 1
 
     setTimeout(() => {
         descriptionHelper.classList.add('-hide')
-        cpt -= 1
-    }, 5000)
-}
-
-const addErrorBanner = (error) => {
-    const errorBanner = document.createElement('span')
-    errorBanner.classList.add('-description-helper')
-    errorBanner.classList.add('-illegal')
-    switch (error.error) {
-        case 'paris': {
-            errorBanner.textContent = 'L\'adresse de cette annonce n\'est pas dans Paris'; break;
-        }
-        case 'address': {
-            errorBanner.textContent = 'Nous n\'avons pas trouvé d\'adresse pour cette annonce.'; break;
-        }
-        case 'minimal': {
-            errorBanner.textContent = 'Nous n\'avons pas trouvé les informations nécessaires pour cette annonce.'; break;
-        }
-        case 'outdated': {
-            errorBanner.textContent = 'L\'extension n\'est plus à jour. Vous pouvez la mettre à jour manuellement dans les réglages.'; break;
-        }
-        default: {
-            errorBanner.textContent = error.msg; break;
-        }
-    }
-
-    document.body.appendChild(errorBanner)
-    errorBanner.style.top = `${(errorBanner.offsetHeight * cpt) + 35}px`
-    cpt += 1
-
-    setTimeout(() => {
-        errorBanner.classList.add('-hide')
         cpt -= 1
     }, 5000)
 }

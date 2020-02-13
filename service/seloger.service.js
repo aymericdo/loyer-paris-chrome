@@ -31,9 +31,8 @@ const getDataFromSelogerDOM = () => {
     let charges = chargesArray && chargesArray.length && chargesArray[chargesIndex + 1]
 
     if (!charges) {
-        chargesArray = chargesElement && chargesElement.innerHTML.split(' ')
-        chargesIndex = chargesArray && chargesArray.indexOf(chargesArray.find(elem => elem.search('forfaitaires') !== -1))
-        charges = chargesArray && chargesArray.length && chargesArray[chargesIndex + 2]
+        chargesArray = chargesElement && chargesElement.innerHTML.split('<br>')
+        charges = chargesArray && chargesArray.length > 1 && chargesArray[1].match(/\d+/) && chargesArray[1].match(/\d+/)[0] || ''
     }
 
     const furnished = optionsSection.some(el => {

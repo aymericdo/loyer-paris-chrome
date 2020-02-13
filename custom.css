@@ -41,9 +41,12 @@ span.title-addon.-legal.-loueragile {
 
 span.-description-helper {
     position: fixed;
+    display: flex;
+    align-items: center;
     z-index: 9999999;
     top: 0.875em;
     right: 0.875em;
+    height: 3.5em;
     border: 1px solid transparent;
     border-radius: 4px;
     font-size: 16px;
