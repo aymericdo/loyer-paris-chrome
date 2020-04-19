@@ -7,21 +7,21 @@ const getIdFromSelogerUrl = () => {
 const selogerFireKeywords = () => ['description-bien']
 
 const selogerScraping = () => {
-    const title = document.querySelector('.detail-title.title1') || document.querySelector('.Title__ShowcaseTitleContainer-sc-4479bn-0.kXTaBk')
-    const price = document.getElementById('price') || document.querySelector('.Summary__Text-sc-1wkzvu-6.Summary__PriceText-sc-1wkzvu-9.fulWhK') || document.querySelector('.Summarystyled__PriceContainer-tzuaot-7.jXkDml')
+    const title = document.querySelector('.detail-title.title1') || document.querySelector('.Title__ShowcaseTitleContainer-sc-4479bn-0')
+    const price = document.getElementById('price') || document.querySelector('.Summary__Text-sc-1wkzvu-6.Summary__PriceText-sc-1wkzvu-9.fulWhK') || document.querySelector('.Summarystyled__PriceContainer-tzuaot-7')
 
     return [[title], [price]]
 }
 
 const getDataFromSelogerDOM = () => {
-    const title = document.querySelector('.detail-title.title1') || document.querySelector('.Title__ShowcaseTitleContainer-sc-4479bn-0.kXTaBk')
+    const title = document.querySelector('.detail-title.title1') || document.querySelector('.Title__ShowcaseTitleContainer-sc-4479bn-0')
     const description = document.querySelector('div.description-bien > section.categorie > p') || document.querySelector('.TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.dMkXAI') || document.querySelector('.TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.koqVoo')
-    const price = document.getElementById('price') || document.querySelector('.Summary__Text-sc-1wkzvu-6.Summary__PriceText-sc-1wkzvu-9.fulWhK') || document.querySelector('.Summarystyled__PriceContainer-tzuaot-7.jXkDml')
+    const price = document.getElementById('price') || document.querySelector('.Summary__Text-sc-1wkzvu-6.Summary__PriceText-sc-1wkzvu-9.fulWhK') || document.querySelector('.Summarystyled__PriceContainer-tzuaot-7')
     const cityLabel = document.querySelector('.resume p.localite') || document.querySelector('#top .Summary__TopLeftWrapper-sc-1wkzvu-2.cRdFIp .Summary__Text-sc-1wkzvu-6.gcWjRm:last-child') || document.querySelector('.Summarystyled__Address-tzuaot-5.fLUFm')
     const renter = document.querySelector('.agence-title') || document.querySelector('.LightSummary__Title-f6k8ax-2.kqLAJb') || document.querySelector('.LightSummary__Title-f6k8ax-1.lnUnld')
     const itemTags = (document.querySelector('.resume ul.criterion > li') && [...document.querySelectorAll('.resume ul.criterion > li')])
         || (document.querySelector('.Summary__TagsWrapper-sc-1wkzvu-7.emAUgN > div') && [...document.querySelectorAll('.Summary__TagsWrapper-sc-1wkzvu-7.emAUgN > div')])
-        || (document.querySelector('.Summarystyled__TagsWrapper-tzuaot-18.chDANw > div') && [...document.querySelectorAll('.Summarystyled__TagsWrapper-tzuaot-18.chDANw > div')])
+        || (document.querySelector('.Summarystyled__TagsWrapper-tzuaot-18 > div') && [...document.querySelectorAll('.Summarystyled__TagsWrapper-tzuaot-18 > div')])
     const optionsSection = (document.querySelector('section.categorie .criteria-wrapper > div') && [...document.querySelectorAll('section.categorie .criteria-wrapper > div')]) || (document.querySelector('.GeneralList__List-sc-9gtpjm-0.BAyYz > li') && [...document.querySelectorAll('.GeneralList__List-sc-9gtpjm-0.BAyYz > li')])
     const chargesElement = document.querySelector('section.categorie.with-padding-bottom .sh-text-light') || document.querySelector('#a-propos-de-ce-prix .TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.dMkXAI > div')
 
