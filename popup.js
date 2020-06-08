@@ -41,11 +41,17 @@ document.addEventListener("DOMContentLoaded", () => {
             })
     }
 
-    chrome.storage.sync.get('ad', (data) => {
-        createList(detectedInfo, data.ad.detectedInfo)
-        createList(computedInfo, {
-            ...data.ad.computedInfo,
-            isLegal: data.ad.isLegal,
-        })
-    })
+    chrome.runtime.onMessage.addListener(
+        function(request, sender, sendResponse) {
+            if (request.message === "sendingAd") {
+                createList(detectedInfo, request.ad.detectedInfo)
+                createList(computedInfo, {
+                    ...request.ad.computedInfo,
+                    isLegal: request.ad.isLegal,
+                })
+            }
+        }
+    );
 })
+
+chrome.runtime.sendMessage({ message: 'openingPopup' })
