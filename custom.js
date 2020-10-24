@@ -74,7 +74,7 @@ const customizeLegalAd = (titleElements) => {
 
 const customizeIllegalAd = (titleElements, priceElements) => {
     const titleAddon = document.createElement('span')
-    titleAddon.textContent = 'Annonce à vérifier'
+    titleAddon.textContent = 'Annonce illégale'
     titleAddon.classList.add('title-addon')
     titleAddon.classList.add('-illegal')
     titleElements.forEach(node => {
