@@ -32,7 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     const value = typeof data[infoKey].value === 'boolean' ? token[data[infoKey].value] : data[infoKey].value
                     spanKey.textContent = token[infoKey][0]
                     spanKey.classList.add('key')
-                    spanValue.textContent = `${value}${token[infoKey][1] ? token[infoKey][1] : ''}`
+                    spanValue.textContent = token[infoKey][0] === 'Adresse' ?
+                        `${value.charAt(0).toUpperCase() + value.slice(1)}`
+                    :
+                        `${value}${token[infoKey][1] ? token[infoKey][1] : ''}`
                     spanValue.classList.add('value')
                     li.appendChild(spanKey)
                     li.appendChild(spanValue)
@@ -47,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 createList(detectedInfo, request.ad.detectedInfo)
                 createList(computedInfo, {
                     ...request.ad.computedInfo,
-                    isLegal: request.ad.isLegal,
+                    isLegal: { order: Object.keys(request.ad.computedInfo).length, value: request.ad.isLegal },
                 })
             }
         }

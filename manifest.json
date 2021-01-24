@@ -1,6 +1,6 @@
 {
   "name": "Encadrement",
-  "version": "5.0.9",
+  "version": "5.1.0",
   "description": "Soyez informés du prix maximum des annonces, basé sur l'encadrement des loyers, sur tous vos sites d'annonces préférés",
   "permissions": [
   ],
@@ -24,7 +24,7 @@
       "matches": [
         "https://www.seloger.com/*",
         "https://www.leboncoin.fr/*",
-        "https://www.loueragile.fr/*",
+        "https://www.jinka.fr/*",
         "https://www.pap.fr/*",
         "https://www.logic-immo.com/*",
         "https://immobilier.lefigaro.fr/*",

@@ -23,13 +23,13 @@ section {
 h1 {
     display: inline-block;
     color: #fdcd56;
-    padding-top: 18px;
+    padding-top: 16px;
     padding-left: 24px;
-    font-size: 16px;
+    font-size: 24px;
     margin: 0;
 }
 
-h1::after{
+h1::after {
   content: "";
   position: relative;
   background-color: #FDCD56;
@@ -42,7 +42,7 @@ h1::after{
 h2 {
     color: #b1b1b1;
     padding: 9px 24px;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 500;
     margin: 0;
     margin-top: 24px;
@@ -107,12 +107,11 @@ p > b::before {
 
 p > a {
     color: #e1e1e1;
-    text-decoration: none;
     font-weight: 500;
 }
 
 p > a:hover {
-    text-decoration: underline;
+    color: #d3d3d3;
 }
 
 p.-warning {

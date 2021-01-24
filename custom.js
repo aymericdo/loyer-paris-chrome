@@ -4,15 +4,24 @@ const getDomain = () => {
 }
 
 const getIdByDomain = () => {
-    return (getDomain() === 'leboncoin') ? getIdFromLeboncoinUrl()
-        : (getDomain() === 'seloger') ? getIdFromSelogerUrl()
-            : (getDomain() === 'loueragile') ? getIdFromLoueragileUrl()
-                : (getDomain() === 'pap') ? getIdFromPapUrl()
-                    : (getDomain() === 'logic-immo') ? getIdFromLogicimmoUrl()
-                        : (getDomain() === 'lefigaro') ? getIdFromLefigaroUrl()
-                            : (getDomain() === 'orpi') ? getIdFromOrpiUrl()
-                                : (getDomain() === 'facebook') ? getIdFromFacebookUrl()
-                                    : null
+    return (getDomain() === 'leboncoin') ?
+        getIdFromLeboncoinUrl()
+    : (getDomain() === 'seloger') ?
+        getIdFromSelogerUrl()
+    : (getDomain() === 'jinka') ?
+        getIdFromLoueragileUrl()
+    : (getDomain() === 'pap') ?
+        getIdFromPapUrl()
+    : (getDomain() === 'logic-immo') ?
+        getIdFromLogicimmoUrl()
+    : (getDomain() === 'lefigaro') ?
+        getIdFromLefigaroUrl()
+    : (getDomain() === 'orpi') ?
+        getIdFromOrpiUrl()
+    : (getDomain() === 'facebook') ?
+        getIdFromFacebookUrl()
+    :
+        null
 }
 
 let currentDomain = getDomain()
@@ -20,11 +29,16 @@ let currentId = getIdByDomain()
 let alreadyChecked = []
 let currentAd = null
 
-const fireKeywords =
-    currentDomain === 'seloger' ? selogerFireKeywords()
-        : currentDomain === 'leboncoin' ? leboncoinFireKeywords()
-            : currentDomain === 'facebook' ? facebookFireKeywords()
-                : null
+const fireKeywords = currentDomain === 'seloger' ?
+    selogerFireKeywords()
+: currentDomain === 'leboncoin' ?
+    leboncoinFireKeywords()
+: currentDomain === 'facebook' ?
+    facebookFireKeywords()
+: currentDomain === 'jinka' ?
+    loueragileFireKeywords()
+:
+    null
 
 const activateTab = () => {
     if (currentAd) {
@@ -41,16 +55,24 @@ const deactivateTab = () => {
 
 const customizeTab = () => {
     activateTab()
-    const [titleElements, priceElements] =
-        currentDomain === 'seloger' ? selogerScraping()
-            : currentDomain === 'leboncoin' ? leboncoinScraping()
-                : currentDomain === 'loueragile' ? loueragileScraping()
-                    : currentDomain === 'pap' ? papScraping()
-                        : currentDomain === 'logic-immo' ? logicimmoScraping()
-                            : currentDomain === 'lefigaro' ? lefigaroScraping()
-                                : currentDomain === 'orpi' ? orpiScraping()
-                                    : currentDomain === 'facebook' ? facebookScraping()
-                                        : null
+    const [titleElements, priceElements] = currentDomain === 'seloger' ?
+        selogerScraping()
+    : currentDomain === 'leboncoin' ?
+        leboncoinScraping()
+    : currentDomain === 'jinka' ?
+        loueragileScraping()
+    : currentDomain === 'pap' ?
+        papScraping()
+    : currentDomain === 'logic-immo' ?
+        logicimmoScraping()
+    : currentDomain === 'lefigaro' ?
+        lefigaroScraping()
+    : currentDomain === 'orpi' ?
+        orpiScraping()
+    : currentDomain === 'facebook' ?
+        facebookScraping()
+    :
+        null
 
     if (!currentAd.isLegal) {
         customizeIllegalAd(titleElements, priceElements)
@@ -58,7 +80,7 @@ const customizeTab = () => {
         customizeLegalAd(titleElements)
     }
 
-    addDescriptionHelper('Cliquez sur le logo de l\'extension pour plus d\'informations ⤴', currentAd.isLegal)
+    addDescriptionHelper("Cliquez sur le logo de l'extension pour plus d'informations ⤴", currentAd.isLegal)
 }
 
 const customizeLegalAd = (titleElements) => {
@@ -102,17 +124,26 @@ const customizeIllegalAd = (titleElements, priceElements) => {
 
 const addErrorBanner = (error) => {
     switch (error.error) {
-        case 'paris': {
-            addDescriptionHelper('L\'adresse de cette annonce n\'est pas dans Paris', false); break;
+        case 'city': {
+            addDescriptionHelper("L'adresse de cette annonce n'est pas dans Paris.", false); break;
         }
         case 'address': {
-            addDescriptionHelper('Nous n\'avons pas trouvé d\'adresse pour cette annonce.', false); break;
+            addDescriptionHelper("Nous n'avons pas trouvé d'adresse pour cette annonce.", false); break;
         }
         case 'minimal': {
-            addDescriptionHelper('Nous n\'avons pas trouvé les informations nécessaires pour cette annonce.', false); break;
+            addDescriptionHelper("Nous n'avons pas trouvé les informations nécessaires pour cette annonce.", false); break;
+        }
+        case 'price': {
+            addDescriptionHelper("Le prix de l'annonce semble être incohérent.", false); break;
+        }
+        case 'partner': {
+            addDescriptionHelper("Nous avons rencontré un problème de communication interne.", false); break;
+        }
+        case 'filter': {
+            addDescriptionHelper("Nous avons pas trouvé de correspondance.", false); break;
         }
         case 'outdated': {
-            addDescriptionHelper('L\'extension n\'est plus à jour. Vous pouvez la mettre à jour manuellement dans les réglages.', false); break;
+            addDescriptionHelper("L'extension n'est plus à jour. Vous pouvez la mettre à jour manuellement dans les réglages.", false); break;
         }
         default: {
             addDescriptionHelper(error.msg, false); break;
@@ -182,7 +213,7 @@ const fetchData = () => {
         } else {
             request = fetchDataFromJSON({ noMoreData: true })
         }
-    } else if (currentDomain === 'loueragile') {
+    } else if (currentDomain === 'jinka') {
         const id = getIdFromLoueragileUrl()
         request = fetchDataFromId(id)
     } else if (currentDomain === 'pap') {
