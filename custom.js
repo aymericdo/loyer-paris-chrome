@@ -175,10 +175,6 @@ const fetchDataFromJSON = (data) => {
     return { url: `${server}/${currentDomain}/data`, opts: { method: 'post', body: JSON.stringify(data) } }
 }
 
-const fetchDataFromId = (id) => {
-    return { url: `${server}/${currentDomain}?id=${id}` }
-}
-
 const isExtensionUpToDate = (version) => {
     return { url: `${server}/version?version=${version}` }
 }
@@ -204,45 +200,49 @@ const fetchData = () => {
         if (data) {
             request = fetchDataFromJSON(data)
         } else {
-            request = fetchDataFromJSON({ noMoreData: true })
+            request = fetchDataFromJSON({ noMoreData: true, platform: 'chrome' })
         }
     } else if (currentDomain === 'seloger') {
         const data = getDataFromSelogerDOM()
         if (data) {
             request = fetchDataFromJSON(data)
         } else {
-            request = fetchDataFromJSON({ noMoreData: true })
+            request = fetchDataFromJSON({ noMoreData: true, platform: 'chrome' })
         }
     } else if (currentDomain === 'jinka') {
         const id = getIdFromLoueragileUrl()
-        request = fetchDataFromId(id)
+        if (id) {
+            request = fetchDataFromJSON({ id })
+        } else {
+            request = fetchDataFromJSON({ noMoreData: true, platform: 'chrome' })
+        }
     } else if (currentDomain === 'pap') {
         const data = getDataFromPapDOM()
         if (data) {
             request = fetchDataFromJSON(data)
         } else {
-            request = fetchDataFromJSON({ noMoreData: true })
+            request = fetchDataFromJSON({ noMoreData: true, platform: 'chrome' })
         }
     } else if (currentDomain === 'logic-immo') {
         const data = getDataFromLogicimmoDOM()
         if (data) {
             request = fetchDataFromJSON(data)
         } else {
-            request = fetchDataFromJSON({ noMoreData: true })
+            request = fetchDataFromJSON({ noMoreData: true, platform: 'chrome' })
         }
     } else if (currentDomain === 'lefigaro') {
         const data = getDataFromLefigaroDOM()
         if (data) {
             request = fetchDataFromJSON(data)
         } else {
-            request = fetchDataFromJSON({ noMoreData: true })
+            request = fetchDataFromJSON({ noMoreData: true, platform: 'chrome' })
         }
     } else if (currentDomain === 'orpi') {
         const data = getDataFromOrpiDOM()
         if (data) {
             request = fetchDataFromJSON(data)
         } else {
-            request = fetchDataFromJSON({ noMoreData: true })
+            request = fetchDataFromJSON({ noMoreData: true, platform: 'chrome' })
         }
     } else if (currentDomain === 'facebook') {
         const data = getDataFromFacebookDOM()
