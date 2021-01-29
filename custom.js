@@ -28,6 +28,7 @@ let currentDomain = getDomain()
 let currentId = getIdByDomain()
 let alreadyChecked = []
 let currentAd = null
+const platform = 'chrome'
 
 const fireKeywords = currentDomain === 'seloger' ?
     selogerFireKeywords()
@@ -171,7 +172,15 @@ const addDescriptionHelper = (text, isLegal) => {
     }, 5000)
 }
 
-const fetchDataFromJSON = (data) => {
+const fetchDataFromJSON = (dataParam) => {
+    let data = { platform }
+
+    if (!dataParam) {
+        data = { ...data, noMoreData: true }
+    } else {
+        data = { ...data, ...dataParam }
+    }
+
     return { url: `${server}/${currentDomain}/data`, opts: { method: 'post', body: JSON.stringify(data) } }
 }
 
@@ -197,58 +206,28 @@ const fetchData = () => {
     checkExtensionVersion()
     if (currentDomain === 'leboncoin') {
         const data = getDataFromLeboncoinDOM()
-        if (data) {
-            request = fetchDataFromJSON(data)
-        } else {
-            request = fetchDataFromJSON({ noMoreData: true, platform: 'chrome' })
-        }
+        request = fetchDataFromJSON(data)
     } else if (currentDomain === 'seloger') {
         const data = getDataFromSelogerDOM()
-        if (data) {
-            request = fetchDataFromJSON(data)
-        } else {
-            request = fetchDataFromJSON({ noMoreData: true, platform: 'chrome' })
-        }
+        request = fetchDataFromJSON(data)
     } else if (currentDomain === 'jinka') {
         const id = getIdFromLoueragileUrl()
-        if (id) {
-            request = fetchDataFromJSON({ id })
-        } else {
-            request = fetchDataFromJSON({ noMoreData: true, platform: 'chrome' })
-        }
+        request = fetchDataFromJSON(id ? { id } : null)
     } else if (currentDomain === 'pap') {
         const data = getDataFromPapDOM()
-        if (data) {
-            request = fetchDataFromJSON(data)
-        } else {
-            request = fetchDataFromJSON({ noMoreData: true, platform: 'chrome' })
-        }
+        request = fetchDataFromJSON(data)
     } else if (currentDomain === 'logic-immo') {
         const data = getDataFromLogicimmoDOM()
-        if (data) {
-            request = fetchDataFromJSON(data)
-        } else {
-            request = fetchDataFromJSON({ noMoreData: true, platform: 'chrome' })
-        }
+        request = fetchDataFromJSON(data)
     } else if (currentDomain === 'lefigaro') {
         const data = getDataFromLefigaroDOM()
-        if (data) {
-            request = fetchDataFromJSON(data)
-        } else {
-            request = fetchDataFromJSON({ noMoreData: true, platform: 'chrome' })
-        }
+        request = fetchDataFromJSON(data)
     } else if (currentDomain === 'orpi') {
         const data = getDataFromOrpiDOM()
-        if (data) {
-            request = fetchDataFromJSON(data)
-        } else {
-            request = fetchDataFromJSON({ noMoreData: true, platform: 'chrome' })
-        }
+        request = fetchDataFromJSON(data)
     } else if (currentDomain === 'facebook') {
         const data = getDataFromFacebookDOM()
-        if (data) {
-            request = fetchDataFromJSON(data)
-        }
+        request = fetchDataFromJSON(data)
     }
 
     if (request) {
