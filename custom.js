@@ -185,7 +185,7 @@ const fetchDataFromJSON = (dataParam) => {
 }
 
 const isExtensionUpToDate = (version) => {
-    return { url: `${server}/version?version=${version}` }
+    return { url: `${server}/version?version=${version}&platform=${platform}` }
 }
 
 const checkExtensionVersion = () => {

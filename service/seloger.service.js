@@ -18,7 +18,7 @@ const getDataFromSelogerDOM = () => {
     const description = document.querySelector('div.description-bien > section.categorie > p') || document.querySelector('.TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.dMkXAI') || document.querySelector('.TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.koqVoo')
     const price = document.getElementById('price') || document.querySelector('.Summary__Text-sc-1wkzvu-6.Summary__PriceText-sc-1wkzvu-9.fulWhK') || document.querySelector('.Summarystyled__PriceContainer-tzuaot-7')
     const cityLabel = document.querySelector('.resume p.localite') || document.querySelector('#top .Summary__TopLeftWrapper-sc-1wkzvu-2.cRdFIp .Summary__Text-sc-1wkzvu-6.gcWjRm:last-child') || document.querySelector('.Summarystyled__Address-tzuaot-5')
-    const renter = document.querySelector('.agence-title') || document.querySelector('.LightSummary__Title-f6k8ax-2.kqLAJb') || document.querySelector('.LightSummary__Title-f6k8ax-1.lnUnld')
+    const renter = document.querySelector('.agence-title') || document.querySelector('.LightSummary__Title-f6k8ax-2.kqLAJb') || document.querySelector('.LightSummary__Title-f6k8ax-1.lnUnld') || document.querySelector("#agence-info > div.Agency__PrimaryBlock-sc-1rsw64j-5.dNsjKe > h3")
     const itemTags = (document.querySelector('.resume ul.criterion > li') && [...document.querySelectorAll('.resume ul.criterion > li')])
         || (document.querySelector('.Summary__TagsWrapper-sc-1wkzvu-7 > div') && [...document.querySelectorAll('.Summary__TagsWrapper-sc-1wkzvu-7 > div')])
         || (document.querySelector('.Summarystyled__TagsWrapper-tzuaot-19 > div') && [...document.querySelectorAll('.Summarystyled__TagsWrapper-tzuaot-19 > div')])
@@ -51,11 +51,15 @@ const getDataFromSelogerDOM = () => {
         return el.textContent.match(/^Année de construction/g)
     })
 
+    let isParticulier = false
+
     itemTags.forEach(tag => {
         if (tag.textContent.match(/m²/g)) {
             surface = tag
         } else if (tag.textContent.match(/pièce/g)) {
             rooms = tag
+        } else if (tag.textContent.match(/Particulier/g)) {
+            isParticulier = true
         }
     })
 
@@ -76,7 +80,7 @@ const getDataFromSelogerDOM = () => {
         furnished,
         hasCharges: price && price.textContent.includes('CC'),
         price: price && price.textContent,
-        renter: renter && renter.textContent.includes('particulier') ? null : renter.textContent,
+        renter: isParticulier ? 'Particulier' : renter ? renter.textContent.includes('particulier') ? 'Particulier' : renter.textContent : null,
         rooms: rooms && rooms.textContent,
         surface: surface && surface.textContent,
         yearBuilt: yearBuilt && yearBuilt.textContent,
