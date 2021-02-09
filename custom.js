@@ -147,7 +147,7 @@ const addErrorBanner = (error) => {
             addDescriptionHelper("L'extension n'est plus à jour. Vous pouvez la mettre à jour manuellement dans les réglages.", false); break;
         }
         default: {
-            addDescriptionHelper(error.msg, false); break;
+            addDescriptionHelper(error.msg || 'Erreur : nous allons résoudre ce problème pour cette annonce sous peu', false); break;
         }
     }
 }
