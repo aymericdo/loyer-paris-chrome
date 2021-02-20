@@ -1,6 +1,6 @@
 {
   "name": "Encadrement",
-  "version": "5.1.5",
+  "version": "5.1.6",
   "description": "Soyez informés du prix maximum des annonces, basé sur l'encadrement des loyers, sur tous vos sites d'annonces préférés",
   "permissions": [
   ],
@@ -29,7 +29,8 @@
         "https://www.logic-immo.com/*",
         "https://immobilier.lefigaro.fr/*",
         "https://www.facebook.com/marketplace/*",
-        "https://www.orpi.com/*"
+        "https://www.orpi.com/*",
+        "https://gensdeconfiance.com/*"
       ],
       "js": [
         "helper/api.helper.js",
@@ -41,6 +42,7 @@
         "service/lefigaro.service.js",
         "service/facebook.service.js",
         "service/orpi.service.js",
+        "service/gensdeconfiance.service.js",
         "custom.js"
       ],
       "run_at": "document_end",

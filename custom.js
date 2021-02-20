@@ -1,6 +1,6 @@
 const getDomain = () => {
     const url = window.location.toString()
-    return url.split('/')[2].split('.')[1]
+    return url.split('/')[2].replace('www.', '').split('.')[0]
 }
 
 const getIdByDomain = () => {
@@ -20,6 +20,8 @@ const getIdByDomain = () => {
         getIdFromOrpiUrl()
     : (getDomain() === 'facebook') ?
         getIdFromFacebookUrl()
+    : (getDomain() === 'gensdeconfiance') ?
+        getIdFromGensdeconfianceUrl()
     :
         null
 }
@@ -30,9 +32,7 @@ let alreadyChecked = []
 let currentAd = null
 const platform = 'chrome'
 
-const fireKeywords = currentDomain === 'seloger' ?
-    selogerFireKeywords()
-: currentDomain === 'leboncoin' ?
+const fireKeywords = currentDomain === 'leboncoin' ?
     leboncoinFireKeywords()
 : currentDomain === 'facebook' ?
     facebookFireKeywords()
@@ -72,6 +72,8 @@ const customizeTab = () => {
         orpiScraping()
     : currentDomain === 'facebook' ?
         facebookScraping()
+    : currentDomain === 'gensdeconfiance' ?
+        gensdeconfianceScraping()
     :
         null
 
@@ -126,7 +128,7 @@ const customizeIllegalAd = (titleElements, priceElements) => {
 const addErrorBanner = (error) => {
     switch (error.error) {
         case 'city': {
-            addDescriptionHelper("L'adresse de cette annonce n'est pas dans Paris.", false); break;
+            addDescriptionHelper("La ville de cette annonce n'a pas encore mis en place l'encadrement des loyers.", false); break;
         }
         case 'address': {
             addDescriptionHelper("Nous n'avons pas trouvé d'adresse pour cette annonce.", false); break;
@@ -227,6 +229,9 @@ const fetchData = () => {
         request = fetchDataFromJSON(data)
     } else if (currentDomain === 'facebook') {
         const data = getDataFromFacebookDOM()
+        request = fetchDataFromJSON(data)
+    } else if (currentDomain === 'gensdeconfiance') {
+        const data = getDataFromGensdeconfianceDOM()
         request = fetchDataFromJSON(data)
     }
 
