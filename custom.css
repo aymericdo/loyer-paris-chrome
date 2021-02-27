@@ -39,35 +39,181 @@ span.title-addon.-legal.-loueragile {
     margin-left: 10px;
 }
 
-span.-description-helper {
+.-flag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: -10px 10px 5px rgba(0,0,0,0.6);
+    font-weight: bold;
+    font-family: "Garnett", "Avenir", Helvetica, Arial, sans-serif;
+    font-size: 2.5rem;
+    color: #0f0f0f;
+    border: 4px solid #07c507;
+    background: white;
+    z-index: 9999999;
+    transition: all 250ms ease-out;
+    transition-property: background-color;
+    animation: shake-animation 10s ease infinite;
+}
+
+.-flag.-illegal {
+    border-color: #FDCD56;
+    font-size: 25px;
+    border-radius: 20px;
+    width: fit-content;
+    padding: 0 10px;
+}
+
+.-flag:hover {
+    background-color: #07c507;
+    /* animation: fill-it-legal 250ms ease 1; */
+}
+
+.-flag.-illegal:hover {
+    background-color: #FDCD56;
+    /* animation: fill-it-illegal 250ms ease 1; */
+}
+
+.-flag > .-flag-description {
+    position: absolute;
+    width: 250px;
+    max-height: 90px;
+    background-color: rgba(34, 34, 34, 0.95);
+    color: white;
+    padding: 1rem;
+    font-size: 16px;
+    border-radius: 5px;
+    z-index: 9999998;
+    animation: description-closing 200ms ease-out;
+    animation-fill-mode: forwards;
+}
+
+.-flag.-illegal > .-flag-description {
+    animation: description-closing-illegal 200ms ease-out;
+    animation-fill-mode: forwards;
+}
+
+.-flag > .-flag-description.-open {
+    animation: description-opening 200ms ease-out;
+    animation-fill-mode: forwards;
+}
+
+.-flag.-illegal > .-flag-description.-open {
+    animation: description-opening-illegal 200ms ease-out;
+    animation-fill-mode: forwards;
+}
+
+.-description-helper {
+    transition: all 500ms ease-in-out;
+    transition-property: transform;
+    transform: translate(0, -200%);
+    box-sizing: initial;
     position: fixed;
     display: flex;
     align-items: center;
-    z-index: 9999999;
-    top: 0.875em;
-    right: 0.875em;
-    height: 3.5em;
+    z-index: 9999997;
+    width: fit-content;
+    height: 16px;
+    right: 14px;
     border: 1px solid transparent;
     border-radius: 4px;
     font-size: 16px;
     font-weight: bold;
     color: #fff;
-    padding: 0.875em 1em;
+    padding: 0.875em 1.25em;
     visibility: visible;
     opacity: 1;
 }
 
-span.-description-helper.-legal {
-    background: #07c507de;
+.-description-helper.-legal {
+    background: #07c507;
 }
 
-span.-description-helper.-illegal {
+.-description-helper.-illegal {
     background-color: #FDCD56;
     color: #0f0f0f;
 }
 
-span.-description-helper.-hide {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s 1s, opacity 1s linear;
+.-description-helper.-begin {
+    transform: translate(0, -200%);
+}
+
+.-description-helper.-middle {
+    transform: translate(0, 0);
+}
+
+.-description-helper.-hide {
+    transform: translate(200%, 0);
+}
+
+@keyframes shake-animation {
+    0% { transform:translate(0,0) }
+    1.78571% { transform:translate(5px,0) }
+    3.57143% { transform:translate(0,0) }
+    5.35714% { transform:translate(5px,0) }
+    7.14286% { transform:translate(0,0) }
+    8.92857% { transform:translate(5px,0) }
+    10.71429% { transform:translate(0,0) }
+    100% { transform:translate(0,0) }
+}
+
+@keyframes description-closing {
+    0% {
+        transform: translate(-70%, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+}
+
+@keyframes description-closing-illegal {
+    0% {
+        transform: translate(-100%, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+}
+
+@keyframes description-opening {
+    0% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-70%, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes description-opening-illegal {
+    0% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-100%, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes fill-it-legal {
+    0% { background-color: white; }
+    100% { background-color: #07c507; }
+}
+
+@keyframes fill-it-illegal {
+    0% { background-color: white; }
+    100% { background-color: #FDCD56; }
 }
