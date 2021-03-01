@@ -39,45 +39,6 @@ h1::after {
   display: flow-root;
 }
 
-h2 {
-    color: #b1b1b1;
-    padding: 9px 24px;
-    font-size: 16px;
-    font-weight: 500;
-    margin: 0;
-    margin-top: 24px;
-}
-
-ul {
-    background-color: #222222;
-    border: solid 1px transparent;
-    border-radius: 10px;
-    padding: 24px;
-    margin: 0;
-}
-
-ul > li {
-    display: flex;
-    justify-content: space-between;
-    list-style-type: none;
-    font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 16px;
-}
-
-ul > li:last-child {
-    margin-bottom: 0;
-}
-
-ul > li > .key {
-    color: #7e7e7e;
-}
-
-ul > li > .value {
-    color: #e1e1e1;
-    list-style-type: none;
-}
-
 p {
     background-color: #5691fd;
     color: #e4edfd;

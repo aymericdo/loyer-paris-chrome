@@ -1,219 +1,310 @@
-span.title-addon {
-    display: inline-block !important;
-    margin-right: 4px !important;
-}
-
-span.title-addon.-illegal {
-    background-color: #FDCD56;
-    color: #0f0f0f;
-    border: 1px solid transparent;
-    border-radius: 20px;
-    padding: 4px 8px;
-    font-weight: bold;
-}
-
-span.title-addon.-legal {
-    background-color: #07c5075e;
-    border: 1px solid transparent;
-    border-radius: 22px;
-    padding: 4px 6px;
-}
-
-span.title-addon.-legal.-leboncoin,
-span.title-addon.-legal.-loueragile {
-    padding: 2px 10px;
-}
-
-.bad-price {
-    display: inline-block;
-    text-decoration: line-through;
-}
-
-.bad-price * {
-    display: inline-block;
-    text-decoration: line-through;
-}
-
-.good-price {
-    display: inline-block;
-    margin-left: 10px;
+:root {
+  --strokeInfoIconUrl: '';
+  --yellow: #fdcd56;
+  --green: #0be881;
 }
 
 .-flag {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    box-shadow: -10px 10px 5px rgba(0,0,0,0.6);
-    font-weight: bold;
-    font-family: "Garnett", "Avenir", Helvetica, Arial, sans-serif;
-    font-size: 2.5rem;
-    color: #0f0f0f;
-    border: 4px solid #07c507;
-    background: white;
-    z-index: 9999999;
-    transition: all 250ms ease-out;
-    transition-property: background-color;
-    animation: shake-animation 10s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: fit-content;
+  height: 50px;
+  font-size: 25px;
+  border-radius: 20px;
+  padding: 0 10px;
+  box-shadow: -10px 10px 6px rgba(0, 0, 0, 0.6);
+  font-weight: 500;
+  font-family: "Garnett", "Avenir", Helvetica, Arial, sans-serif;
+  color: #0f0f0f;
+  border: 2px solid var(--green);
+  z-index: 9999999;
+  transition: all 250ms ease-out;
+  transition-property: background-position, color, box-shadow;
+  animation: shake-animation 20s ease infinite;
+  user-select: none;
+
+  background-image: linear-gradient(to left, var(--green), var(--green), #ffff, #ffff);
+  background-size: 300%;
+  background-origin: border-box, border-box;
+}
+
+.-flag::after {
+  content: '';
+  background-image: var(--faviconIconUrl);
+  background-size: contain;
+  border-radius: 50%;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: -10px;
+  right: -10px;
+  cursor: move;
 }
 
 .-flag.-illegal {
-    border-color: #FDCD56;
-    font-size: 25px;
-    border-radius: 20px;
-    width: fit-content;
-    padding: 0 10px;
+  border-color: var(--yellow);
+  background-image: linear-gradient(to left, var(--yellow), var(--yellow), #ffff, #ffff);
+  background-size: 300%;
+  background-origin: border-box, border-box;
 }
 
+.-flag:active {
+  cursor: grabbing;
+  box-shadow: -6px 6px 5px rgba(0, 0, 0, 0.6);
+}
+
+.-flag.-clicked,
 .-flag:hover {
-    background-color: #07c507;
-    /* animation: fill-it-legal 250ms ease 1; */
+  background-position: 100% 0;
+  box-shadow: -8px 8px 5px rgba(0, 0, 0, 0.6);
+}
+
+.-flag:not(.-illegal).-clicked,
+.-flag:not(.-illegal):hover {
+  color: #fff;
+}
+
+.-flag.-clicked {
+  animation: none;
 }
 
 .-flag.-illegal:hover {
-    background-color: #FDCD56;
-    /* animation: fill-it-illegal 250ms ease 1; */
+  background-position: 100% 0;
 }
 
 .-flag > .-flag-description {
-    position: absolute;
-    width: 250px;
-    max-height: 90px;
-    background-color: rgba(34, 34, 34, 0.95);
-    color: white;
-    padding: 1rem;
-    font-size: 16px;
-    border-radius: 5px;
-    z-index: 9999998;
-    animation: description-closing 200ms ease-out;
-    animation-fill-mode: forwards;
+  position: absolute;
+  top: 0px;
+  height: 480px;
+  width: 432px;
+  display: block;
+  background-color: #050505;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  z-index: 9999998;
+  font-weight: 500;
+  animation: description-closing 200ms ease-out;
+  animation-fill-mode: forwards;
 }
 
-.-flag.-illegal > .-flag-description {
-    animation: description-closing-illegal 200ms ease-out;
-    animation-fill-mode: forwards;
+.-flag > .-flag-description > section {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.-flag > .-flag-description > section > .inset {
+  padding: 24px;
+}
+
+.-flag > .-flag-description > section > .inset > h1 {
+  display: inline-block;
+  color: var(--yellow);
+  padding-top: 16px;
+  padding-left: 24px;
+  font-size: 24px;
+  margin: 0;
+}
+
+.-flag > .-flag-description > section > .inset > h1::after {
+content: "";
+position: relative;
+background-color: var(--yellow);
+width: 100%;
+height: 3px;
+left: 0;
+display: flow-root;
+}
+
+.-flag > .-flag-description > section > .inset > h2 {
+  color: #b1b1b1;
+  padding: 9px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  margin-top: 24px;
+}
+
+.-flag > .-flag-description > section > .inset > ul {
+  background-color: #222222;
+  border: solid 1px transparent;
+  border-radius: 10px;
+  padding: 24px;
+  margin: 0;
+}
+
+.-flag > .-flag-description > section > .inset > ul > li {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.-flag > .-flag-description > section > .inset > ul > li:last-child {
+  margin-bottom: 0;
+}
+
+.-flag > .-flag-description > section > .inset > ul > li > .key {
+  color: #7e7e7e;
+}
+
+.-flag > .-flag-description > section > .inset > ul > li > .value {
+  color: #e1e1e1;
+  list-style-type: none;
+}
+
+.-flag > .-flag-description > section > .inset > p {
+  background-color: #5691fd;
+  color: #e4edfd;
+  border-radius: 10px;
+  font-size: 13px;
+  padding: 24px;
+  padding-left: 48px;
+  margin: 24px 0;
+}
+
+.-flag > .-flag-description > section > .inset > p > a {
+  color: #e1e1e1;
+  font-weight: 500;
+}
+
+.-flag > .-flag-description > section > .inset > p > a:hover {
+  color: #d3d3d3;
+}
+
+.-flag > .-flag-description > section > .inset > p > b {
+  display: flex;
+  color: #ffffff;
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.-flag > .-flag-description > section > .inset > p > b::before {
+  content: var(--strokeInfoIconUrl);
+  position: absolute;
+  left: -26px;
 }
 
 .-flag > .-flag-description.-open {
-    animation: description-opening 200ms ease-out;
-    animation-fill-mode: forwards;
-}
-
-.-flag.-illegal > .-flag-description.-open {
-    animation: description-opening-illegal 200ms ease-out;
-    animation-fill-mode: forwards;
+  left: -1em;
+  animation: description-opening 200ms ease-out;
+  animation-fill-mode: forwards;
 }
 
 .-description-helper {
-    transition: all 500ms ease-in-out;
-    transition-property: transform;
-    transform: translate(0, -200%);
-    box-sizing: initial;
-    position: fixed;
-    display: flex;
-    align-items: center;
-    z-index: 9999997;
-    width: fit-content;
-    height: 16px;
-    right: 14px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-    padding: 0.875em 1.25em;
-    visibility: visible;
-    opacity: 1;
+  transition: all 500ms ease-in-out;
+  transition-property: transform;
+  transform: translate(0, -200%);
+  box-sizing: initial;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  z-index: 9999997;
+  width: fit-content;
+  height: 16px;
+  right: 14px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  padding: 0.875em 1.25em;
 }
 
 .-description-helper.-legal {
-    background: #07c507;
+  background: var(--green);
 }
 
 .-description-helper.-illegal {
-    background-color: #FDCD56;
-    color: #0f0f0f;
+  background-color: var(--yellow);
+  color: #0f0f0f;
 }
 
 .-description-helper.-begin {
-    transform: translate(0, -200%);
+  transform: translate(0, -200%);
 }
 
 .-description-helper.-middle {
-    transform: translate(0, 0);
+  transform: translate(0, 0);
 }
 
 .-description-helper.-hide {
-    transform: translate(200%, 0);
+  transform: translate(200%, 0);
 }
 
 @keyframes shake-animation {
-    0% { transform:translate(0,0) }
-    1.78571% { transform:translate(5px,0) }
-    3.57143% { transform:translate(0,0) }
-    5.35714% { transform:translate(5px,0) }
-    7.14286% { transform:translate(0,0) }
-    8.92857% { transform:translate(5px,0) }
-    10.71429% { transform:translate(0,0) }
-    100% { transform:translate(0,0) }
+  0% {
+    -webkit-transform: translate(0px, 0px) rotate(0deg);
+  }
+  10% {
+    -webkit-transform: translate(0px, 0px) rotate(0deg);
+  }
+  10.1% {
+    -webkit-transform: translate(2px, 1px) rotate(0deg);
+  }
+  10.2% {
+    -webkit-transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  10.2% {
+    -webkit-transform: translate(-3px, 0px) rotate(1deg);
+  }
+  10.3% {
+    -webkit-transform: translate(0px, 2px) rotate(0deg);
+  }
+  10.4% {
+    -webkit-transform: translate(1px, -1px) rotate(1deg);
+  }
+  10.5% {
+    -webkit-transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  10.6% {
+    -webkit-transform: translate(-3px, 1px) rotate(0deg);
+  }
+  10.7% {
+    -webkit-transform: translate(2px, 1px) rotate(-1deg);
+  }
+  10.8% {
+    -webkit-transform: translate(-1px, -1px) rotate(1deg);
+  }
+  10.9% {
+    -webkit-transform: translate(2px, 2px) rotate(0deg);
+  }
+  11.0% {
+    -webkit-transform: translate(1px, -2px) rotate(-1deg);
+  }
+  11.1% {
+    -webkit-transform: translate(0px, 0px) rotate(0deg);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px) rotate(0deg);
+  }
 }
 
 @keyframes description-closing {
-    0% {
-        transform: translate(-70%, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(0, 0);
-        opacity: 0;
-    }
-}
-
-@keyframes description-closing-illegal {
-    0% {
-        transform: translate(-100%, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(0, 0);
-        opacity: 0;
-    }
+  0% {
+    transform: translate(-100%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
 }
 
 @keyframes description-opening {
-    0% {
-        transform: translate(0, 0);
-        opacity: 0;
-    }
-    100% {
-        transform: translate(-70%, 0);
-        opacity: 1;
-    }
-}
-
-@keyframes description-opening-illegal {
-    0% {
-        transform: translate(0, 0);
-        opacity: 0;
-    }
-    100% {
-        transform: translate(-100%, 0);
-        opacity: 1;
-    }
-}
-
-@keyframes fill-it-legal {
-    0% { background-color: white; }
-    100% { background-color: #07c507; }
-}
-
-@keyframes fill-it-illegal {
-    0% { background-color: white; }
-    100% { background-color: #FDCD56; }
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-100%, 0);
+    opacity: 1;
+  }
 }

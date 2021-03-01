@@ -1,9 +1,8 @@
 {
   "name": "Encadrement",
-  "version": "5.1.6",
+  "version": "6.0.0",
   "description": "Soyez informés du prix maximum des annonces, basé sur l'encadrement des loyers, sur tous vos sites d'annonces préférés",
-  "permissions": [
-  ],
+  "permissions": [],
   "page_action": {
     "default_icon": {
       "16": "images/favicon-16x16.png",
@@ -37,15 +36,17 @@
       "js": [
         "helper/api.helper.js",
         "helper/draggable.helper.js",
+        "service/website.js",
         "service/website/seloger.service.js",
         "service/website/leboncoin.service.js",
-        "service/website/loueragile.service.js",
+        "service/website/jinka.service.js",
         "service/website/pap.service.js",
         "service/website/logicimmo.service.js",
         "service/website/lefigaro.service.js",
         "service/website/facebook.service.js",
         "service/website/orpi.service.js",
         "service/website/gensdeconfiance.service.js",
+        "service/fetcher.js",
         "service/customize.js",
         "custom.js"
       ],
@@ -54,6 +55,10 @@
         "custom.css"
       ]
     }
+  ],
+  "web_accessible_resources": [
+    "images/*.png",
+    "images/*.svg"
   ],
   "icons": {
     "16": "images/favicon-16x16.png",
