@@ -54,6 +54,15 @@ class CustomizeService {
     } else {
       this.adFlag.textContent = "Annonce légale";
     }
+
+    if (!currentAd.isLegal) {
+      // price flag
+      const adFlagPrice = document.createElement("span");
+      adFlagPrice.classList.add("-flag-price");
+      adFlagPrice.textContent = `Prix max estimé ${currentAd.computedInfo.maxAuthorized.value}€`;
+      this.adFlag.appendChild(adFlagPrice);
+    }
+
     document.body.appendChild(this.adFlag);
     this.adFlagListener = dragElement(this.adFlag);
 
@@ -68,6 +77,21 @@ class CustomizeService {
     document.documentElement.style.setProperty(
       "--strokeInfoIconUrl",
       `url(${strokeInfoIconUrl})`
+    );
+    const instagramIconUrl = chrome.extension.getURL("images/instagram-logo.png");
+    document.documentElement.style.setProperty(
+      "--instagramIconUrl",
+      `url(${instagramIconUrl})`
+    );
+    const facebookIconUrl = chrome.extension.getURL("images/facebook-logo.png");
+    document.documentElement.style.setProperty(
+      "--facebookIconUrl",
+      `url(${facebookIconUrl})`
+    );
+    const twitterIconUrl = chrome.extension.getURL("images/twitter-logo.png");
+    document.documentElement.style.setProperty(
+      "--twitterIconUrl",
+      `url(${twitterIconUrl})`
     );
 
     // Build description (new popup)
@@ -87,7 +111,13 @@ class CustomizeService {
     const bInfo = document.createElement("b");
     bInfo.textContent = "Informations";
     pInfo.appendChild(bInfo);
-    pInfo.innerHTML += `Plus d\'info dans la popup de config de l\'extension ou sur notre site : <a href="https://encadrement-loyers.fr/" target="_blank">https://encadrement-loyers.fr/</a>`;
+    pInfo.innerHTML += `Plus d\'info dans la popup de config de l\'extension ou sur notre site : <a href="https://encadrement-loyers.fr/" target="_blank">https://encadrement-loyers.fr/</a></br>`;
+    const socialNetInfo = document.createElement("div");
+    socialNetInfo.classList.add('social-networks');
+    socialNetInfo.innerHTML += `<a href="https://www.instagram.com/encadrementloyers/" target="_blank"><i class="instagram-logo"></i></a>`;
+    socialNetInfo.innerHTML += `<a href="https://twitter.com/_encadrement" target="_blank"><i class="twitter-logo"></i></a>`;
+    socialNetInfo.innerHTML += `<a href="https://www.facebook.com/encadrementloyers" target="_blank"><i class="facebook-logo"></i></a>`;
+    pInfo.appendChild(socialNetInfo);
 
     this.createList(detectedInfo, currentAd.detectedInfo);
     this.createList(computedInfo, {
@@ -178,21 +208,21 @@ class CustomizeService {
     document.body.appendChild(this.adDescriptionHelper);
 
     setTimeout(() => {
+      this.adDescriptionHelper.classList.remove("-begin");
       this.adDescriptionHelper.classList.add("-middle");
 
-      if (this.cptDescriptionHelper > 0) {
-        this.adDescriptionHelper.style.top = `${
-          56 * this.cptDescriptionHelper + 20 * 2
-        }px`;
-      }
+      this.adDescriptionHelper.style.top = `${
+        56 * this.cptDescriptionHelper + 20 * 2
+      }px`;
 
       this.cptDescriptionHelper += 1;
     });
 
     setTimeout(() => {
+      this.adDescriptionHelper.classList.remove("-middle");
       this.adDescriptionHelper.classList.add("-hide");
       this.cptDescriptionHelper -= 1;
-    }, 10000);
+    }, 8000);
   }
 
   addErrorBanner(error) {

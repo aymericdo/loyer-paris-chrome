@@ -42,6 +42,8 @@ class WebsiteService {
         return new LuxResidenceWebsite();
       case "bellesdemeures":
         return new BellesDemeuresWebsite();
+      case "bienici":
+        return new BienIciWebsite();
       default:
         return null;
     }

@@ -30,8 +30,9 @@
         "https://www.facebook.com/marketplace/*",
         "https://www.orpi.com/*",
         "https://gensdeconfiance.com/*",
-        "https://bellesdemeures.com/*",
-        "https://lux-residence.com/*"
+        "https://www.bellesdemeures.com/*",
+        "https://www.lux-residence.com/*",
+        "https://www.bienici.com/*"
       ],
       "js": [
         "helper/api.helper.js",
@@ -46,6 +47,9 @@
         "service/website/facebook.service.js",
         "service/website/orpi.service.js",
         "service/website/gensdeconfiance.service.js",
+        "service/website/bellesdemeures.service.js",
+        "service/website/luxresidence.service.js",
+        "service/website/bienici.service.js",
         "service/fetcher.js",
         "service/customize.js",
         "custom.js"

@@ -1,5 +1,8 @@
 :root {
   --strokeInfoIconUrl: '';
+  --twitterIconUrl: '';
+  --facebookIconUrl: '';
+  --instagramIconUrl: '';
   --yellow: #fdcd56;
   --green: #0be881;
 }
@@ -75,6 +78,19 @@
 
 .-flag.-illegal:hover {
   background-position: 100% 0;
+}
+
+.-flag > .-flag-price {
+  position: absolute;
+  right: 0;
+  bottom: -16px;
+  font-size: 14px;
+  border-radius: 10px;
+  padding: 0 10px;
+  box-shadow: -10px 10px 6px rgb(0 0 0 / 60%);
+  font-weight: 500;
+  background: white;
+  border: 1px solid black;
 }
 
 .-flag > .-flag-description {
@@ -160,7 +176,7 @@ display: flow-root;
   list-style-type: none;
 }
 
-.-flag > .-flag-description > section > .inset > p {
+.-flag > .-flag-description > section > .inset > p.-info {
   background-color: #5691fd;
   color: #e4edfd;
   border-radius: 10px;
@@ -170,26 +186,69 @@ display: flow-root;
   margin: 24px 0;
 }
 
-.-flag > .-flag-description > section > .inset > p > a {
+.-flag > .-flag-description > section > .inset > p.-info > a {
   color: #e1e1e1;
   font-weight: 500;
 }
 
-.-flag > .-flag-description > section > .inset > p > a:hover {
+.-flag > .-flag-description > section > .inset > p.-info > a:hover {
   color: #d3d3d3;
 }
 
-.-flag > .-flag-description > section > .inset > p > b {
+.-flag > .-flag-description > section > .inset > p.-info > b {
   display: flex;
   color: #ffffff;
   position: relative;
   margin-bottom: 4px;
 }
 
-.-flag > .-flag-description > section > .inset > p > b::before {
+.-flag > .-flag-description > section > .inset > p.-info > b::before {
   content: var(--strokeInfoIconUrl);
   position: absolute;
   left: -26px;
+}
+
+.-flag > .-flag-description > section > .inset > p.-info .social-networks {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.-flag > .-flag-description > section > .inset > p.-info .social-networks > a {
+  display: flex;
+  padding: 5px;
+  border-radius: 8px;
+  background-color: transparent;
+  transition: background-color 250ms ease-in-out;
+}
+
+.-flag > .-flag-description > section > .inset > p.-info .social-networks > a:hover {
+  background-color: white;
+}
+
+.-flag > .-flag-description > section > .inset > p.-info i {
+  width: 25px;
+  height: 25px;
+
+}
+
+.-flag > .-flag-description > section > .inset > p.-info i::before {
+  display: inline-block;
+  background-size: 100%;
+  width: 25px;
+  height: 25px;
+  content: "";
+}
+
+.-flag > .-flag-description > section > .inset > p.-info i.twitter-logo::before {
+  background-image: var(--twitterIconUrl);
+}
+.-flag > .-flag-description > section > .inset > p.-info i.instagram-logo::before {
+  background-image: var(--instagramIconUrl);
+}
+.-flag > .-flag-description > section > .inset > p.-info i.facebook-logo::before {
+  background-image: var(--facebookIconUrl);
 }
 
 .-flag > .-flag-description.-open {
