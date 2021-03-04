@@ -100,11 +100,14 @@ class CustomizeService {
 
     const h1 = document.createElement("h1");
     h1.textContent = "Encadrement";
+    h1.classList.add('title');
     const h2First = document.createElement("h2");
+    h2First.classList.add('subtitle');
     h2First.textContent = "Informations présentes dans l'annonce";
     const detectedInfo = document.createElement("ul");
     const h2Second = document.createElement("h2");
     h2Second.textContent = "Calcul du montant estimé du loyer";
+    h2Second.classList.add('subtitle');
     const computedInfo = document.createElement("ul");
     const pInfo = document.createElement("p");
     pInfo.classList.add("-info");

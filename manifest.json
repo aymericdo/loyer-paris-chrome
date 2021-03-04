@@ -32,7 +32,9 @@
         "https://gensdeconfiance.com/*",
         "https://www.bellesdemeures.com/*",
         "https://www.lux-residence.com/*",
-        "https://www.bienici.com/*"
+        "https://www.bienici.com/*",
+        "https://www.fnaim.fr/*",
+        "https://www.superimmo.com/*"
       ],
       "js": [
         "helper/api.helper.js",
@@ -50,6 +52,8 @@
         "service/website/bellesdemeures.service.js",
         "service/website/luxresidence.service.js",
         "service/website/bienici.service.js",
+        "service/website/fnaim.service.js",
+        "service/website/superimmo.service.js",
         "service/fetcher.js",
         "service/customize.js",
         "custom.js"

@@ -44,6 +44,10 @@ class WebsiteService {
         return new BellesDemeuresWebsite();
       case "bienici":
         return new BienIciWebsite();
+      case "fnaim":
+        return new FnaimWebsite();
+      case "superimmo":
+        return new SuperimmoWebsite();
       default:
         return null;
     }
