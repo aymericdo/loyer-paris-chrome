@@ -1,5 +1,5 @@
 class JinkaWebsite extends WebsiteService {
-  fireKeyword = "._alert_result";
+  fireKeyword = "._alert_result > div";
 
   getId() {
     const url = window.location.toString();

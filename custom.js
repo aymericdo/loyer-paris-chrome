@@ -3,6 +3,9 @@ const fetcherService = new FetcherService();
 const customizeService = new CustomizeService();
 let isFetched = false;
 
+let timer;
+let timer2;
+
 chrome.runtime.sendMessage({ message: "activateIcon" });
 
 chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
@@ -18,7 +21,6 @@ chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-let timer;
 const observer = new MutationObserver((mutations, observer) => {
   if (timer) clearTimeout(timer);
   mutations.forEach((mutation) => {
@@ -54,6 +56,16 @@ const observer = new MutationObserver((mutations, observer) => {
 });
 
 const letsObserve = () => {
+  observer.disconnect();
+  if (timer2) clearTimeout(timer2);
+
+  if (fetcherService.isBlackListed(
+    websiteService.currentDomain,
+    websiteService.getId()
+  )) {
+    return;
+  }
+
   isFetched = false;
   if (
     fetcherService.isAlreadyFetched(
@@ -81,11 +93,13 @@ const letsObserve = () => {
   } else if (websiteService.fireKeyword === null) {
     fetcherService.fetchData();
     isFetched = true;
-    observer.disconnect();
   } else if (!!document.body.querySelector(websiteService.fireKeyword) && !!document.body.querySelector(websiteService.fireKeyword).textContent) {
-    fetcherService.fetchData();
-    isFetched = true;
-    observer.disconnect();
+    // Need a timeout here because sometime, the dom is staying with all old elements, so, it's just to be sure it's ok
+    // (Problem encountered on lux-residence)
+    timer2 = setTimeout(() => {
+      fetcherService.fetchData();
+      isFetched = true;
+    }, 500);
   } else {
     observer.observe(document.body, {
       childList: true,

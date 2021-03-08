@@ -266,7 +266,7 @@
 
 .-description-helper {
   transition: all 500ms ease-in-out;
-  transition-property: transform;
+  transition-property: transform, top;
   transform: translate(0, -200%);
   box-sizing: initial;
   position: fixed;
@@ -303,6 +303,17 @@
 
 .-description-helper.-hide {
   transform: translate(200%, 0);
+}
+
+.-description-helper > a.update-link {
+  margin: 0 5px;
+  color: #0f0f0f;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.-description-helper > a.update-link:hover {
+  color: #050505;
 }
 
 @keyframes shake-animation {

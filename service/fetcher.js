@@ -1,6 +1,8 @@
 class FetcherService {
   adsChecked = [];
+  adsBlackListed = [];
   fetchingForIds = [];
+  versionChecked = false;
 
   constructor() {}
 
@@ -10,13 +12,17 @@ class FetcherService {
     if (ad) {
       customizeService.decorate(ad.ad)
     } else {
-      this.checkExtensionVersion();
+      if (!this.versionChecked) this.checkExtensionVersion();
       this.checkAd();
     }
   }
 
   isAlreadyFetched(d, i) {
     return this.adsChecked.some(({ domain, id }) => domain === d && id === i)
+  }
+
+  isBlackListed(d, i) {
+    return this.adsBlackListed.some(({ domain, id }) => domain === d && id === i)
   }
 
   // Private
@@ -52,6 +58,7 @@ class FetcherService {
   };
 
   checkExtensionVersion() {
+    this.versionChecked = true;
     const manifestData = chrome.runtime.getManifest();
     const url = `${SERVER}/version?version=${manifestData.version}&platform=${PLATFORM}`
     fetch(url)
@@ -77,6 +84,12 @@ class FetcherService {
 
   handleError = (err) => {
     this.fetchingForIds = this.fetchingForIds.filter(id => websiteService.getId() !== id);
+    if (['city', 'price', 'partner', 'filter', 'other'].includes(err.error)) {
+      this.adsBlackListed.push({
+        domain: websiteService.currentDomain,
+        id: websiteService.getId(),
+      });
+    }
     customizeService.addErrorBanner(err);
   }
 }

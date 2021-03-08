@@ -20,24 +20,31 @@ const TOKEN = {
 class CustomizeService {
   cptDescriptionHelper = 0;
   adFlag = null;
-  adDescriptionHelper = null;
   adFlagListener = null;
+  firstDescriptionHelper = null;
 
   constructor() {}
 
   decorate(currentAd) {
     this.customizeAd(currentAd);
 
-    this.addDescriptionHelper(
+    this.firstDescriptionHelper = this.addDescriptionHelper(
       "Cliquez sur le badge pour plus d'informations ⤴",
       currentAd.isLegal
     );
   }
 
   resetCustomization() {
-    this.cptDescriptionHelper = 0;
-    this.adFlag && this.adFlag.remove();
-    this.adDescriptionHelper && this.adDescriptionHelper.remove();
+    if (this.adFlag) {
+      this.cptDescriptionHelper -= 1;
+      this.adFlag.remove();
+    }
+
+    if (this.firstDescriptionHelper) {
+      this.cptDescriptionHelper -= 1;
+      this.firstDescriptionHelper.remove();
+    }
+
     this.adFlagListener && this.adFlagListener();
   }
 
@@ -64,6 +71,7 @@ class CustomizeService {
     }
 
     document.body.appendChild(this.adFlag);
+    this.moveDescriptionBanner();
     this.adFlagListener = dragElement(this.adFlag);
 
     const faviconIconUrl = chrome.extension.getURL(
@@ -202,30 +210,47 @@ class CustomizeService {
       });
   }
 
-  addDescriptionHelper(text, isLegal) {
-    this.adDescriptionHelper = document.createElement("div");
-    this.adDescriptionHelper.classList.add("-description-helper");
-    this.adDescriptionHelper.classList.add("-begin");
-    this.adDescriptionHelper.classList.add(isLegal ? "-legal" : "-illegal");
-    this.adDescriptionHelper.textContent = text;
-    document.body.appendChild(this.adDescriptionHelper);
-
+  addDescriptionHelper(text, isLegal, timer = 8000) {
+    const adDescriptionHelper = document.createElement("div");
+    adDescriptionHelper.classList.add("-description-helper");
+    adDescriptionHelper.classList.add("-begin");
+    adDescriptionHelper.classList.add(isLegal ? "-legal" : "-illegal");
+    adDescriptionHelper.innerHTML = text;
+    document.body.appendChild(adDescriptionHelper);
+    
     setTimeout(() => {
-      this.adDescriptionHelper.classList.remove("-begin");
-      this.adDescriptionHelper.classList.add("-middle");
+      adDescriptionHelper.classList.remove("-begin");
+      adDescriptionHelper.classList.add("-middle");
 
-      this.adDescriptionHelper.style.top = `${
-        56 * this.cptDescriptionHelper + 20 * 2
-      }px`;
+      const link = adDescriptionHelper.querySelector('a.update-link');
+      if (link) {
+        link.addEventListener('click', () => {
+          chrome.runtime.sendMessage({ message: "redirectSettings" });
+        });
+      }
+
+      this.moveDescriptionBanner();
 
       this.cptDescriptionHelper += 1;
     });
 
     setTimeout(() => {
-      this.adDescriptionHelper.classList.remove("-middle");
-      this.adDescriptionHelper.classList.add("-hide");
+      adDescriptionHelper.classList.remove("-middle");
+      adDescriptionHelper.classList.add("-hide");
       this.cptDescriptionHelper -= 1;
-    }, 8000);
+      setTimeout(() => { this.moveDescriptionBanner(false) });
+    }, timer);
+
+    return adDescriptionHelper;
+  }
+
+  moveDescriptionBanner(up = true) {
+    const adDescriptionHelperList = [...document.querySelectorAll('div.-description-helper.-middle')];
+    adDescriptionHelperList.forEach((adDescriptionHelper, i) => {
+      adDescriptionHelper.style.top = `${
+        56 * (up ? this.cptDescriptionHelper - i : this.cptDescriptionHelper - i - 1) + 20 * 2
+      }px`;
+    })
   }
 
   addErrorBanner(error) {
@@ -274,8 +299,9 @@ class CustomizeService {
       }
       case "outdated": {
         this.addDescriptionHelper(
-          "L'extension n'est plus à jour. Vous pouvez la mettre à jour manuellement dans les réglages.",
-          false
+          `L'extension Encadrement n'est plus à jour. <a class="update-link"> Cliquez ici</a> pour avoir la dernière version.`,
+          false,
+          20000
         );
         break;
       }
