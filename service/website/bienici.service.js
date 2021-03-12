@@ -1,5 +1,8 @@
 class BienIciWebsite extends WebsiteService {
-  fireKeyword = '.detailedSheetFirstBlock';
+  constructor() {
+    super();
+    this.fireKeyword = '.detailedSheetFirstBlock';
+  }
 
   getId() {
     const url = window.location.toString();

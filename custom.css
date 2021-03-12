@@ -309,7 +309,7 @@
   margin: 0 5px;
   color: #0f0f0f;
   cursor: pointer;
-  text-decoration: underline;
+  text-decoration: underline !important;
 }
 
 .-description-helper > a.update-link:hover {

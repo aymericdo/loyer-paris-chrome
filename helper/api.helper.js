@@ -1,5 +1,5 @@
-// const SERVER = 'https://encadrement-loyers.herokuapp.com'
-const SERVER = "http://localhost:3000";
+const SERVER = 'https://encadrement-loyers.herokuapp.com'
+// const SERVER = "http://localhost:3000";
 
 const PLATFORM = "chrome";
 

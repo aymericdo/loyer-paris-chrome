@@ -1,5 +1,8 @@
 class LuxResidenceWebsite extends WebsiteService {
-  fireKeyword = '.city'
+  constructor() {
+    super();
+    this.fireKeyword = '.city';
+  }  
 
   getId() {
     const url = window.location.toString();

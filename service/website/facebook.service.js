@@ -1,5 +1,8 @@
 class FacebookWebsite extends WebsiteService {
-  // fireKeyword = "div[data-pagelet=root]";
+  constructor() {
+    super();
+    // this.fireKeyword = "div[data-pagelet=root]";
+  }
 
   getId() {
     const url = window.location.toString();

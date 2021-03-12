@@ -18,12 +18,12 @@ const TOKEN = {
   false: "Non",
 };
 class CustomizeService {
-  cptDescriptionHelper = 0;
-  adFlag = null;
-  adFlagListener = null;
-  firstDescriptionHelper = null;
-
-  constructor() {}
+  constructor() {
+    this.cptDescriptionHelper = 0;
+    this.adFlag = null;
+    this.adFlagListener = null;
+    this.firstDescriptionHelper = null;
+  }
 
   decorate(currentAd) {
     this.customizeAd(currentAd);
@@ -210,24 +210,17 @@ class CustomizeService {
       });
   }
 
-  addDescriptionHelper(text, isLegal, timer = 8000) {
+  addDescriptionHelper(text, isLegal) {
     const adDescriptionHelper = document.createElement("div");
     adDescriptionHelper.classList.add("-description-helper");
     adDescriptionHelper.classList.add("-begin");
     adDescriptionHelper.classList.add(isLegal ? "-legal" : "-illegal");
-    adDescriptionHelper.innerHTML = text;
+    adDescriptionHelper.textContent = text;
     document.body.appendChild(adDescriptionHelper);
     
     setTimeout(() => {
       adDescriptionHelper.classList.remove("-begin");
       adDescriptionHelper.classList.add("-middle");
-
-      const link = adDescriptionHelper.querySelector('a.update-link');
-      if (link) {
-        link.addEventListener('click', () => {
-          chrome.runtime.sendMessage({ message: "redirectSettings" });
-        });
-      }
 
       this.moveDescriptionBanner();
 
@@ -239,7 +232,50 @@ class CustomizeService {
       adDescriptionHelper.classList.add("-hide");
       this.cptDescriptionHelper -= 1;
       setTimeout(() => { this.moveDescriptionBanner(false) });
-    }, timer);
+    }, 8000);
+
+    return adDescriptionHelper;
+  }
+
+  addUpdateBanner() {
+    const adDescriptionHelper = document.createElement("div");
+    adDescriptionHelper.classList.add("-description-helper");
+    adDescriptionHelper.classList.add("-begin");
+    adDescriptionHelper.classList.add("-illegal");
+    
+    const updateLink = document.createElement("a");
+    updateLink.classList.add("update-link");
+    updateLink.textContent = "Cliquez ici";
+    updateLink.addEventListener('click', () => {
+      chrome.runtime.sendMessage({ message: "redirectSettings" });
+    });
+
+    const adDescriptionHelperPart1 = document.createElement("span");
+    adDescriptionHelperPart1.textContent = `L'extension Encadrement n'est plus à jour.`;
+    const adDescriptionHelperPart2 = document.createElement("span");
+    adDescriptionHelperPart2.textContent = `pour avoir la dernière version.`;
+
+    adDescriptionHelper.appendChild(adDescriptionHelperPart1);
+    adDescriptionHelper.appendChild(updateLink);
+    adDescriptionHelper.appendChild(adDescriptionHelperPart2);
+
+    document.body.appendChild(adDescriptionHelper);
+    
+    setTimeout(() => {
+      adDescriptionHelper.classList.remove("-begin");
+      adDescriptionHelper.classList.add("-middle");
+
+      this.moveDescriptionBanner();
+
+      this.cptDescriptionHelper += 1;
+    });
+
+    setTimeout(() => {
+      adDescriptionHelper.classList.remove("-middle");
+      adDescriptionHelper.classList.add("-hide");
+      this.cptDescriptionHelper -= 1;
+      setTimeout(() => { this.moveDescriptionBanner(false) });
+    }, 20000);
 
     return adDescriptionHelper;
   }
@@ -298,11 +334,7 @@ class CustomizeService {
         break;
       }
       case "outdated": {
-        this.addDescriptionHelper(
-          `L'extension Encadrement n'est plus à jour. <a class="update-link"> Cliquez ici</a> pour avoir la dernière version.`,
-          false,
-          20000
-        );
+        this.addUpdateBanner()
         break;
       }
       case "other": {

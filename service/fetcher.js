@@ -1,10 +1,10 @@
 class FetcherService {
-  adsChecked = [];
-  adsBlackListed = [];
-  fetchingForIds = [];
-  versionChecked = false;
-
-  constructor() {}
+  constructor() {
+    this.adsChecked = [];
+    this.adsBlackListed = [];
+    this.fetchingForIds = [];
+    this.versionChecked = false;
+  }
 
   fetchData() {
     const ad = this.adsChecked.find(({ domain, id }) => domain === websiteService.currentDomain && id === websiteService.getId())
@@ -53,8 +53,8 @@ class FetcherService {
     fetch(request.url, request.opts)
       .then(middlewareJson)
       .then(middlewareErrorCatcher)
-      .then(this.handleSuccess)
-      .catch(this.handleError);
+      .then(this.handleSuccess.bind(this))
+      .catch(this.handleError.bind(this));
   };
 
   checkExtensionVersion() {
@@ -71,7 +71,7 @@ class FetcherService {
       });
   }
 
-  handleSuccess = (myJson) => {
+  handleSuccess(myJson) {
     const currentAd = { ...myJson };
     this.adsChecked.push({
       domain: websiteService.currentDomain,
@@ -82,7 +82,7 @@ class FetcherService {
     customizeService.decorate(currentAd)
   }
 
-  handleError = (err) => {
+  handleError(err) {
     this.fetchingForIds = this.fetchingForIds.filter(id => websiteService.getId() !== id);
     if (['city', 'price', 'partner', 'filter', 'other'].includes(err.error)) {
       this.adsBlackListed.push({

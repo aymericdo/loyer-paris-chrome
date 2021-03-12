@@ -1,8 +1,6 @@
 class WebsiteService {
-  fireKeyword = null;
-  currentDomain = null;
-
   constructor() {
+    this.fireKeyword = null;
     this.currentDomain = WebsiteService.getDomain();
   }
 

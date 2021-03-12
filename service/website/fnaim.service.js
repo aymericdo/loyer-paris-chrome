@@ -1,5 +1,8 @@
 class FnaimWebsite extends WebsiteService {
-  fireKeyword = '[itemprop=name]';
+  constructor() {
+    super();
+    this.fireKeyword = '[itemprop=name]';
+  }
 
   getId() {
     const url = window.location.toString();
