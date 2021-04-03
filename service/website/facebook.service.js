@@ -15,8 +15,6 @@ class FacebookWebsite extends WebsiteService {
 
     if (!body) return null;
 
-    return {
-      data: JSON.stringify(body.outerHTML),
-    };
+    return JSON.stringify(body.outerHTML);
   }
 }

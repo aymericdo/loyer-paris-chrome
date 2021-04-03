@@ -6,7 +6,8 @@ class WebsiteService {
 
   static getDomain() {
     try {
-      return window.location.toString()
+      return window.location
+        .toString()
         .split("/")[2]
         .replace("www.", "")
         .replace("immobilier.", "")
@@ -62,8 +63,6 @@ class WebsiteService {
 
   getData() {
     const body = document.querySelector("html > body");
-    return {
-      data: JSON.stringify(body.outerHTML),
-    };
+    return JSON.stringify(body.outerHTML);
   }
 }

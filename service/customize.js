@@ -56,10 +56,10 @@ class CustomizeService {
     this.adFlag = document.createElement("div");
     this.adFlag.classList.add("-flag");
     if (!currentAd.isLegal) {
-      this.adFlag.textContent = "Annonce illégale";
+      this.adFlag.textContent = "Non conforme";
       this.adFlag.classList.add("-illegal");
     } else {
-      this.adFlag.textContent = "Annonce légale";
+      this.adFlag.textContent = "Conforme";
     }
 
     if (!currentAd.isLegal) {
@@ -86,7 +86,9 @@ class CustomizeService {
       "--strokeInfoIconUrl",
       `url(${strokeInfoIconUrl})`
     );
-    const instagramIconUrl = chrome.extension.getURL("images/instagram-logo.png");
+    const instagramIconUrl = chrome.extension.getURL(
+      "images/instagram-logo.png"
+    );
     document.documentElement.style.setProperty(
       "--instagramIconUrl",
       `url(${instagramIconUrl})`
@@ -108,14 +110,14 @@ class CustomizeService {
 
     const h1 = document.createElement("h1");
     h1.textContent = "Encadrement";
-    h1.classList.add('title');
+    h1.classList.add("title");
     const h2First = document.createElement("h2");
-    h2First.classList.add('subtitle');
+    h2First.classList.add("subtitle");
     h2First.textContent = "Informations présentes dans l'annonce";
     const detectedInfo = document.createElement("ul");
     const h2Second = document.createElement("h2");
     h2Second.textContent = "Calcul du montant estimé du loyer";
-    h2Second.classList.add('subtitle');
+    h2Second.classList.add("subtitle");
     const computedInfo = document.createElement("ul");
     const pInfo = document.createElement("p");
     pInfo.classList.add("-info");
@@ -124,7 +126,7 @@ class CustomizeService {
     pInfo.appendChild(bInfo);
     pInfo.innerHTML += `Plus d\'info dans la popup de config de l\'extension ou sur notre site : <a href="https://encadrement-loyers.fr/" target="_blank">https://encadrement-loyers.fr/</a></br>`;
     const socialNetInfo = document.createElement("div");
-    socialNetInfo.classList.add('social-networks');
+    socialNetInfo.classList.add("social-networks");
     socialNetInfo.innerHTML += `<a href="https://www.instagram.com/encadrementloyers/" target="_blank"><i class="instagram-logo"></i></a>`;
     socialNetInfo.innerHTML += `<a href="https://twitter.com/_encadrement" target="_blank"><i class="twitter-logo"></i></a>`;
     socialNetInfo.innerHTML += `<a href="https://www.facebook.com/encadrementloyers" target="_blank"><i class="facebook-logo"></i></a>`;
@@ -217,7 +219,7 @@ class CustomizeService {
     adDescriptionHelper.classList.add(isLegal ? "-legal" : "-illegal");
     adDescriptionHelper.textContent = text;
     document.body.appendChild(adDescriptionHelper);
-    
+
     setTimeout(() => {
       adDescriptionHelper.classList.remove("-begin");
       adDescriptionHelper.classList.add("-middle");
@@ -231,7 +233,9 @@ class CustomizeService {
       adDescriptionHelper.classList.remove("-middle");
       adDescriptionHelper.classList.add("-hide");
       this.cptDescriptionHelper -= 1;
-      setTimeout(() => { this.moveDescriptionBanner(false) });
+      setTimeout(() => {
+        this.moveDescriptionBanner(false);
+      });
     }, 8000);
 
     return adDescriptionHelper;
@@ -242,11 +246,11 @@ class CustomizeService {
     adDescriptionHelper.classList.add("-description-helper");
     adDescriptionHelper.classList.add("-begin");
     adDescriptionHelper.classList.add("-illegal");
-    
+
     const updateLink = document.createElement("a");
     updateLink.classList.add("update-link");
     updateLink.textContent = "Cliquez ici";
-    updateLink.addEventListener('click', () => {
+    updateLink.addEventListener("click", () => {
       chrome.runtime.sendMessage({ message: "redirectSettings" });
     });
 
@@ -260,7 +264,7 @@ class CustomizeService {
     adDescriptionHelper.appendChild(adDescriptionHelperPart2);
 
     document.body.appendChild(adDescriptionHelper);
-    
+
     setTimeout(() => {
       adDescriptionHelper.classList.remove("-begin");
       adDescriptionHelper.classList.add("-middle");
@@ -274,19 +278,27 @@ class CustomizeService {
       adDescriptionHelper.classList.remove("-middle");
       adDescriptionHelper.classList.add("-hide");
       this.cptDescriptionHelper -= 1;
-      setTimeout(() => { this.moveDescriptionBanner(false) });
+      setTimeout(() => {
+        this.moveDescriptionBanner(false);
+      });
     }, 20000);
 
     return adDescriptionHelper;
   }
 
   moveDescriptionBanner(up = true) {
-    const adDescriptionHelperList = [...document.querySelectorAll('div.-description-helper.-middle')];
+    const adDescriptionHelperList = [
+      ...document.querySelectorAll("div.-description-helper.-middle"),
+    ];
     adDescriptionHelperList.forEach((adDescriptionHelper, i) => {
       adDescriptionHelper.style.top = `${
-        56 * (up ? this.cptDescriptionHelper - i : this.cptDescriptionHelper - i - 1) + 20 * 2
+        56 *
+          (up
+            ? this.cptDescriptionHelper - i
+            : this.cptDescriptionHelper - i - 1) +
+        20 * 2
       }px`;
-    })
+    });
   }
 
   addErrorBanner(error) {
@@ -334,7 +346,7 @@ class CustomizeService {
         break;
       }
       case "outdated": {
-        this.addUpdateBanner()
+        this.addUpdateBanner();
         break;
       }
       case "other": {

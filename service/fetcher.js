@@ -7,10 +7,13 @@ class FetcherService {
   }
 
   fetchData() {
-    const ad = this.adsChecked.find(({ domain, id }) => domain === websiteService.currentDomain && id === websiteService.getId())
+    const ad = this.adsChecked.find(
+      ({ domain, id }) =>
+        domain === websiteService.currentDomain && id === websiteService.getId()
+    );
 
     if (ad) {
-      customizeService.decorate(ad.ad)
+      customizeService.decorate(ad.ad);
     } else {
       if (!this.versionChecked) this.checkExtensionVersion();
       this.checkAd();
@@ -18,23 +21,29 @@ class FetcherService {
   }
 
   isAlreadyFetched(d, i) {
-    return this.adsChecked.some(({ domain, id }) => domain === d && id === i)
+    return this.adsChecked.some(({ domain, id }) => domain === d && id === i);
   }
 
   isBlackListed(d, i) {
-    return this.adsBlackListed.some(({ domain, id }) => domain === d && id === i)
+    return this.adsBlackListed.some(
+      ({ domain, id }) => domain === d && id === i
+    );
   }
 
   // Private
   buildRequest(dataParam) {
-    let data = { platform: PLATFORM, id: websiteService.getId() };
-  
+    let data = {
+      platform: PLATFORM,
+      id: websiteService.getId(),
+      url: window.location.toString(),
+    };
+
     if (!dataParam) {
-      data = { ...data, noMoreData: true };
+      data["noMoreData"] = true;
     } else {
-      data = { ...data, ...dataParam };
+      data["data"] = dataParam;
     }
-  
+
     return {
       url: `${SERVER}/${websiteService.currentDomain}/data/v2`,
       opts: { method: "post", body: JSON.stringify(data) },
@@ -45,8 +54,8 @@ class FetcherService {
     const data = websiteService.getData();
     const request = this.buildRequest(data);
 
-    if (this.fetchingForIds.some(id => id === websiteService.getId())) {
-      return null
+    if (this.fetchingForIds.some((id) => id === websiteService.getId())) {
+      return null;
     }
 
     this.fetchingForIds.push(websiteService.getId());
@@ -55,12 +64,12 @@ class FetcherService {
       .then(middlewareErrorCatcher)
       .then(this.handleSuccess.bind(this))
       .catch(this.handleError.bind(this));
-  };
+  }
 
   checkExtensionVersion() {
     this.versionChecked = true;
     const manifestData = chrome.runtime.getManifest();
-    const url = `${SERVER}/version?version=${manifestData.version}&platform=${PLATFORM}`
+    const url = `${SERVER}/version?version=${manifestData.version}&platform=${PLATFORM}`;
     fetch(url)
       .then(middlewareJson)
       .then(middlewareErrorCatcher)
@@ -78,13 +87,17 @@ class FetcherService {
       id: websiteService.getId(),
       ad: currentAd,
     });
-    this.fetchingForIds = this.fetchingForIds.filter(id => websiteService.getId() !== id);
-    customizeService.decorate(currentAd)
+    this.fetchingForIds = this.fetchingForIds.filter(
+      (id) => websiteService.getId() !== id
+    );
+    customizeService.decorate(currentAd);
   }
 
   handleError(err) {
-    this.fetchingForIds = this.fetchingForIds.filter(id => websiteService.getId() !== id);
-    if (['city', 'price', 'partner', 'filter', 'other'].includes(err.error)) {
+    this.fetchingForIds = this.fetchingForIds.filter(
+      (id) => websiteService.getId() !== id
+    );
+    if (["city", "price", "partner", "filter", "other"].includes(err.error)) {
       this.adsBlackListed.push({
         domain: websiteService.currentDomain,
         id: websiteService.getId(),
