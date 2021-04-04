@@ -34,7 +34,8 @@
         "https://www.lux-residence.com/*",
         "https://www.bienici.com/*",
         "https://www.fnaim.fr/*",
-        "https://www.superimmo.com/*"
+        "https://www.superimmo.com/*",
+        "https://www.locservice.fr/*"
       ],
       "js": [
         "helper/api.helper.js",
@@ -54,6 +55,7 @@
         "service/website/bienici.service.js",
         "service/website/fnaim.service.js",
         "service/website/superimmo.service.js",
+        "service/website/locservice.service.js",
         "service/fetcher.js",
         "service/customize.js",
         "custom.js"

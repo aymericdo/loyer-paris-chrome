@@ -1,8 +1,8 @@
 :root {
-  --strokeInfoIconUrl: '';
-  --twitterIconUrl: '';
-  --facebookIconUrl: '';
-  --instagramIconUrl: '';
+  --strokeInfoIconUrl: "";
+  --twitterIconUrl: "";
+  --facebookIconUrl: "";
+  --instagramIconUrl: "";
   --yellow: #fdcd56;
   --green: #0be881;
 }
@@ -16,6 +16,7 @@
   top: 20px;
   right: 20px;
   width: fit-content;
+  min-width: 200px;
   height: 50px;
   font-size: 25px;
   border-radius: 20px;
@@ -31,13 +32,19 @@
   animation: shake-animation 20s ease infinite;
   user-select: none;
 
-  background-image: linear-gradient(to left, var(--green), var(--green), #ffff, #ffff);
+  background-image: linear-gradient(
+    to left,
+    var(--green),
+    var(--green),
+    #ffff,
+    #ffff
+  );
   background-size: 300%;
   background-origin: border-box, border-box;
 }
 
 .-flag::after {
-  content: '';
+  content: "";
   background-image: var(--faviconIconUrl);
   background-size: contain;
   border-radius: 50%;
@@ -51,7 +58,13 @@
 
 .-flag.-illegal {
   border-color: var(--yellow);
-  background-image: linear-gradient(to left, var(--yellow), var(--yellow), #ffff, #ffff);
+  background-image: linear-gradient(
+    to left,
+    var(--yellow),
+    var(--yellow),
+    #ffff,
+    #ffff
+  );
   background-size: 300%;
   background-origin: border-box, border-box;
 }
@@ -230,14 +243,19 @@
   transition: background-color 250ms ease-in-out;
 }
 
-.-flag > .-flag-description > section > .inset > p.-info .social-networks > a:hover {
+.-flag
+  > .-flag-description
+  > section
+  > .inset
+  > p.-info
+  .social-networks
+  > a:hover {
   background-color: white;
 }
 
 .-flag > .-flag-description > section > .inset > p.-info i {
   width: 25px;
   height: 25px;
-
 }
 
 .-flag > .-flag-description > section > .inset > p.-info i::before {
@@ -248,13 +266,28 @@
   content: "";
 }
 
-.-flag > .-flag-description > section > .inset > p.-info i.twitter-logo::before {
+.-flag
+  > .-flag-description
+  > section
+  > .inset
+  > p.-info
+  i.twitter-logo::before {
   background-image: var(--twitterIconUrl);
 }
-.-flag > .-flag-description > section > .inset > p.-info i.instagram-logo::before {
+.-flag
+  > .-flag-description
+  > section
+  > .inset
+  > p.-info
+  i.instagram-logo::before {
   background-image: var(--instagramIconUrl);
 }
-.-flag > .-flag-description > section > .inset > p.-info i.facebook-logo::before {
+.-flag
+  > .-flag-description
+  > section
+  > .inset
+  > p.-info
+  i.facebook-logo::before {
   background-image: var(--facebookIconUrl);
 }
 

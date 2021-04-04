@@ -47,6 +47,8 @@ class WebsiteService {
         return new FnaimWebsite();
       case "superimmo":
         return new SuperimmoWebsite();
+      case "locservice":
+        return new LocServiceWebsite();
       default:
         return null;
     }
