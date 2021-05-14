@@ -11,7 +11,7 @@ class FacebookWebsite extends WebsiteService {
   }
 
   getData() {
-    const body = document.querySelector("html div[data-pagelet=MainFeed]");
+    const body = document.querySelector("html [id^=mount_]");
 
     if (!body) return null;
 
