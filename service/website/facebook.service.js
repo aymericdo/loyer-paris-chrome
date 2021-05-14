@@ -1,7 +1,7 @@
 class FacebookWebsite extends WebsiteService {
   constructor() {
     super();
-    // this.fireKeyword = "div[data-pagelet=root]";
+    // this.fireKeyword = "div[data-pagelet=MainFeed]";
   }
 
   getId() {
@@ -11,7 +11,7 @@ class FacebookWebsite extends WebsiteService {
   }
 
   getData() {
-    const body = document.querySelector("html div[data-pagelet=root]");
+    const body = document.querySelector("html div[data-pagelet=MainFeed]");
 
     if (!body) return null;
 
