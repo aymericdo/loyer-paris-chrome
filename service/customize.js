@@ -125,7 +125,14 @@ class CustomizeService {
     const bInfo = document.createElement("b");
     bInfo.textContent = "Informations";
     pInfo.appendChild(bInfo);
-    pInfo.innerHTML += `Plus d\'info dans la popup de config de l\'extension ou sur notre site : <a href="https://encadrement-loyers.fr/" target="_blank">https://encadrement-loyers.fr/</a></br>`;
+
+    if (currentAd.moreInfo) {
+      pInfo.innerHTML += `Plus d\'info dans la popup de config de l\'extension, sur notre site : <a href="https://encadrement-loyers.fr/" target="_blank">https://encadrement-loyers.fr/</a></br>`;
+      pInfo.innerHTML += `ou sur le site de la ville : <a href="${currentAd.moreInfo}" target="_blank">${currentAd.moreInfo}</a></br>`;
+    } else {
+      pInfo.innerHTML += `Plus d\'info dans la popup de config de l\'extension ou sur notre site : <a href="https://encadrement-loyers.fr/" target="_blank">https://encadrement-loyers.fr/</a></br>`;
+    }
+
     const socialNetInfo = document.createElement("div");
     socialNetInfo.classList.add("social-networks");
     socialNetInfo.innerHTML += `<a href="https://www.instagram.com/encadrementloyers/" target="_blank"><i class="instagram-logo"></i></a>`;

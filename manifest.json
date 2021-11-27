@@ -1,6 +1,6 @@
 {
   "name": "Encadrement",
-  "version": "6.0.4",
+  "version": "6.0.5",
   "description": "Soyez informés du prix maximum des annonces, basé sur l'encadrement des loyers, sur tous vos sites d'annonces préférés",
   "permissions": [],
   "page_action": {
