@@ -127,10 +127,17 @@ class CustomizeService {
     pInfo.appendChild(bInfo);
 
     if (currentAd.moreInfo) {
-      pInfo.innerHTML += `Plus d\'info dans la popup de config de l\'extension, sur notre site : <a href="https://encadrement-loyers.fr/" target="_blank">https://encadrement-loyers.fr/</a></br>`;
-      pInfo.innerHTML += `ou sur le site de la ville : <a href="${currentAd.moreInfo}" target="_blank">${currentAd.moreInfo}</a></br>`;
+      const a = document.createElement('a');
+      a.setAttribute('href', currentAd.moreInfo)
+      a.setAttribute('target', '_blank')
+      a.innerHTML = currentAd.moreInfo
+
+      pInfo.innerHTML += `Plus d\'info dans la popup de config de l\'extension, sur notre site : <a href="https://encadrement-loyers.fr/" target="_blank">https://encadrement-loyers.fr/</a></br>`
+      pInfo.innerHTML += 'ou sur le site de la ville : '
+      pInfo.appendChild(a)
+      pInfo.innerHTML += '</br>'
     } else {
-      pInfo.innerHTML += `Plus d\'info dans la popup de config de l\'extension ou sur notre site : <a href="https://encadrement-loyers.fr/" target="_blank">https://encadrement-loyers.fr/</a></br>`;
+      pInfo.innerHTML += `Plus d\'info dans la popup de config de l\'extension ou sur notre site : <a href="https://encadrement-loyers.fr/" target="_blank">https://encadrement-loyers.fr/</a></br>`
     }
 
     const socialNetInfo = document.createElement("div");
