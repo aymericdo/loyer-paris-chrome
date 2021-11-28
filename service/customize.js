@@ -37,14 +37,14 @@ class CustomizeService {
 
   resetCustomization() {
     if (this.adFlag) {
-      this.cptDescriptionHelper -= 1;
       this.adFlag.remove();
     }
 
     if (this.firstDescriptionHelper) {
-      this.cptDescriptionHelper -= 1;
       this.firstDescriptionHelper.remove();
     }
+
+    this.cptDescriptionHelper = 0
 
     this.adFlagListener && this.adFlagListener();
   }
@@ -75,31 +75,31 @@ class CustomizeService {
     this.moveDescriptionBanner();
     this.adFlagListener = dragElement(this.adFlag);
 
-    const faviconIconUrl = chrome.extension.getURL(
+    const faviconIconUrl = chrome.runtime.getURL(
       "images/favicon-128x128.png"
     );
     document.documentElement.style.setProperty(
       "--faviconIconUrl",
       `url(${faviconIconUrl})`
     );
-    const strokeInfoIconUrl = chrome.extension.getURL("images/stroke-info.svg");
+    const strokeInfoIconUrl = chrome.runtime.getURL("images/stroke-info.svg");
     document.documentElement.style.setProperty(
       "--strokeInfoIconUrl",
       `url(${strokeInfoIconUrl})`
     );
-    const instagramIconUrl = chrome.extension.getURL(
+    const instagramIconUrl = chrome.runtime.getURL(
       "images/instagram-logo.png"
     );
     document.documentElement.style.setProperty(
       "--instagramIconUrl",
       `url(${instagramIconUrl})`
     );
-    const facebookIconUrl = chrome.extension.getURL("images/facebook-logo.png");
+    const facebookIconUrl = chrome.runtime.getURL("images/facebook-logo.png");
     document.documentElement.style.setProperty(
       "--facebookIconUrl",
       `url(${facebookIconUrl})`
     );
-    const twitterIconUrl = chrome.extension.getURL("images/twitter-logo.png");
+    const twitterIconUrl = chrome.runtime.getURL("images/twitter-logo.png");
     document.documentElement.style.setProperty(
       "--twitterIconUrl",
       `url(${twitterIconUrl})`

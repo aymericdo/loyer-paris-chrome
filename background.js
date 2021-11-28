@@ -1,6 +1,6 @@
-chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message === "activateIcon") {
-    chrome.pageAction.show(sender.tab.id);
+    // chrome.action.show(sender.tab.id);
   } else if (request.message === "redirectSettings") {
     chrome.tabs.create({ 'url': 'chrome://extensions/?options=' + chrome.runtime.id });
   }

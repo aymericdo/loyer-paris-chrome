@@ -8,7 +8,7 @@ let timer2;
 
 chrome.runtime.sendMessage({ message: "activateIcon" });
 
-chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message === "urlHasChanged") {
     websiteService = WebsiteService.getCurrentWebsite();
     const newId = websiteService && websiteService.getId();
