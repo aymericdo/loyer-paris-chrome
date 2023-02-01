@@ -1,8 +1,10 @@
 {
   "name": "Encadrement",
-  "version": "6.0.5",
+  "version": "6.0.6",
   "description": "Soyez informés du prix maximum des annonces, basé sur l'encadrement des loyers, sur tous vos sites d'annonces préférés",
-  "permissions": [],
+  "permissions": [
+    "tabs"
+  ],
   "action": {
     "default_icon": {
       "16": "images/favicon-16x16.png",
@@ -63,32 +65,34 @@
       ]
     }
   ],
-  "web_accessible_resources": [{
-    "resources": [
-      "images/facebook-logo.png",
-      "images/instagram-logo.png",
-      "images/twitter-logo.png",
-      "images/stroke-info.svg",
-      "images/favicon-128x128.png"
-    ],
-    "matches": [
-      "https://www.seloger.com/*",
-      "https://www.leboncoin.fr/*",
-      "https://www.jinka.fr/*",
-      "https://www.pap.fr/*",
-      "https://www.logic-immo.com/*",
-      "https://immobilier.lefigaro.fr/*",
-      "https://www.facebook.com/*",
-      "https://www.orpi.com/*",
-      "https://gensdeconfiance.com/*",
-      "https://www.bellesdemeures.com/*",
-      "https://www.lux-residence.com/*",
-      "https://www.bienici.com/*",
-      "https://www.fnaim.fr/*",
-      "https://www.superimmo.com/*",
-      "https://www.locservice.fr/*"
-    ]
-  }],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/facebook-logo.png",
+        "images/instagram-logo.png",
+        "images/twitter-logo.png",
+        "images/stroke-info.svg",
+        "images/favicon-128x128.png"
+      ],
+      "matches": [
+        "https://www.seloger.com/*",
+        "https://www.leboncoin.fr/*",
+        "https://www.jinka.fr/*",
+        "https://www.pap.fr/*",
+        "https://www.logic-immo.com/*",
+        "https://immobilier.lefigaro.fr/*",
+        "https://www.facebook.com/*",
+        "https://www.orpi.com/*",
+        "https://gensdeconfiance.com/*",
+        "https://www.bellesdemeures.com/*",
+        "https://www.lux-residence.com/*",
+        "https://www.bienici.com/*",
+        "https://www.fnaim.fr/*",
+        "https://www.superimmo.com/*",
+        "https://www.locservice.fr/*"
+      ]
+    }
+  ],
   "icons": {
     "16": "images/favicon-16x16.png",
     "32": "images/favicon-32x32.png",

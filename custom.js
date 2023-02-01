@@ -34,7 +34,7 @@ const observer = new MutationObserver((mutations, observer) => {
           !isFetched &&
           !!node &&
           !!node.querySelector(websiteService.fireKeyword &&
-          !!node.querySelector(websiteService.fireKeyword).textContent)
+            !!node.querySelector(websiteService.fireKeyword).textContent)
         ) {
           fetcherService.fetchData();
           isFetched = true;

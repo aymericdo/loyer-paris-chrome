@@ -97,7 +97,7 @@ class FetcherService {
     this.fetchingForIds = this.fetchingForIds.filter(
       (id) => websiteService.getId() !== id
     );
-    if (["city", "price", "partner", "filter", "other"].includes(err.error)) {
+    if (["city", "minimal", "address", "price", "surface", "partner", "filter", "other"].includes(err.error)) {
       this.adsBlackListed.push({
         domain: websiteService.currentDomain,
         id: websiteService.getId(),

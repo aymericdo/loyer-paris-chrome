@@ -332,6 +332,13 @@ class CustomizeService {
         );
         break;
       }
+      case "surface": {
+        this.addDescriptionHelper(
+          "Nous n'avons pas trouvé la surface pour cette annonce.",
+          false
+        );
+        break;
+      }
       case "minimal": {
         this.addDescriptionHelper(
           "Nous n'avons pas trouvé les informations nécessaires pour cette annonce.",
