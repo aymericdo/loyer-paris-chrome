@@ -306,13 +306,12 @@ class CustomizeService {
       ...document.querySelectorAll("div.-description-helper.-middle"),
     ];
     adDescriptionHelperList.forEach((adDescriptionHelper, i) => {
-      adDescriptionHelper.style.top = `${
-        56 *
-          (up
-            ? this.cptDescriptionHelper - i
-            : this.cptDescriptionHelper - i - 1) +
+      adDescriptionHelper.style.top = `${56 *
+        (up
+          ? this.cptDescriptionHelper - i
+          : this.cptDescriptionHelper - i - 1) +
         20 * 2
-      }px`;
+        }px`;
     });
   }
 
@@ -377,7 +376,7 @@ class CustomizeService {
       default: {
         this.addDescriptionHelper(
           error.msg ||
-            "Erreur : nous allons résoudre ce problème pour cette annonce sous peu",
+          "Erreur : nous allons résoudre ce problème pour cette annonce sous peu",
           false
         );
         break;
