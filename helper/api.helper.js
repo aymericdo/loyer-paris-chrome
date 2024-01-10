@@ -1,4 +1,4 @@
-const SERVER = "https://encadrement-loyers.herokuapp.com";
+const SERVER = 'https://backend.aymericdo.ovh/encadrement-back';
 // const SERVER = "http://localhost:3000";
 
 const PLATFORM = "chrome";
