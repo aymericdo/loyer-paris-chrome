@@ -53,9 +53,13 @@ class CustomizeService {
     this.resetCustomization();
     this.cptDescriptionHelper += 1;
 
+    const isFake = currentAd.isFake;
+    let pFakeInfo = null
+
     // Badge
     this.adFlag = document.createElement("div");
-    this.adFlag.classList.add("-flag");
+    this.adFlag.classList.add("flag");
+    
     if (!currentAd.isLegal) {
       this.adFlag.textContent = "Non conforme";
       this.adFlag.classList.add("-illegal");
@@ -63,10 +67,37 @@ class CustomizeService {
       this.adFlag.textContent = "Conforme";
     }
 
+    if (isFake) {
+      this.adFlag.classList.add("-fake");
+      const fakeFlag = document.createElement("span");
+      fakeFlag.classList.add("fake");
+      fakeFlag.textContent = `* Cette ville n'applique actuellement pas l'encadrement des loyers.`
+      const fakeFlag2 = document.createElement("span");
+      fakeFlag2.classList.add("fake");
+      fakeFlag2.textContent = `Cette simulation est à but d'expérimentation.`
+      this.adFlag.appendChild(fakeFlag)
+      this.adFlag.appendChild(fakeFlag2)
+
+      pFakeInfo = document.createElement("p");
+      pFakeInfo.classList.add('-warning');
+      const bFakeInfo = document.createElement("b");
+      bFakeInfo.classList.add('-icon');
+      bFakeInfo.textContent = "Attention";
+      pFakeInfo.appendChild(bFakeInfo);
+
+      pFakeInfo.innerHTML += `Cette ville n'applique pas l'encadrement des loyers.</br>`
+      pFakeInfo.innerHTML += `L'extension est ici active de manière exceptionnelle à des fins d'expérimentations.</br>`
+      pFakeInfo.innerHTML += `Vous ne pouvez donc pas modifier votre loyer, quel que soit le résultat de notre analyse.</br></br>`
+      pFakeInfo.innerHTML += `<b>Méthodologie :</b> </br>`
+      pFakeInfo.innerHTML += `Faire comme si l'encadrement était mis en application en prenant comme base de référence `
+      pFakeInfo.innerHTML += `la quartier le moins cher de Paris, à partir des critères réellement trouvés dans l'annonce.`
+    }
+    
+
     if (!currentAd.isLegal) {
       // price flag
       const adFlagPrice = document.createElement("span");
-      adFlagPrice.classList.add("-flag-price");
+      adFlagPrice.classList.add("flag-price");
       adFlagPrice.textContent = `Prix max estimé ${currentAd.computedInfo.maxAuthorized.value}€`;
       this.adFlag.appendChild(adFlagPrice);
     }
@@ -86,6 +117,11 @@ class CustomizeService {
     document.documentElement.style.setProperty(
       "--strokeInfoIconUrl",
       `url(${strokeInfoIconUrl})`
+    );
+    const solidBangIconUrl = chrome.runtime.getURL("images/solid-bang.svg");
+    document.documentElement.style.setProperty(
+      "--solidBangIconUrl",
+      `url(${solidBangIconUrl})`
     );
     const instagramIconUrl = chrome.runtime.getURL(
       "images/instagram-logo.png"
@@ -112,17 +148,21 @@ class CustomizeService {
     const h1 = document.createElement("h1");
     h1.textContent = "Encadrement";
     h1.classList.add("title");
+
     const h2First = document.createElement("h2");
     h2First.classList.add("subtitle");
     h2First.textContent = "Informations présentes dans l'annonce";
+
     const detectedInfo = document.createElement("ul");
     const h2Second = document.createElement("h2");
     h2Second.textContent = "Calcul du montant estimé du loyer";
     h2Second.classList.add("subtitle");
     const computedInfo = document.createElement("ul");
+
     const pInfo = document.createElement("p");
     pInfo.classList.add("-info");
     const bInfo = document.createElement("b");
+    bInfo.classList.add('-icon');
     bInfo.textContent = "Informations";
     pInfo.appendChild(bInfo);
 
@@ -159,6 +199,7 @@ class CustomizeService {
     const adDescriptionSectionInset = document.createElement("div");
     adDescriptionSectionInset.classList.add("inset");
     adDescriptionSectionInset.appendChild(h1);
+    if (pFakeInfo) adDescriptionSectionInset.appendChild(pFakeInfo);
     adDescriptionSectionInset.appendChild(h2First);
     adDescriptionSectionInset.appendChild(detectedInfo);
     adDescriptionSectionInset.appendChild(h2Second);
@@ -169,7 +210,7 @@ class CustomizeService {
     adDescriptionSection.appendChild(adDescriptionSectionInset);
     adDescription.appendChild(adDescriptionSection);
 
-    adDescription.classList.add("-flag-description");
+    adDescription.classList.add("flag-description");
     this.adFlag.appendChild(adDescription);
 
     // Toggle description opening
@@ -256,51 +297,6 @@ class CustomizeService {
     return adDescriptionHelper;
   }
 
-  addUpdateBanner() {
-    const adDescriptionHelper = document.createElement("div");
-    adDescriptionHelper.classList.add("-description-helper");
-    adDescriptionHelper.classList.add("-begin");
-    adDescriptionHelper.classList.add("-illegal");
-
-    const updateLink = document.createElement("a");
-    updateLink.classList.add("update-link");
-    updateLink.textContent = "Cliquez ici";
-    updateLink.addEventListener("click", () => {
-      chrome.runtime.sendMessage({ message: "redirectSettings" });
-    });
-
-    const adDescriptionHelperPart1 = document.createElement("span");
-    adDescriptionHelperPart1.textContent = `L'extension Encadrement n'est plus à jour.`;
-    const adDescriptionHelperPart2 = document.createElement("span");
-    adDescriptionHelperPart2.textContent = `pour avoir la dernière version.`;
-
-    adDescriptionHelper.appendChild(adDescriptionHelperPart1);
-    adDescriptionHelper.appendChild(updateLink);
-    adDescriptionHelper.appendChild(adDescriptionHelperPart2);
-
-    document.body.appendChild(adDescriptionHelper);
-
-    setTimeout(() => {
-      adDescriptionHelper.classList.remove("-begin");
-      adDescriptionHelper.classList.add("-middle");
-
-      this.moveDescriptionBanner();
-
-      this.cptDescriptionHelper += 1;
-    });
-
-    setTimeout(() => {
-      adDescriptionHelper.classList.remove("-middle");
-      adDescriptionHelper.classList.add("-hide");
-      this.cptDescriptionHelper -= 1;
-      setTimeout(() => {
-        this.moveDescriptionBanner(false);
-      });
-    }, 20000);
-
-    return adDescriptionHelper;
-  }
-
   moveDescriptionBanner(up = true) {
     const adDescriptionHelperList = [
       ...document.querySelectorAll("div.-description-helper.-middle"),
@@ -364,10 +360,6 @@ class CustomizeService {
           "Nous avons pas trouvé de correspondance.",
           false
         );
-        break;
-      }
-      case "outdated": {
-        this.addUpdateBanner();
         break;
       }
       case "other": {

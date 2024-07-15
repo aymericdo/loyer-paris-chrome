@@ -6,24 +6,9 @@ let isFetched = false;
 let timer;
 let timer2;
 
-chrome.runtime.sendMessage({ message: "activateIcon" });
-
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.message === "urlHasChanged") {
-    websiteService = WebsiteService.getCurrentWebsite();
-    const newId = websiteService && websiteService.getId();
-    if (newId === null) {
-      customizeService.resetCustomization();
-    } else {
-      customizeService.resetCustomization();
-      letsObserve();
-    }
-  }
-});
-
 const observer = new MutationObserver((mutations, observer) => {
   if (timer) clearTimeout(timer);
-  mutations.forEach((mutation) => {
+  mutations.forEach(async (mutation) => {
     if (!mutation.addedNodes) return;
 
     for (let i = 0; i < mutation.addedNodes.length; i++) {
@@ -36,7 +21,7 @@ const observer = new MutationObserver((mutations, observer) => {
           !!node.querySelector(websiteService.fireKeyword &&
             !!node.querySelector(websiteService.fireKeyword).textContent)
         ) {
-          fetcherService.fetchData();
+          await fetcherService.fetchData();
           isFetched = true;
           observer.disconnect();
         }
@@ -46,16 +31,16 @@ const observer = new MutationObserver((mutations, observer) => {
     }
   });
 
-  timer = setTimeout(() => {
+  timer = setTimeout(async () => {
     if (!isFetched) {
-      fetcherService.fetchData();
+      await fetcherService.fetchData();
       isFetched = true;
       observer.disconnect();
     }
   }, 3000);
 });
 
-const letsObserve = () => {
+const letsObserve = async () => {
   observer.disconnect();
   if (timer2) clearTimeout(timer2);
 
@@ -91,13 +76,13 @@ const letsObserve = () => {
       characterData: false,
     });
   } else if (websiteService.fireKeyword === null) {
-    fetcherService.fetchData();
+    await fetcherService.fetchData();
     isFetched = true;
   } else if (!!document.body.querySelector(websiteService.fireKeyword) && !!document.body.querySelector(websiteService.fireKeyword).textContent) {
     // Need a timeout here because sometime, the dom is staying with all old elements, so, it's just to be sure it's ok
     // (Problem encountered on lux-residence)
-    timer2 = setTimeout(() => {
-      fetcherService.fetchData();
+    timer2 = setTimeout(async () => {
+      await fetcherService.fetchData();
       isFetched = true;
     }, 500);
   } else {

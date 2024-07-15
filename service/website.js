@@ -23,8 +23,6 @@ class WebsiteService {
         return new LeboncoinWebsite();
       case "seloger":
         return new SelogerWebsite();
-      case "jinka":
-        return new JinkaWebsite();
       case "pap":
         return new PapWebsite();
       case "logic-immo":

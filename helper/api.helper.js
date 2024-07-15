@@ -3,10 +3,6 @@ const SERVER = 'https://backend.aymericdo.ovh/encadrement-back';
 
 const PLATFORM = "chrome";
 
-const middlewareJson = (response) => {
-  return response.json();
-};
-
 const middlewareErrorCatcher = (response) => {
   if (
     (response &&

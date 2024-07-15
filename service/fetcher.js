@@ -3,10 +3,9 @@ class FetcherService {
     this.adsChecked = [];
     this.adsBlackListed = [];
     this.fetchingForIds = [];
-    this.versionChecked = false;
   }
 
-  fetchData() {
+  async fetchData() {
     const ad = this.adsChecked.find(
       ({ domain, id }) =>
         domain === websiteService.currentDomain && id === websiteService.getId()
@@ -15,8 +14,7 @@ class FetcherService {
     if (ad) {
       customizeService.decorate(ad.ad);
     } else {
-      if (!this.versionChecked) this.checkExtensionVersion();
-      this.checkAd();
+      await this.checkAd();
     }
   }
 
@@ -50,7 +48,7 @@ class FetcherService {
     };
   }
 
-  checkAd() {
+  async checkAd() {
     const data = websiteService.getData();
     const request = this.buildRequest(data);
 
@@ -59,25 +57,17 @@ class FetcherService {
     }
 
     this.fetchingForIds.push(websiteService.getId());
-    fetch(request.url, request.opts)
-      .then(middlewareJson)
-      .then(middlewareErrorCatcher)
-      .then(this.handleSuccess.bind(this))
-      .catch(this.handleError.bind(this));
-  }
+    try {
+      const result = await fetch(request.url, request.opts)
+      const myJson = await result.json()
 
-  checkExtensionVersion() {
-    this.versionChecked = true;
-    const manifestData = chrome.runtime.getManifest();
-    const url = `${SERVER}/version?version=${manifestData.version}&platform=${PLATFORM}`;
-    fetch(url)
-      .then(middlewareJson)
-      .then(middlewareErrorCatcher)
-      .then((isOutdated) => {
-        if (isOutdated) {
-          customizeService.addErrorBanner({ error: "outdated" });
-        }
-      });
+      middlewareErrorCatcher(myJson)
+
+      this.handleSuccess(myJson)
+    } catch (error) {
+      console.error(JSON.stringify(error))
+      this.handleError(error)
+    }
   }
 
   handleSuccess(myJson) {

@@ -7,10 +7,11 @@
   --green: #0be881;
 }
 
-.-flag {
+.flag {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   cursor: pointer;
   position: fixed;
   top: 20px;
@@ -43,7 +44,7 @@
   background-origin: border-box, border-box;
 }
 
-.-flag::after {
+.flag::after {
   content: "";
   background-image: var(--faviconIconUrl);
   background-size: contain;
@@ -56,7 +57,7 @@
   cursor: move;
 }
 
-.-flag.-illegal {
+.flag.-illegal {
   border-color: var(--yellow);
   background-image: linear-gradient(
     to left,
@@ -69,31 +70,40 @@
   background-origin: border-box, border-box;
 }
 
-.-flag:active {
+.flag:active {
   cursor: grabbing;
   box-shadow: -6px 6px 5px rgba(0, 0, 0, 0.6);
 }
 
-.-flag.-clicked,
-.-flag:hover {
+.flag.-clicked,
+.flag:hover {
   background-position: 100% 0;
   box-shadow: -8px 8px 5px rgba(0, 0, 0, 0.6);
 }
 
-.-flag:not(.-illegal).-clicked,
-.-flag:not(.-illegal):hover {
+.flag:not(.-illegal).-clicked,
+.flag:not(.-illegal):hover {
   color: #fff;
 }
 
-.-flag.-clicked {
+.flag.-clicked {
   animation: none;
 }
 
-.-flag.-illegal:hover {
+.flag.-illegal:hover {
   background-position: 100% 0;
 }
 
-.-flag > .-flag-price {
+.flag.-fake {
+  height: 75px;
+}
+
+.flag > .fake {
+  text-wrap: nowrap;
+  font-size: 10px;
+}
+
+.flag > .flag-price {
   position: absolute;
   right: 0;
   bottom: -16px;
@@ -106,7 +116,7 @@
   border: 1px solid black;
 }
 
-.-flag > .-flag-description {
+.flag > .flag-description {
   position: absolute;
   top: 0px;
   height: 480px;
@@ -122,16 +132,16 @@
   animation-fill-mode: forwards;
 }
 
-.-flag > .-flag-description > section {
+.flag > .flag-description > section {
   max-height: 100%;
   overflow-y: auto;
 }
 
-.-flag > .-flag-description > section > .inset {
+.flag > .flag-description > section > .inset {
   padding: 24px;
 }
 
-.-flag > .-flag-description > section > .inset > h1 {
+.flag > .flag-description > section > .inset > h1 {
   display: inline-block;
   color: var(--yellow);
   padding-top: 16px;
@@ -140,7 +150,7 @@
   margin: 0;
 }
 
-.-flag > .-flag-description > section > .inset > h1.title::after {
+.flag > .flag-description > section > .inset > h1.title::after {
   content: "";
   position: relative;
   background-color: var(--yellow);
@@ -152,7 +162,7 @@
   transform: none;
 }
 
-.-flag > .-flag-description > section > .inset > h2.subtitle {
+.flag > .flag-description > section > .inset > h2.subtitle {
   color: #b1b1b1;
   padding: 9px 24px;
   font-size: 16px;
@@ -161,12 +171,12 @@
   margin-top: 24px;
 }
 
-.-flag > .-flag-description > section > .inset > h2.subtitle::after {
+.flag > .flag-description > section > .inset > h2.subtitle::after {
   /* Thanks fnaim... */
   display: none;
 }
 
-.-flag > .-flag-description > section > .inset > ul {
+.flag > .flag-description > section > .inset > ul {
   background-color: #222222;
   border: solid 1px transparent;
   border-radius: 10px;
@@ -174,7 +184,7 @@
   margin: 0;
 }
 
-.-flag > .-flag-description > section > .inset > ul > li {
+.flag > .flag-description > section > .inset > ul > li {
   display: flex;
   justify-content: space-between;
   list-style-type: none;
@@ -183,22 +193,20 @@
   margin-bottom: 16px;
 }
 
-.-flag > .-flag-description > section > .inset > ul > li:last-child {
+.flag > .flag-description > section > .inset > ul > li:last-child {
   margin-bottom: 0;
 }
 
-.-flag > .-flag-description > section > .inset > ul > li > .key {
+.flag > .flag-description > section > .inset > ul > li > .key {
   color: #7e7e7e;
 }
 
-.-flag > .-flag-description > section > .inset > ul > li > .value {
+.flag > .flag-description > section > .inset > ul > li > .value {
   color: #e1e1e1;
   list-style-type: none;
 }
 
-.-flag > .-flag-description > section > .inset > p.-info {
-  background-color: #5691fd;
-  color: #e4edfd;
+.flag > .flag-description > section > .inset > p {
   border-radius: 10px;
   font-size: 13px;
   padding: 24px;
@@ -206,36 +214,61 @@
   margin: 24px 0;
 }
 
-.-flag > .-flag-description > section > .inset > p.-info > a {
+.flag > .flag-description > section > .inset > p > a {
   color: #e1e1e1;
   font-weight: 500;
 }
 
-.-flag > .-flag-description > section > .inset > p.-info > a:hover {
+.flag > .flag-description > section > .inset > p > a:hover {
   color: #d3d3d3;
 }
 
-.-flag > .-flag-description > section > .inset > p.-info > b {
+.flag > .flag-description > section > .inset > p > b.-icon {
   display: flex;
   color: #ffffff;
   position: relative;
   margin-bottom: 4px;
 }
 
-.-flag > .-flag-description > section > .inset > p.-info > b::before {
-  content: var(--strokeInfoIconUrl);
+.flag > .flag-description > section > .inset > p > b.-icon::before {
   position: absolute;
   left: -26px;
 }
 
-.-flag > .-flag-description > section > .inset > p.-info .social-networks {
+.flag > .flag-description > section > .inset > p.-info {
+  background-color: #5691fd;
+  color: #e4edfd;
+}
+
+.flag > .flag-description > section > .inset > p.-warning {
+  background-color: #FDCD56;
+  color: #0f0f0f;
+}
+
+.flag > .flag-description > section > .inset > p.-info > b.-icon::before {
+  content: var(--strokeInfoIconUrl);
+}
+
+.flag > .flag-description > section > .inset > p.-warning > b.-icon::before {
+  content: var(--solidBangIconUrl);
+}
+
+.flag > .flag-description > section > .inset > p.-warning > a {
+  color: #0f0f0f;
+}
+
+.flag > .flag-description > section > .inset > p.-warning > b {
+  color: #050505;
+}
+
+.flag > .flag-description > section > .inset > p.-info .social-networks {
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin-top: 16px;
 }
 
-.-flag > .-flag-description > section > .inset > p.-info .social-networks > a {
+.flag > .flag-description > section > .inset > p.-info .social-networks > a {
   display: flex;
   padding: 5px;
   border-radius: 8px;
@@ -243,8 +276,8 @@
   transition: background-color 250ms ease-in-out;
 }
 
-.-flag
-  > .-flag-description
+.flag
+  > .flag-description
   > section
   > .inset
   > p.-info
@@ -253,37 +286,38 @@
   background-color: white;
 }
 
-.-flag > .-flag-description > section > .inset > p.-info i {
+.flag > .flag-description > section > .inset > p.-info i {
   width: 25px;
   height: 25px;
 }
 
-.-flag > .-flag-description > section > .inset > p.-info i::before {
+.flag > .flag-description > section > .inset > p.-info i::before {
   display: inline-block;
   background-size: 100%;
   width: 25px;
   height: 25px;
   content: "";
+  background-repeat: no-repeat;
 }
 
-.-flag
-  > .-flag-description
+.flag
+  > .flag-description
   > section
   > .inset
   > p.-info
   i.twitter-logo::before {
   background-image: var(--twitterIconUrl);
 }
-.-flag
-  > .-flag-description
+.flag
+  > .flag-description
   > section
   > .inset
   > p.-info
   i.instagram-logo::before {
   background-image: var(--instagramIconUrl);
 }
-.-flag
-  > .-flag-description
+.flag
+  > .flag-description
   > section
   > .inset
   > p.-info
@@ -291,7 +325,7 @@
   background-image: var(--facebookIconUrl);
 }
 
-.-flag > .-flag-description.-open {
+.flag > .flag-description.-open {
   left: -1em;
   animation: description-opening 200ms ease-out;
   animation-fill-mode: forwards;

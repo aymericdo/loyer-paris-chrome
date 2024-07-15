@@ -1,6 +1,6 @@
 {
   "name": "Encadrement",
-  "version": "6.1.2",
+  "version": "6.1.3",
   "description": "Soyez informés du prix maximum des annonces, basé sur l'encadrement des loyers, sur tous vos sites d'annonces préférés",
   "permissions": [],
   "action": {
@@ -12,15 +12,11 @@
     },
     "default_popup": "popup.html"
   },
-  "background": {
-    "service_worker": "background.js"
-  },
   "content_scripts": [
     {
       "matches": [
         "https://www.seloger.com/*",
         "https://www.leboncoin.fr/*",
-        "https://www.jinka.fr/*",
         "https://www.pap.fr/*",
         "https://www.logic-immo.com/*",
         "https://immobilier.lefigaro.fr/*",
@@ -40,7 +36,6 @@
         "service/website.js",
         "service/website/seloger.service.js",
         "service/website/leboncoin.service.js",
-        "service/website/jinka.service.js",
         "service/website/pap.service.js",
         "service/website/logicimmo.service.js",
         "service/website/lefigaro.service.js",
@@ -70,12 +65,12 @@
         "images/instagram-logo.png",
         "images/twitter-logo.png",
         "images/stroke-info.svg",
+        "images/solid-bang.svg",
         "images/favicon-128x128.png"
       ],
       "matches": [
         "https://www.seloger.com/*",
         "https://www.leboncoin.fr/*",
-        "https://www.jinka.fr/*",
         "https://www.pap.fr/*",
         "https://www.logic-immo.com/*",
         "https://immobilier.lefigaro.fr/*",
