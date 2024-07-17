@@ -28,10 +28,13 @@
         "https://www.bienici.com/*",
         "https://www.fnaim.fr/*",
         "https://www.superimmo.com/*",
-        "https://www.locservice.fr/*"
+        "https://www.locservice.fr/*",
+        "https://www.avendrealouer.fr/*",
+        "https://fr.foncia.com/*"
       ],
       "js": [
         "helper/api.helper.js",
+        "helper/wait-for-elm.helper.js",
         "helper/draggable.helper.js",
         "service/website.js",
         "service/website/seloger.service.js",
@@ -48,6 +51,8 @@
         "service/website/fnaim.service.js",
         "service/website/superimmo.service.js",
         "service/website/locservice.service.js",
+        "service/website/foncia.service.js",
+        "service/website/avendrealouer.service.js",
         "service/fetcher.js",
         "service/customize.js",
         "custom.js"

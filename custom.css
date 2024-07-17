@@ -7,7 +7,12 @@
   --green: #0be881;
 }
 
-.flag {
+.encadrement-flag .title,
+.encadrement-flag .subtitle {
+  font-family: "Garnett", "Avenir", Helvetica, Arial, sans-serif !important;
+}
+
+.encadrement-flag {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,7 +29,7 @@
   padding: 0 10px;
   box-shadow: -10px 10px 6px rgba(0, 0, 0, 0.6);
   font-weight: 500;
-  font-family: "Garnett", "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "Garnett", "Avenir", Helvetica, Arial, sans-serif !important;
   color: #0f0f0f;
   border: 2px solid var(--green);
   z-index: 9999999;
@@ -44,7 +49,7 @@
   background-origin: border-box, border-box;
 }
 
-.flag::after {
+.encadrement-flag::after {
   content: "";
   background-image: var(--faviconIconUrl);
   background-size: contain;
@@ -57,7 +62,7 @@
   cursor: move;
 }
 
-.flag.-illegal {
+.encadrement-flag.-illegal {
   border-color: var(--yellow);
   background-image: linear-gradient(
     to left,
@@ -70,40 +75,40 @@
   background-origin: border-box, border-box;
 }
 
-.flag:active {
+.encadrement-flag:active {
   cursor: grabbing;
   box-shadow: -6px 6px 5px rgba(0, 0, 0, 0.6);
 }
 
-.flag.-clicked,
-.flag:hover {
+.encadrement-flag.-clicked,
+.encadrement-flag:hover {
   background-position: 100% 0;
   box-shadow: -8px 8px 5px rgba(0, 0, 0, 0.6);
 }
 
-.flag:not(.-illegal).-clicked,
-.flag:not(.-illegal):hover {
+.encadrement-flag:not(.-illegal).-clicked,
+.encadrement-flag:not(.-illegal):hover {
   color: #fff;
 }
 
-.flag.-clicked {
+.encadrement-flag.-clicked {
   animation: none;
 }
 
-.flag.-illegal:hover {
+.encadrement-flag.-illegal:hover {
   background-position: 100% 0;
 }
 
-.flag.-fake {
+.encadrement-flag.-fake {
   height: 75px;
 }
 
-.flag > .fake {
+.encadrement-flag > .fake {
   text-wrap: nowrap;
   font-size: 10px;
 }
 
-.flag > .flag-price {
+.encadrement-flag > .encadrement-flag-price {
   position: absolute;
   right: 0;
   bottom: -16px;
@@ -116,7 +121,7 @@
   border: 1px solid black;
 }
 
-.flag > .flag-description {
+.encadrement-flag > .encadrement-flag-description {
   position: absolute;
   top: 0px;
   height: 480px;
@@ -132,16 +137,16 @@
   animation-fill-mode: forwards;
 }
 
-.flag > .flag-description > section {
+.encadrement-flag > .encadrement-flag-description > section {
   max-height: 100%;
   overflow-y: auto;
 }
 
-.flag > .flag-description > section > .inset {
+.encadrement-flag > .encadrement-flag-description > section > .inset {
   padding: 24px;
 }
 
-.flag > .flag-description > section > .inset > h1 {
+.encadrement-flag > .encadrement-flag-description > section > .inset > h1 {
   display: inline-block;
   color: var(--yellow);
   padding-top: 16px;
@@ -150,7 +155,7 @@
   margin: 0;
 }
 
-.flag > .flag-description > section > .inset > h1.title::after {
+.encadrement-flag > .encadrement-flag-description > section > .inset > h1.title::after {
   content: "";
   position: relative;
   background-color: var(--yellow);
@@ -162,7 +167,7 @@
   transform: none;
 }
 
-.flag > .flag-description > section > .inset > h2.subtitle {
+.encadrement-flag > .encadrement-flag-description > section > .inset > h2.subtitle {
   color: #b1b1b1;
   padding: 9px 24px;
   font-size: 16px;
@@ -171,12 +176,12 @@
   margin-top: 24px;
 }
 
-.flag > .flag-description > section > .inset > h2.subtitle::after {
+.encadrement-flag > .encadrement-flag-description > section > .inset > h2.subtitle::after {
   /* Thanks fnaim... */
   display: none;
 }
 
-.flag > .flag-description > section > .inset > ul {
+.encadrement-flag > .encadrement-flag-description > section > .inset > ul {
   background-color: #222222;
   border: solid 1px transparent;
   border-radius: 10px;
@@ -184,7 +189,7 @@
   margin: 0;
 }
 
-.flag > .flag-description > section > .inset > ul > li {
+.encadrement-flag > .encadrement-flag-description > section > .inset > ul > li {
   display: flex;
   justify-content: space-between;
   list-style-type: none;
@@ -193,20 +198,20 @@
   margin-bottom: 16px;
 }
 
-.flag > .flag-description > section > .inset > ul > li:last-child {
+.encadrement-flag > .encadrement-flag-description > section > .inset > ul > li:last-child {
   margin-bottom: 0;
 }
 
-.flag > .flag-description > section > .inset > ul > li > .key {
+.encadrement-flag > .encadrement-flag-description > section > .inset > ul > li > .key {
   color: #7e7e7e;
 }
 
-.flag > .flag-description > section > .inset > ul > li > .value {
+.encadrement-flag > .encadrement-flag-description > section > .inset > ul > li > .value {
   color: #e1e1e1;
   list-style-type: none;
 }
 
-.flag > .flag-description > section > .inset > p {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p {
   border-radius: 10px;
   font-size: 13px;
   padding: 24px;
@@ -214,61 +219,61 @@
   margin: 24px 0;
 }
 
-.flag > .flag-description > section > .inset > p > a {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p > a {
   color: #e1e1e1;
   font-weight: 500;
 }
 
-.flag > .flag-description > section > .inset > p > a:hover {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p > a:hover {
   color: #d3d3d3;
 }
 
-.flag > .flag-description > section > .inset > p > b.-icon {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p > b.-icon {
   display: flex;
   color: #ffffff;
   position: relative;
   margin-bottom: 4px;
 }
 
-.flag > .flag-description > section > .inset > p > b.-icon::before {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p > b.-icon::before {
   position: absolute;
   left: -26px;
 }
 
-.flag > .flag-description > section > .inset > p.-info {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p.-info {
   background-color: #5691fd;
   color: #e4edfd;
 }
 
-.flag > .flag-description > section > .inset > p.-warning {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p.-warning {
   background-color: #FDCD56;
   color: #0f0f0f;
 }
 
-.flag > .flag-description > section > .inset > p.-info > b.-icon::before {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p.-info > b.-icon::before {
   content: var(--strokeInfoIconUrl);
 }
 
-.flag > .flag-description > section > .inset > p.-warning > b.-icon::before {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p.-warning > b.-icon::before {
   content: var(--solidBangIconUrl);
 }
 
-.flag > .flag-description > section > .inset > p.-warning > a {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p.-warning > a {
   color: #0f0f0f;
 }
 
-.flag > .flag-description > section > .inset > p.-warning > b {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p.-warning > b {
   color: #050505;
 }
 
-.flag > .flag-description > section > .inset > p.-info .social-networks {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p.-info .social-networks {
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin-top: 16px;
 }
 
-.flag > .flag-description > section > .inset > p.-info .social-networks > a {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p.-info .social-networks > a {
   display: flex;
   padding: 5px;
   border-radius: 8px;
@@ -276,8 +281,8 @@
   transition: background-color 250ms ease-in-out;
 }
 
-.flag
-  > .flag-description
+.encadrement-flag
+  > .encadrement-flag-description
   > section
   > .inset
   > p.-info
@@ -286,12 +291,12 @@
   background-color: white;
 }
 
-.flag > .flag-description > section > .inset > p.-info i {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p.-info i {
   width: 25px;
   height: 25px;
 }
 
-.flag > .flag-description > section > .inset > p.-info i::before {
+.encadrement-flag > .encadrement-flag-description > section > .inset > p.-info i::before {
   display: inline-block;
   background-size: 100%;
   width: 25px;
@@ -300,24 +305,24 @@
   background-repeat: no-repeat;
 }
 
-.flag
-  > .flag-description
+.encadrement-flag
+  > .encadrement-flag-description
   > section
   > .inset
   > p.-info
   i.twitter-logo::before {
   background-image: var(--twitterIconUrl);
 }
-.flag
-  > .flag-description
+.encadrement-flag
+  > .encadrement-flag-description
   > section
   > .inset
   > p.-info
   i.instagram-logo::before {
   background-image: var(--instagramIconUrl);
 }
-.flag
-  > .flag-description
+.encadrement-flag
+  > .encadrement-flag-description
   > section
   > .inset
   > p.-info
@@ -325,7 +330,7 @@
   background-image: var(--facebookIconUrl);
 }
 
-.flag > .flag-description.-open {
+.encadrement-flag > .encadrement-flag-description.-open {
   left: -1em;
   animation: description-opening 200ms ease-out;
   animation-fill-mode: forwards;

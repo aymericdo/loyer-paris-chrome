@@ -1,7 +1,6 @@
 class FacebookWebsite extends WebsiteService {
   constructor() {
     super();
-    // this.fireKeyword = "div[data-pagelet=MainFeed]";
   }
 
   getId() {

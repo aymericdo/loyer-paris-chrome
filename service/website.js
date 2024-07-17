@@ -1,6 +1,6 @@
 class WebsiteService {
   constructor() {
-    this.fireKeyword = null;
+    this.fireKeyword = 'body';
     this.currentDomain = WebsiteService.getDomain();
   }
 
@@ -11,6 +11,7 @@ class WebsiteService {
         .split("/")[2]
         .replace("www.", "")
         .replace("immobilier.", "")
+        .replace("fr.", "")
         .split(".")[0];
     } catch {
       return null;
@@ -47,6 +48,10 @@ class WebsiteService {
         return new SuperimmoWebsite();
       case "locservice":
         return new LocServiceWebsite();
+      case "foncia":
+        return new FonciaWebsite();
+      case "avendrealouer":
+        return new AvendrealouerWebsite();
       default:
         return null;
     }

@@ -58,7 +58,7 @@ class CustomizeService {
 
     // Badge
     this.adFlag = document.createElement("div");
-    this.adFlag.classList.add("flag");
+    this.adFlag.classList.add("encadrement-flag");
     
     if (!currentAd.isLegal) {
       this.adFlag.textContent = "Non conforme";
@@ -92,12 +92,11 @@ class CustomizeService {
       pFakeInfo.innerHTML += `Faire comme si l'encadrement était mis en application en prenant comme base de référence `
       pFakeInfo.innerHTML += `la quartier le moins cher de Paris, à partir des critères réellement trouvés dans l'annonce.`
     }
-    
 
     if (!currentAd.isLegal) {
-      // price flag
+      // price encadrement-flag
       const adFlagPrice = document.createElement("span");
-      adFlagPrice.classList.add("flag-price");
+      adFlagPrice.classList.add("encadrement-flag-price");
       adFlagPrice.textContent = `Prix max estimé ${currentAd.computedInfo.maxAuthorized.value}€`;
       this.adFlag.appendChild(adFlagPrice);
     }
@@ -210,7 +209,7 @@ class CustomizeService {
     adDescriptionSection.appendChild(adDescriptionSectionInset);
     adDescription.appendChild(adDescriptionSection);
 
-    adDescription.classList.add("flag-description");
+    adDescription.classList.add("encadrement-flag-description");
     this.adFlag.appendChild(adDescription);
 
     // Toggle description opening
