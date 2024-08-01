@@ -90,7 +90,7 @@ class CustomizeService {
       pFakeInfo.innerHTML += `Vous ne pouvez donc pas modifier votre loyer, quel que soit le résultat de notre analyse.</br></br>`
       pFakeInfo.innerHTML += `<b>Méthodologie :</b> </br>`
       pFakeInfo.innerHTML += `Faire comme si l'encadrement était mis en application en prenant comme base de référence `
-      pFakeInfo.innerHTML += `la quartier le moins cher de Paris, à partir des critères réellement trouvés dans l'annonce.`
+      pFakeInfo.innerHTML += `la zone la moins chère de Bordeaux, à partir des critères réellement trouvés dans l'annonce.`
     }
 
     if (!currentAd.isLegal) {
