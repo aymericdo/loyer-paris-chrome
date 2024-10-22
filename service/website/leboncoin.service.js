@@ -1,7 +1,7 @@
 class LeboncoinWebsite extends WebsiteService {
   constructor() {
     super();
-    this.fireKeyword = '#map';
+    this.fireKeyword = '#mainContent';
   }
 
   getId() {
