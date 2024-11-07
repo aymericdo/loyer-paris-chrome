@@ -14,6 +14,7 @@ const TOKEN = {
   min: ["Prix minimum au mètre carré", "€"],
   maxAuthorized: ["Prix maximum estimé (hors charges)", "€"],
   promoPercentage: ["Écart avec le prix de l'annonce", "%"],
+  promo: ["Économie mensuelle", "€"],
   isLegal: ["Est conforme"],
   true: "Oui",
   false: "Non",
@@ -97,7 +98,7 @@ class CustomizeService {
       // price encadrement-flag
       const adFlagPrice = document.createElement("span");
       adFlagPrice.classList.add("encadrement-flag-price");
-      adFlagPrice.textContent = `Prix max estimé ${currentAd.computedInfo.maxAuthorized.value}€`;
+      adFlagPrice.innerHTML = `Prix max estimé ${currentAd.computedInfo.maxAuthorized.value}€ <br>(- ${currentAd.computedInfo.promo.value}€ par mois)`;
       this.adFlag.appendChild(adFlagPrice);
     }
 
@@ -181,7 +182,7 @@ class CustomizeService {
 
     const socialNetInfo = document.createElement("div");
     socialNetInfo.classList.add("social-networks");
-    socialNetInfo.innerHTML += `<a href="https://www.instagram.com/encadrementloyers/" target="_blank"><i class="instagram-logo"></i></a>`;
+    socialNetInfo.innerHTML += `<a href="https://www.instagram.com/encadrement_loyers/" target="_blank"><i class="instagram-logo"></i></a>`;
     socialNetInfo.innerHTML += `<a href="https://twitter.com/_encadrement" target="_blank"><i class="twitter-logo"></i></a>`;
     socialNetInfo.innerHTML += `<a href="https://www.facebook.com/encadrementloyers" target="_blank"><i class="facebook-logo"></i></a>`;
     pInfo.appendChild(socialNetInfo);

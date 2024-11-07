@@ -111,14 +111,16 @@
 .encadrement-flag > .encadrement-flag-price {
   position: absolute;
   right: 0;
-  bottom: -16px;
+  bottom: -3.6rem;
   font-size: 14px;
   border-radius: 10px;
+  line-height: 1.875rem;
   padding: 0 10px;
   box-shadow: -10px 10px 6px rgb(0 0 0 / 60%);
   font-weight: 500;
   background: white;
   border: 1px solid black;
+  text-align: center;
 }
 
 .encadrement-flag > .encadrement-flag-description {
