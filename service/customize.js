@@ -244,6 +244,7 @@ class CustomizeService {
       .sort((a, b) => data[a].order - data[b].order)
       .forEach((infoKey) => {
         if (
+          TOKEN[infoKey] &&
           data[infoKey] &&
           (data[infoKey].value || data[infoKey].value === false)
         ) {
