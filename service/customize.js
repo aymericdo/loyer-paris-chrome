@@ -98,7 +98,7 @@ class CustomizeService {
       // price encadrement-flag
       const adFlagPrice = document.createElement("span");
       adFlagPrice.classList.add("encadrement-flag-price");
-      adFlagPrice.innerHTML = `Prix max estimé ${currentAd.computedInfo.maxAuthorized.value}€ <br>(- ${currentAd.computedInfo.promo.value}€ par mois)`;
+      adFlagPrice.innerText = `Prix max estimé ${currentAd.computedInfo.maxAuthorized.value}€\n(- ${currentAd.computedInfo.promo.value}€ par mois)`;
       this.adFlag.appendChild(adFlagPrice);
     }
 
