@@ -1,7 +1,7 @@
 class BienIciWebsite extends WebsiteService {
   constructor() {
     super();
-    this.fireKeyword = '.detailedSheetFirstBlock';
+    this.fireKeyword = '.agency-overview__info-name';
   }
 
   getId() {
