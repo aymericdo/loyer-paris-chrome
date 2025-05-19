@@ -314,7 +314,7 @@ class CustomizeService {
 
   addErrorBanner(error) {
     switch (error.error) {
-      case "city": {
+      case "badLocation": {
         this.addDescriptionHelper(
           "La ville de cette annonce n'a pas encore mis en place l'encadrement des loyers.",
           false
@@ -338,6 +338,13 @@ class CustomizeService {
       case "minimal": {
         this.addDescriptionHelper(
           "Nous n'avons pas trouvé les informations nécessaires pour cette annonce.",
+          false
+        );
+        break;
+      }
+      case "colocation": {
+        this.addDescriptionHelper(
+          "Cette annonce semble concerner une colocation.",
           false
         );
         break;
