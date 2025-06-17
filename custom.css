@@ -104,8 +104,10 @@
 }
 
 .encadrement-flag > .fake {
+  margin-top: 0.5rem;
   text-wrap: nowrap;
-  font-size: 10px;
+  font-size: 12px;
+  line-height: normal;
 }
 
 .encadrement-flag > .encadrement-flag-price {

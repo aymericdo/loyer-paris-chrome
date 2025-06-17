@@ -72,12 +72,8 @@ class CustomizeService {
       this.adFlag.classList.add("-fake");
       const fakeFlag = document.createElement("span");
       fakeFlag.classList.add("fake");
-      fakeFlag.textContent = `* Cette ville n'applique actuellement pas l'encadrement des loyers.`
-      const fakeFlag2 = document.createElement("span");
-      fakeFlag2.classList.add("fake");
-      fakeFlag2.textContent = `Cette simulation est à but d'expérimentation.`
+      fakeFlag.innerHTML = `Cette ville n'applique actuellement pas l'encadrement des loyers.<br>Cette simulation est à but d'expérimentation.`
       this.adFlag.appendChild(fakeFlag)
-      this.adFlag.appendChild(fakeFlag2)
 
       pFakeInfo = document.createElement("p");
       pFakeInfo.classList.add('-warning');
@@ -87,18 +83,18 @@ class CustomizeService {
       pFakeInfo.appendChild(bFakeInfo);
 
       pFakeInfo.innerHTML += `Cette ville n'applique pas l'encadrement des loyers.</br>`
-      pFakeInfo.innerHTML += `L'extension est ici active de manière exceptionnelle à des fins d'expérimentations.</br>`
+      pFakeInfo.innerHTML += `L'extension est ici active de manière exceptionnelle, à des fins d'expérimentations.</br>`
       pFakeInfo.innerHTML += `Vous ne pouvez donc pas modifier votre loyer, quel que soit le résultat de notre analyse.</br></br>`
       pFakeInfo.innerHTML += `<b>Méthodologie :</b> </br>`
-      pFakeInfo.innerHTML += `Faire comme si l'encadrement était mis en application en prenant comme base de référence `
-      pFakeInfo.innerHTML += `la zone la moins chère de Bordeaux, à partir des critères réellement trouvés dans l'annonce.`
+      pFakeInfo.innerHTML += `Nous utilisons les données de l'<a href="https://www.observatoires-des-loyers.org/connaitre-les-loyers/carte-des-niveaux-de-loyers" target="_blank">Observatoire des loyers</a>`
+      pFakeInfo.innerHTML += ` pour déterminer le loyer maximum à ne pas dépasser. Nous partons du loyer médian de la zone, auquel nous ajoutons 20 % pour calculer le loyer maximum au mètre carré.`
     }
 
     if (!currentAd.isLegal) {
       // price encadrement-flag
       const adFlagPrice = document.createElement("span");
       adFlagPrice.classList.add("encadrement-flag-price");
-      adFlagPrice.innerText = `Prix max estimé ${currentAd.computedInfo.maxAuthorized.value}€\n(- ${currentAd.computedInfo.promo.value}€ par mois)`;
+      adFlagPrice.innerText = `Prix max estimé ${currentAd.computedInfo.maxAuthorized.value}€\n(-${currentAd.computedInfo.promo.value}€ par mois)`;
       this.adFlag.appendChild(adFlagPrice);
     }
 
@@ -172,12 +168,12 @@ class CustomizeService {
       a.setAttribute('target', '_blank')
       a.textContent = currentAd.moreInfo
 
-      pInfo.innerHTML += `Plus d\'info dans la popup de config de l\'extension, sur notre site : <a href="https://encadrement-loyers.fr/" target="_blank">https://encadrement-loyers.fr/</a></br>`
+      pInfo.innerHTML += `Retrouvez plus d\'informations dans la fenêtre de configuration de l\'extension (accessible en cliquant sur l\'icône en haut à droite, près de la barre d\'adresse), sur notre site : <a href="https://encadrement-loyers.fr/" target="_blank">https://encadrement-loyers.fr/</a></br>`
       pInfo.innerHTML += 'ou sur le site de la ville : '
       pInfo.appendChild(a)
       pInfo.innerHTML += '</br>'
     } else {
-      pInfo.innerHTML += `Plus d\'info dans la popup de config de l\'extension ou sur notre site : <a href="https://encadrement-loyers.fr/" target="_blank">https://encadrement-loyers.fr/</a></br>`
+      pInfo.innerHTML += `Retrouvez plus d\'informations dans la fenêtre de configuration de l\'extension (accessible en cliquant sur l\'icône en haut à droite, près de la barre d\'adresse), ou directement sur notre site : <a href="https://encadrement-loyers.fr/" target="_blank">https://encadrement-loyers.fr/</a></br>`
     }
 
     const socialNetInfo = document.createElement("div");
