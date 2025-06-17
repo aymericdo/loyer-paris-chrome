@@ -23,13 +23,13 @@
   right: 20px;
   width: fit-content;
   min-width: 200px;
-  height: 50px;
   font-size: 25px;
   border-radius: 20px;
-  padding: 0 10px;
+  padding: 10px;
   box-shadow: -10px 10px 6px rgba(0, 0, 0, 0.6);
   font-weight: 500;
   font-family: "Garnett", "Avenir", Helvetica, Arial, sans-serif !important;
+  line-height: 24px;
   color: #0f0f0f;
   border: 2px solid var(--green);
   z-index: 9999999;
@@ -99,12 +99,8 @@
   background-position: 100% 0;
 }
 
-.encadrement-flag.-fake {
-  height: 75px;
-}
-
 .encadrement-flag > .fake {
-  margin-top: 0.5rem;
+  margin-top: 8px;
   text-wrap: nowrap;
   font-size: 12px;
   line-height: normal;
@@ -113,10 +109,10 @@
 .encadrement-flag > .encadrement-flag-price {
   position: absolute;
   right: 0;
-  bottom: -3.6rem;
+  bottom: -36px;
   font-size: 14px;
   border-radius: 10px;
-  line-height: 1.875rem;
+  line-height: 20px;
   padding: 0 10px;
   box-shadow: -10px 10px 6px rgb(0 0 0 / 60%);
   font-weight: 500;
@@ -335,7 +331,7 @@
 }
 
 .encadrement-flag > .encadrement-flag-description.-open {
-  left: -1em;
+  left: -16px;
   animation: description-opening 200ms ease-out;
   animation-fill-mode: forwards;
 }
@@ -357,7 +353,7 @@
   font-size: 16px;
   font-weight: bold;
   color: #fff;
-  padding: 0.875em 1.25em;
+  padding: 14px 20px;
 }
 
 .-description-helper.-legal {

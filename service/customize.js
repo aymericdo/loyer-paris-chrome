@@ -287,24 +287,27 @@ class CustomizeService {
       adDescriptionHelper.classList.add("-hide");
       this.cptDescriptionHelper -= 1;
       setTimeout(() => {
-        this.moveDescriptionBanner(false);
+        this.moveDescriptionBanner();
       });
     }, 8000);
 
     return adDescriptionHelper;
   }
 
-  moveDescriptionBanner(up = true) {
+  moveDescriptionBanner() {
     const adDescriptionHelperList = [
       ...document.querySelectorAll("div.-description-helper.-middle"),
     ];
+
+    const startY = document.querySelector('.encadrement-flag')?.offsetHeight +
+      (document.querySelector('.encadrement-flag-price')?.offsetHeight ?? 10);
+
     adDescriptionHelperList.forEach((adDescriptionHelper, i) => {
-      adDescriptionHelper.style.top = `${56 *
-        (up
-          ? this.cptDescriptionHelper - i
-          : this.cptDescriptionHelper - i - 1) +
-        20 * 2
-        }px`;
+      const top = (i > 0) ?
+        startY + (adDescriptionHelperList[i - 1].offsetHeight * i) + 10 :
+        startY
+
+      adDescriptionHelper.style.top = `${top + 20}px`;
     });
   }
 
